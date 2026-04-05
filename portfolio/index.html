@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Dominic Orume Uririe — Senior AI Engineer</title>
+<meta name="description" content="Senior AI Engineer specialising in Generative AI, Agentic Workflows, and OCR Automation. MSc AI & Business Strategy, Aston University."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:       #06060f;
+  --surface:  #0d0d1a;
+  --surface2: #13131f;
+  --border:   #1e1e30;
+  --cyan:     #00d4ff;
+  --violet:   #7b61ff;
+  --gold:     #f0c040;
+  --coral:    #ff6b6b;
+  --green:    #00ff9d;
+  --text:     #e8e8f0;
+  --muted:    #6b6b8a;
+  --white:    #ffffff;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; overflow-x: hidden; cursor: none; }
+
+/* ── CURSOR ── */
+.cursor { width: 12px; height: 12px; background: var(--cyan); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.15s ease, background 0.2s; transform: translate(-50%,-50%); }
+.cursor-ring { width: 36px; height: 36px; border: 1px solid rgba(0,212,255,0.4); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform 0.35s ease, width 0.3s, height 0.3s; transform: translate(-50%,-50%); }
+
+/* ── NOISE ── */
+body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events:none; z-index:1; opacity:0.4; }
+
+/* ── NAV ── */
+nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:20px 60px; display:flex; justify-content:space-between; align-items:center; background:rgba(6,6,15,0.85); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
+.nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:700; color:var(--white); text-decoration:none; letter-spacing:1px; }
+.nav-logo span { color:var(--cyan); }
+.nav-links { display:flex; gap:28px; list-style:none; }
+.nav-links a { font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.nav-links a:hover { color:var(--cyan); }
+.nav-avail { display:flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--green); letter-spacing:2px; }
+.pulse-dot { width:7px; height:7px; background:var(--green); border-radius:50%; animation:pulseDot 2s ease-in-out infinite; }
+@keyframes pulseDot { 0%,100%{box-shadow:0 0 0 0 rgba(0,255,157,0.4)} 50%{box-shadow:0 0 0 6px rgba(0,255,157,0)} }
+
+/* ── HERO ── */
+#hero { min-height:100vh; display:flex; align-items:center; padding:120px 60px 60px; position:relative; overflow:hidden; }
+.hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px); background-size:60px 60px; pointer-events:none; }
+.hero-glow { position:absolute; width:700px; height:700px; background:radial-gradient(circle,rgba(0,212,255,0.08) 0%,transparent 70%); top:-150px; right:-100px; pointer-events:none; animation:pulse 6s ease-in-out infinite; }
+.hero-glow2 { position:absolute; width:500px; height:500px; background:radial-gradient(circle,rgba(123,97,255,0.07) 0%,transparent 70%); bottom:0; left:200px; pointer-events:none; animation:pulse 8s ease-in-out infinite reverse; }
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.1);opacity:0.7} }
+.hero-content { position:relative; z-index:2; max-width:1000px; }
+.hero-tag { font-family:'JetBrains Mono',monospace; font-size:0.72rem; letter-spacing:4px; text-transform:uppercase; color:var(--cyan); margin-bottom:24px; display:flex; align-items:center; gap:12px; opacity:0; animation:fadeUp 0.8s ease forwards 0.2s; }
+.hero-tag::before { content:''; width:40px; height:1px; background:var(--cyan); }
+.hero-name { font-family:'Cormorant Garamond',serif; font-size:clamp(3.5rem,8vw,6.5rem); font-weight:700; line-height:1.05; color:var(--white); margin-bottom:16px; opacity:0; animation:fadeUp 0.8s ease forwards 0.4s; }
+.hero-name .accent { color:var(--cyan); }
+.hero-title { font-family:'JetBrains Mono',monospace; font-size:clamp(0.8rem,1.8vw,0.95rem); color:var(--violet); letter-spacing:3px; text-transform:uppercase; margin-bottom:32px; opacity:0; animation:fadeUp 0.8s ease forwards 0.6s; }
+.hero-desc { font-size:1.05rem; color:var(--muted); max-width:620px; line-height:1.9; margin-bottom:48px; opacity:0; animation:fadeUp 0.8s ease forwards 0.8s; }
+.hero-cta { display:flex; gap:16px; flex-wrap:wrap; opacity:0; animation:fadeUp 0.8s ease forwards 1s; }
+.btn-primary { padding:14px 32px; background:var(--cyan); color:var(--bg); font-family:'Syne',sans-serif; font-size:0.85rem; font-weight:700; letter-spacing:1px; text-decoration:none; border-radius:3px; transition:transform 0.2s,box-shadow 0.2s; display:inline-block; }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,212,255,0.3); }
+.btn-secondary { padding:14px 32px; border:1px solid var(--border); color:var(--text); font-family:'Syne',sans-serif; font-size:0.85rem; font-weight:600; letter-spacing:1px; text-decoration:none; border-radius:3px; transition:border-color 0.2s,color 0.2s; display:inline-block; }
+.btn-secondary:hover { border-color:var(--cyan); color:var(--cyan); }
+.hero-scroll { position:absolute; bottom:40px; left:60px; display:flex; align-items:center; gap:12px; font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:3px; color:var(--muted); text-transform:uppercase; opacity:0; animation:fadeUp 0.8s ease forwards 1.4s; }
+.scroll-line { width:60px; height:1px; background:var(--muted); animation:scrollLine 2s ease-in-out infinite; }
+@keyframes scrollLine { 0%,100%{width:60px} 50%{width:20px} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── STATS BAR ── */
+.stats-bar { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--surface); position:relative; z-index:2; }
+.stat-item { padding:32px 40px; border-right:1px solid var(--border); }
+.stat-item:last-child { border-right:none; }
+.stat-num { font-family:'Cormorant Garamond',serif; font-size:2.8rem; font-weight:700; color:var(--cyan); line-height:1; }
+.stat-label { font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-top:6px; }
+
+/* ── SECTIONS ── */
+section { padding:100px 60px; position:relative; z-index:2; }
+.section-label { font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:4px; text-transform:uppercase; color:var(--cyan); margin-bottom:16px; display:flex; align-items:center; gap:12px; }
+.section-label::before { content:''; width:30px; height:1px; background:var(--cyan); }
+.section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:700; color:var(--white); margin-bottom:16px; }
+.section-sub { color:var(--muted); font-size:1rem; line-height:1.8; max-width:560px; margin-bottom:60px; }
+
+/* ── ABOUT ── */
+#about { background:var(--surface); }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.about-text p { color:var(--muted); line-height:1.9; font-size:0.95rem; margin-bottom:20px; }
+.about-text p strong { color:var(--text); }
+.about-right { display:flex; flex-direction:column; gap:20px; }
+.about-card { background:var(--surface2); border:1px solid var(--border); border-radius:4px; padding:24px; transition:border-color 0.2s; }
+.about-card:hover { border-color:var(--cyan); }
+.about-card-icon { font-size:1.4rem; margin-bottom:10px; }
+.about-card-title { font-family:'Syne',sans-serif; font-weight:700; font-size:0.9rem; color:var(--white); margin-bottom:6px; }
+.about-card-text { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--muted); line-height:1.6; }
+
+/* ── SKILLS ── */
+#skills { background:var(--bg); }
+.skills-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; }
+.skill-card { background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:28px; transition:border-color 0.2s,transform 0.2s; }
+.skill-card:hover { border-color:var(--cyan); transform:translateY(-4px); }
+.skill-icon { font-size:1.5rem; margin-bottom:14px; }
+.skill-name { font-weight:700; font-size:0.95rem; color:var(--white); margin-bottom:8px; }
+.skill-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.skill-tag { font-family:'JetBrains Mono',monospace; font-size:0.62rem; padding:3px 9px; border-radius:2px; letter-spacing:1px; }
+.t-cyan { background:rgba(0,212,255,0.08); color:var(--cyan); border:1px solid rgba(0,212,255,0.2); }
+.t-violet { background:rgba(123,97,255,0.08); color:var(--violet); border:1px solid rgba(123,97,255,0.2); }
+.t-gold { background:rgba(240,192,64,0.08); color:var(--gold); border:1px solid rgba(240,192,64,0.2); }
+.t-green { background:rgba(0,255,157,0.08); color:var(--green); border:1px solid rgba(0,255,157,0.2); }
+.t-coral { background:rgba(255,107,107,0.08); color:var(--coral); border:1px solid rgba(255,107,107,0.2); }
+
+/* ── EXPERIENCE ── */
+#experience { background:var(--surface); }
+.exp-list { display:flex; flex-direction:column; gap:2px; }
+.exp-item { background:var(--surface2); border:1px solid var(--border); border-radius:4px; padding:32px; transition:border-color 0.2s; cursor:pointer; }
+.exp-item:hover { border-color:var(--cyan); }
+.exp-header { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:16px; }
+.exp-role { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:700; color:var(--white); }
+.exp-company { font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--cyan); letter-spacing:2px; text-transform:uppercase; margin-top:4px; }
+.exp-period { font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--muted); letter-spacing:1px; text-align:right; white-space:nowrap; }
+.exp-bullets { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.exp-bullets li { color:var(--muted); font-size:0.88rem; line-height:1.7; padding-left:20px; position:relative; }
+.exp-bullets li::before { content:'→'; position:absolute; left:0; color:var(--cyan); font-family:'JetBrains Mono',monospace; font-size:0.75rem; }
+.exp-bullets li strong { color:var(--text); }
+
+/* ── PROJECTS ── */
+#projects { background:var(--bg); }
+.projects-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(360px,1fr)); gap:20px; }
+.project-card { background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:32px; transition:border-color 0.2s,transform 0.2s; display:flex; flex-direction:column; }
+.project-card:hover { border-color:var(--cyan); transform:translateY(-4px); }
+.project-num { font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:700; color:var(--border); line-height:1; margin-bottom:16px; }
+.project-tags { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+.project-title { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:700; color:var(--white); margin-bottom:6px; }
+.project-client { font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--cyan); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+.project-desc { color:var(--muted); font-size:0.85rem; line-height:1.8; flex:1; }
+.project-link { margin-top:20px; font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--cyan); text-decoration:none; letter-spacing:1px; display:flex; align-items:center; gap:8px; transition:gap 0.2s; }
+.project-link:hover { gap:14px; }
+
+/* ── CERTIFICATIONS ── */
+#certifications { background:var(--surface); }
+.cert-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
+.cert-card { background:var(--surface2); border:1px solid var(--border); border-radius:4px; padding:24px; transition:border-color 0.2s; }
+.cert-card:hover { border-color:var(--gold); }
+.cert-icon { font-size:1.6rem; margin-bottom:12px; }
+.cert-name { font-weight:700; font-size:0.9rem; color:var(--white); line-height:1.4; margin-bottom:6px; }
+.cert-issuer { font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--gold); letter-spacing:1px; text-transform:uppercase; }
+
+/* ── EDUCATION ── */
+#education { background:var(--bg); }
+.edu-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.edu-card { background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:32px; transition:border-color 0.2s; }
+.edu-card:hover { border-color:var(--violet); }
+.edu-degree { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:700; color:var(--white); margin-bottom:8px; }
+.edu-school { font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--violet); letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; }
+.edu-period { font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--muted); margin-bottom:12px; }
+.edu-note { font-size:0.82rem; color:var(--muted); line-height:1.7; }
+
+/* ── CONTACT ── */
+#contact { background:var(--surface); }
+.contact-inner { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.contact-links { display:flex; flex-direction:column; gap:12px; }
+.contact-link { display:flex; align-items:center; gap:16px; padding:20px 24px; background:var(--surface2); border:1px solid var(--border); border-radius:4px; text-decoration:none; transition:border-color 0.2s,transform 0.2s; }
+.contact-link:hover { border-color:var(--cyan); transform:translateX(6px); }
+.contact-link-icon { font-size:1.2rem; width:36px; text-align:center; }
+.contact-link-text { font-family:'JetBrains Mono',monospace; }
+.contact-link-label { font-size:0.65rem; color:var(--muted); letter-spacing:2px; text-transform:uppercase; }
+.contact-link-value { font-size:0.82rem; color:var(--text); margin-top:2px; }
+.contact-note { color:var(--muted); line-height:1.9; font-size:0.92rem; }
+.contact-note strong { color:var(--text); }
+
+/* ── FOOTER ── */
+footer { padding:32px 60px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:var(--bg); position:relative; z-index:2; }
+.footer-left { font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--muted); letter-spacing:2px; }
+.footer-right { font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--muted); letter-spacing:1px; }
+.footer-right span { color:var(--cyan); }
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(40px); transition:opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  nav { padding:16px 24px; }
+  .nav-links { display:none; }
+  #hero { padding:100px 24px 60px; }
+  section { padding:70px 24px; }
+  .about-grid,.contact-inner,.edu-grid { grid-template-columns:1fr; gap:40px; }
+  .stats-bar { grid-template-columns:1fr 1fr; }
+  .stat-item { border-right:none; border-bottom:1px solid var(--border); }
+  footer { flex-direction:column; gap:12px; padding:24px; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#hero" class="nav-logo">D<span>.</span>O<span>.</span>U</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-avail"><div class="pulse-dot"></div>Available for Opportunities</div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Senior AI Engineer · Birmingham, UK</div>
+    <h1 class="hero-name">Dominic<br/><span class="accent">Orume</span> Uririe</h1>
+    <div class="hero-title">Generative AI · Agentic Workflows · OCR Automation</div>
+    <p class="hero-desc">
+      Production-grade AI Engineer specialising in Generative AI systems, autonomous agentic workflows, and intelligent document processing. Building AI that bridges the gap between unstructured data and business intelligence — reliably, securely, and at enterprise scale.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-secondary">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>Scroll to explore</div>
+</section>
+
+<!-- ── STATS BAR ── -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <div class="stat-num">7+</div>
+    <div class="stat-label">Years Engineering</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num">91+</div>
+    <div class="stat-label">Reliability Scores</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num">5</div>
+    <div class="stat-label">Published Books</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num">MSc</div>
+    <div class="stat-label">AI & Business Strategy</div>
+  </div>
+</div>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="section-label">About</div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <h2 class="section-title" style="margin-bottom:28px">Building AI That<br/>Operates in Production</h2>
+      <p>Senior AI Engineer with a track record of delivering <strong>production-ready Generative AI systems</strong> and automated document intelligence within enterprise environments. Expert in prompt engineering and designing autonomous agentic workflows that bridge the gap between unstructured data and business intelligence.</p>
+      <p>Currently pursuing an <strong>MSc in Artificial Intelligence & Business Strategy (Distinction)</strong> at Aston University — a deliberate convergence of technical depth and strategic vision. Every system I build is governed with a focus on security, reliability, and precision.</p>
+      <p>I approach AI engineering not as an output but as <strong>infrastructure</strong> — systems designed to outlast individual effort, scale with organisational needs, and remain auditable under scrutiny. I spoke at <strong>FrontierTechX</strong> on this exact principle: AI that earns trust through governance, not just performance.</p>
+    </div>
+    <div class="about-right reveal">
+      <div class="about-card">
+        <div class="about-card-icon">🧠</div>
+        <div class="about-card-title">Generative AI Engineering</div>
+        <div class="about-card-text">Expert-level mastery of Google Gemini API, Azure OpenAI, and Foundation Model fine-tuning. Building LLM pipelines that perform in production environments.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">⚙️</div>
+        <div class="about-card-title">Agentic Workflow Orchestration</div>
+        <div class="about-card-text">End-to-end autonomous agent design using Python, N8N, Make.com, and Azure AI Studio. Multi-step reasoning systems with guardrails and failure recovery.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">📄</div>
+        <div class="about-card-title">Intelligent Document Processing</div>
+        <div class="about-card-text">AI-enhanced OCR pipelines for automated financial and tax data extraction. RAG-powered retrieval with anomaly detection and enterprise-grade precision.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🔐</div>
+        <div class="about-card-title">Responsible AI & Governance</div>
+        <div class="about-card-text">Authored AI requirements and security documentation. Embedding Responsible AI standards — reliability, fairness, accountability — in every system.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="section-label">Skills</div>
+  <h2 class="section-title reveal">Tools & Technologies</h2>
+  <p class="section-sub reveal">The full stack of an AI Engineer who ships to production.</p>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">✍️</div>
+      <div class="skill-name">Prompt Engineering</div>
+      <div class="skill-tags">
+        <span class="skill-tag t-cyan">Few-shot / Zero-shot</span>
+        <span class="skill-tag t-cyan">Chain-of-Thought</span>
+        <span class="skill-tag t-cyan">Prompt Chaining</span>
+        <span class="skill-tag t-cyan">Hallucination Mitigation</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-name">Generative AI Platforms</div>
+      <div class="skill-tags">
+        <span class="skill-tag t-violet">Google Gemini API</span>
+        <span class="skill-tag t-violet">Azure OpenAI</span>
+        <span class="skill-tag t-violet">Claude API</span>
+        <span class="skill-tag t-violet">Foundation Model Fine-tuning</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-name">Agentic Orchestration</div>
+      <div class="skill-tags">
+        <span class="skill-tag t-green">Python</span>
+        <span class="skill-tag t-green">N8N</span>
+        <span class="skill-tag t-green">Make.com</span>
+        <span class="skill-tag t-green">Azure AI Studio</span>
+        <span class="skill-tag t-green">LangChain</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">📊</div>
+      <div class="skill-name">Intelligent Document Processing</div>
+      <div class="skill-tags">
+        <span class="skill-tag t-gold">RAG Pipelines</span>
+        <span class="skill-tag t-gold">OCR Automation</span>
+        <span class="skill-tag t-gold">Cloud Run</span>
+        <span class="skill-tag t-gold">Anomaly Detection</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🔗</div>
+      <div class="skill-name">Blockchain & Distributed Systems</div>
+      <div class="skill-tags">
+        <span class="skill-tag t-coral">Certified Blockchain Architect</span>
+        <span class="skill-tag t-coral">DeFi Architecture</span>
+        <span class="skill-tag t-coral">Secure Distributed Systems</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">☁️</div>
+      <div class="skill-name">Cloud & Deployment</div>
+      <div class="skill-tags">
+        <span class="skill-tag t-cyan">Google Cloud Run</span>
+        <span class="skill-tag t-cyan">Azure</span>
+        <span class="skill-tag t-cyan">Production Pipelines</span>
+        <span class="skill-tag t-cyan">CI/CD</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience">
+  <div class="section-label">Experience</div>
+  <h2 class="section-title reveal">Professional Record</h2>
+  <p class="section-sub reveal">7+ years of shipping AI systems that operate in the real world.</p>
+  <div class="exp-list">
+
+    <div class="exp-item reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">AI Engineer & Growth Consultant</div>
+          <div class="exp-company">Simeria · United Kingdom</div>
+        </div>
+        <div class="exp-period">Dec 2025 — Present</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Architected an <strong>AI-Driven Content Engine</strong> using Python and Google AI Studio to automate multi-channel marketing distribution at scale.</li>
+        <li>Deployed automated pipelines scaling product communications across <strong>LinkedIn, YouTube, and X</strong> via agentic scheduling — increasing automated engagement metrics measurably.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Senior AI / ML Engineer</div>
+          <div class="exp-company">Micki Solutions · United Kingdom</div>
+        </div>
+        <div class="exp-period">Nov 2025 — Present</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Designed production-grade AI automation systems achieving <strong>91+ performance scores</strong> in reliability and accessibility — enterprise-ready from day one.</li>
+        <li>Authored <strong>AI requirements and security documentation</strong>, embedding Responsible AI standards in every automated prompt workflow and deployment.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Lead AI / ML Engineer</div>
+          <div class="exp-company">Vorem Limited · United Kingdom</div>
+        </div>
+        <div class="exp-period">Jan 2021 — Oct 2025</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Built and deployed <strong>Generative AI systems</strong> using foundation models, implementing custom prompt guardrails to reduce hallucinations and ensure enterprise-safe outputs.</li>
+        <li>Designed and implemented deployment patterns for <strong>automated business strategy tools</strong>, focusing on long-term maintainability, data security, and operational resilience.</li>
+        <li>Led end-to-end agentic orchestration projects — from architecture to production — across Python, N8N, Make.com, and Azure AI Studio.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="section-label">Projects</div>
+  <h2 class="section-title reveal">Signature Work</h2>
+  <p class="section-sub reveal">Production systems built to solve real enterprise problems.</p>
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <div class="project-num">01</div>
+      <div class="project-tags">
+        <span class="skill-tag t-gold">RAG</span>
+        <span class="skill-tag t-cyan">OCR</span>
+        <span class="skill-tag t-green">Cloud Run</span>
+      </div>
+      <div class="project-title">Tax Intelligence & Bank Statement OCR Engine</div>
+      <div class="project-client">Financial Compliance · Enterprise</div>
+      <p class="project-desc">Engineered a custom AI-enhanced OCR analyser to solve manual processing of unstructured, low-quality bank statement images for tax compliance. Built a RAG-powered retrieval system automating extraction, anomaly detection, and tax categorisation of financial data from images — achieving enterprise-grade precision in data governance.</p>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">02</div>
+      <div class="project-tags">
+        <span class="skill-tag t-violet">Gemini API</span>
+        <span class="skill-tag t-cyan">Agentic</span>
+        <span class="skill-tag t-green">QuickBooks</span>
+      </div>
+      <div class="project-title">BRIAN-STORE-AI: Autonomous Retail Workflow Agent</div>
+      <div class="project-client">Retail Automation · Enterprise</div>
+      <p class="project-desc">Designed complex prompt architectures for multi-step Gemini API workflows handling inventory tracking and demand forecasting. Orchestrated a semi-autonomous agent system syncing real-time retail data directly into QuickBooks — eliminating 100% of manual data entry and reducing operational overhead significantly.</p>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">03</div>
+      <div class="project-tags">
+        <span class="skill-tag t-cyan">Claude API</span>
+        <span class="skill-tag t-violet">Playwright</span>
+        <span class="skill-tag t-green">Flask</span>
+        <span class="skill-tag t-gold">SQLite</span>
+      </div>
+      <div class="project-title">Personal AI Job Search Agent</div>
+      <div class="project-client">Career Automation · Personal</div>
+      <p class="project-desc">Engineered a full-stack AI-powered job search pipeline: Indeed MCP role discovery across 10 cities, semantic CV matching with gap analysis, Claude API brand-voice cover letter generation with geographic tailoring, Playwright stealth form automation, and a Flask Human-in-the-Loop approval dashboard. Zero auto-submissions — every application is human-confirmed.</p>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">04</div>
+      <div class="project-tags">
+        <span class="skill-tag t-cyan">Python</span>
+        <span class="skill-tag t-violet">Google AI Studio</span>
+        <span class="skill-tag t-green">Multi-channel</span>
+      </div>
+      <div class="project-title">AI-Driven Content Engine</div>
+      <div class="project-client">Simeria · Growth Automation</div>
+      <p class="project-desc">Architected an end-to-end content automation system using Python and Google AI Studio. Deployed production pipelines distributing content autonomously across LinkedIn, YouTube, and X — scaling communications that would require a full marketing team into a single agentic workflow with measurable engagement uplift.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── CERTIFICATIONS ── -->
+<section id="certifications">
+  <div class="section-label">Certifications</div>
+  <h2 class="section-title reveal">Credentials</h2>
+  <p class="section-sub reveal">Structured validation of technical and leadership capability.</p>
+  <div class="cert-grid">
+    <div class="cert-card reveal">
+      <div class="cert-icon">🔗</div>
+      <div class="cert-name">Certified Blockchain Architect</div>
+      <div class="cert-issuer">Secure & Distributed Systems</div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">✨</div>
+      <div class="cert-name">Google Gemini AI Certification</div>
+      <div class="cert-issuer">Generative AI & Prompt Engineering</div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">⚖️</div>
+      <div class="cert-name">AI for Governance, Risk & Compliance</div>
+      <div class="cert-issuer">Responsible AI Leadership</div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">🐍</div>
+      <div class="cert-name">Programming for Everybody (Python)</div>
+      <div class="cert-issuer">University of Michigan</div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">🎤</div>
+      <div class="cert-name">FrontierTechX Speaker</div>
+      <div class="cert-issuer">AI & Business Strategy · Conference</div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">👥</div>
+      <div class="cert-name">Leadership Through Feedback</div>
+      <div class="cert-issuer">Team & Technical Leadership</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EDUCATION ── -->
+<section id="education">
+  <div class="section-label">Education</div>
+  <h2 class="section-title reveal">Academic Foundation</h2>
+  <p class="section-sub reveal">Engineering rigour meets strategic vision.</p>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-degree">MSc — Artificial Intelligence & Business Strategy</div>
+      <div class="edu-school">Aston University · United Kingdom</div>
+      <div class="edu-period">2025 – 2026 · Distinction Track</div>
+      <p class="edu-note">A deliberate convergence of technical AI engineering and business strategy. Grounding production AI systems in the language of commercial outcomes, governance, and organisational impact.</p>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree">BSc — Electrical & Electronic Engineering (Honours)</div>
+      <div class="edu-school">Covenant University · Nigeria</div>
+      <div class="edu-period">2009 – 2014</div>
+      <p class="edu-note">Final Project: <strong style="color:var(--text)">AI-Driven Power System Automation</strong> — the origin point of a career built on applying intelligence to systems that matter. Engineering fundamentals that underpin every AI system built since.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="section-label">Contact</div>
+  <div class="contact-inner">
+    <div class="reveal">
+      <h2 class="section-title">Let's Build<br/>Something Real</h2>
+      <p class="contact-note" style="margin-top:20px">
+        I am available for <strong>senior AI engineering roles</strong> across the UK, Ireland, Germany, the Netherlands, Australia, and Canada. Open to both employed positions and high-value consultancy engagements.<br/><br/>
+        Every system I build is designed to outlast individual effort — <strong>production-grade, governed, and built for the long run</strong>.
+      </p>
+    </div>
+    <div class="contact-links reveal">
+      <a href="mailto:orumedominic@gmail.com" class="contact-link">
+        <div class="contact-link-icon">✉️</div>
+        <div class="contact-link-text">
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-value">orumedominic@gmail.com</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/" target="_blank" class="contact-link">
+        <div class="contact-link-icon">💼</div>
+        <div class="contact-link-text">
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-value">Dominic Orume Uririe</div>
+        </div>
+      </a>
+      <a href="https://github.com/" target="_blank" class="contact-link">
+        <div class="contact-link-icon">⚡</div>
+        <div class="contact-link-text">
+          <div class="contact-link-label">GitHub</div>
+          <div class="contact-link-value">rume-job-agent & projects</div>
+        </div>
+      </a>
+      <div class="contact-link" style="cursor:default">
+        <div class="contact-link-icon">📍</div>
+        <div class="contact-link-text">
+          <div class="contact-link-label">Location</div>
+          <div class="contact-link-value">Birmingham, England, UK · Open to relocation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-left">© 2026 Dominic Orume Uririe · Senior AI Engineer</div>
+  <div class="footer-right">Built with <span>intelligence</span> · orumedominic@gmail.com</div>
+</footer>
+
+<script>
+// ── Custom cursor ─────────────────────────────────────────────────────────
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursorRing');
+let mx=0, my=0, rx=0, ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+(function animRing(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+document.querySelectorAll('a,button,.exp-item,.project-card,.skill-card,.cert-card,.contact-link').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ cursor.style.transform='translate(-50%,-50%) scale(2.5)'; cursor.style.background='var(--violet)'; ring.style.width='60px'; ring.style.height='60px'; });
+  el.addEventListener('mouseleave',()=>{ cursor.style.transform='translate(-50%,-50%) scale(1)'; cursor.style.background='var(--cyan)'; ring.style.width='36px'; ring.style.height='36px'; });
+});
+
+// ── Scroll reveal ─────────────────────────────────────────────────────────
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// ── Active nav link ───────────────────────────────────────────────────────
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const sectionObserver = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(a=>a.style.color='');
+      const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if(active) active.style.color='var(--cyan)';
+    }
+  });
+},{ threshold:0.4 });
+sections.forEach(s=>sectionObserver.observe(s));
+</script>
+</body>
+</html>
