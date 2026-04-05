@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Rume Dominic — AI Engineer · Blockchain Architect · Product Strategist</title>
+<meta name="description" content="Senior AI Engineer and Blockchain Architect with 7+ years building autonomous AI agents, GenAI systems, and fintech products for African and global markets."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#06060f; --surface:#0d0d1a; --surface2:#13131f; --surface3:#1a1e2e;
+  --border:#1e1e30; --cyan:#00d4ff; --violet:#7b61ff; --gold:#f0c040;
+  --coral:#ff6b6b; --green:#00ff9d; --orange:#ff9d00;
+  --text:#e8e8f0; --muted:#6b6b8a; --white:#ffffff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+.cur{width:10px;height:10px;background:var(--cyan);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .12s,background .2s}
+.cur-r{width:34px;height:34px;border:1px solid rgba(0,212,255,.35);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .32s,width .25s,height .25s}
+
+/* NOISE */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:.4}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 60px;display:flex;justify-content:space-between;align-items:center;background:rgba(6,6,15,.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:700;color:var(--white);text-decoration:none;letter-spacing:1px}
+.logo span{color:var(--cyan)}
+.nav-links{display:flex;gap:26px;list-style:none}
+.nav-links a{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover,.nav-links a.on{color:var(--cyan)}
+.avail{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--green);letter-spacing:2px}
+.dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(0,255,157,.5)}50%{box-shadow:0 0 0 7px rgba(0,255,157,0)}}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding:110px 60px 60px;position:relative;overflow:hidden}
+.hgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.025) 1px,transparent 1px);background-size:55px 55px;pointer-events:none}
+.hglow{position:absolute;width:750px;height:750px;background:radial-gradient(circle,rgba(0,212,255,.07) 0%,transparent 68%);top:-180px;right:-120px;pointer-events:none;animation:glow 7s ease-in-out infinite}
+.hglow2{position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(123,97,255,.06) 0%,transparent 70%);bottom:-60px;left:160px;pointer-events:none;animation:glow 9s ease-in-out infinite reverse}
+@keyframes glow{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.75}}
+.hcontent{position:relative;z-index:2;max-width:980px}
+.htag{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);margin-bottom:22px;display:flex;align-items:center;gap:12px;opacity:0;animation:up .8s ease forwards .2s}
+.htag::before{content:'';width:38px;height:1px;background:var(--cyan)}
+.hname{font-family:'Cormorant Garamond',serif;font-size:clamp(3.2rem,8vw,6.8rem);font-weight:700;line-height:1.02;color:var(--white);margin-bottom:14px;opacity:0;animation:up .8s ease forwards .4s}
+.hname .ac{color:var(--cyan)}
+.htitle{font-family:'JetBrains Mono',monospace;font-size:clamp(.75rem,1.6vw,.88rem);color:var(--violet);letter-spacing:3px;text-transform:uppercase;margin-bottom:28px;opacity:0;animation:up .8s ease forwards .6s}
+.hdesc{font-size:1rem;color:var(--muted);max-width:600px;line-height:1.95;margin-bottom:44px;opacity:0;animation:up .8s ease forwards .8s}
+.hcta{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:up .8s ease forwards 1s}
+.btn-p{padding:13px 30px;background:var(--cyan);color:var(--bg);font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:1px;text-decoration:none;border-radius:3px;transition:transform .2s,box-shadow .2s;display:inline-block}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,212,255,.3)}
+.btn-s{padding:13px 30px;border:1px solid var(--border);color:var(--text);font-family:'Syne',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:1px;text-decoration:none;border-radius:3px;transition:border-color .2s,color .2s;display:inline-block}
+.btn-s:hover{border-color:var(--cyan);color:var(--cyan)}
+.hscroll{position:absolute;bottom:36px;left:60px;display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:3px;color:var(--muted);text-transform:uppercase;opacity:0;animation:up .8s ease forwards 1.4s}
+.sline{width:55px;height:1px;background:var(--muted);animation:sl 2.2s ease-in-out infinite}
+@keyframes sl{0%,100%{width:55px}50%{width:18px}}
+@keyframes up{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* STATS */
+.statsbar{display:grid;grid-template-columns:repeat(5,1fr);background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:2}
+.sitem{padding:28px 36px;border-right:1px solid var(--border)}
+.sitem:last-child{border-right:none}
+.snum{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:700;color:var(--cyan);line-height:1}
+.slbl{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:5px}
+
+/* SECTIONS */
+section{padding:90px 60px;position:relative;z-index:2}
+.slabel{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.slabel::before{content:'';width:28px;height:1px;background:var(--cyan)}
+.stitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:700;color:var(--white);margin-bottom:12px}
+.ssub{color:var(--muted);font-size:.94rem;line-height:1.85;max-width:540px;margin-bottom:52px}
+
+/* ABOUT */
+#about{background:var(--surface)}
+.about-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:72px;align-items:start}
+.about-text p{color:var(--muted);line-height:1.95;font-size:.92rem;margin-bottom:18px}
+.about-text p strong{color:var(--text)}
+.about-cards{display:flex;flex-direction:column;gap:14px}
+.acard{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:22px;transition:border-color .2s}
+.acard:hover{border-color:var(--cyan)}
+.acard-ico{font-size:1.3rem;margin-bottom:9px}
+.acard-t{font-weight:700;font-size:.88rem;color:var(--white);margin-bottom:5px}
+.acard-d{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--muted);line-height:1.6}
+
+/* SKILLS */
+#skills{background:var(--bg)}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.skcard{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:26px;transition:border-color .2s,transform .2s}
+.skcard:hover{border-color:var(--cyan);transform:translateY(-3px)}
+.sk-ico{font-size:1.4rem;margin-bottom:12px}
+.sk-name{font-weight:700;font-size:.9rem;color:var(--white);margin-bottom:10px}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:3px 8px;border-radius:2px;letter-spacing:.8px}
+.tc{background:rgba(0,212,255,.07);color:var(--cyan);border:1px solid rgba(0,212,255,.18)}
+.tv{background:rgba(123,97,255,.07);color:var(--violet);border:1px solid rgba(123,97,255,.18)}
+.tg{background:rgba(240,192,64,.07);color:var(--gold);border:1px solid rgba(240,192,64,.18)}
+.tn{background:rgba(0,255,157,.07);color:var(--green);border:1px solid rgba(0,255,157,.18)}
+.to{background:rgba(255,107,107,.07);color:var(--coral);border:1px solid rgba(255,107,107,.18)}
+
+/* EXPERIENCE */
+#experience{background:var(--surface)}
+.exp-list{display:flex;flex-direction:column;gap:3px}
+.exp{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:30px;transition:border-color .2s}
+.exp:hover{border-color:var(--cyan)}
+.exp-h{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:14px}
+.exp-role{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;color:var(--white)}
+.exp-co{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-top:3px}
+.exp-date{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);text-align:right;white-space:nowrap;flex-shrink:0}
+.exp-loc{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);margin-top:2px;text-align:right}
+.exp-ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.exp-ul li{color:var(--muted);font-size:.86rem;line-height:1.75;padding-left:18px;position:relative}
+.exp-ul li::before{content:'→';position:absolute;left:0;color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:.7rem;top:1px}
+.exp-ul li strong{color:var(--text)}
+
+/* PROJECTS */
+#projects{background:var(--bg)}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:18px}
+.pcard{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:30px;display:flex;flex-direction:column;transition:border-color .2s,transform .2s;position:relative;overflow:hidden}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity .3s}
+.pcard:hover{border-color:var(--cyan);transform:translateY(-4px)}
+.pcard:hover::before{opacity:1}
+.pnum{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;color:var(--border);line-height:1;margin-bottom:14px}
+.ptags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.ptitle{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:700;color:var(--white);margin-bottom:5px;line-height:1.3}
+.pclient{font-family:'JetBrains Mono',monospace;font-size:.64rem;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.pdesc{color:var(--muted);font-size:.83rem;line-height:1.8;flex:1}
+.plink{margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--cyan);text-decoration:none;letter-spacing:1px;display:flex;align-items:center;gap:7px;transition:gap .2s}
+.plink:hover{gap:13px}
+.pstack{display:flex;flex-wrap:wrap;gap:4px;margin-top:12px}
+.pstag{font-family:'JetBrains Mono',monospace;font-size:.58rem;padding:2px 7px;border-radius:2px;background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
+
+/* CERTIFICATIONS */
+#certifications{background:var(--surface)}
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.ccard{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:22px;transition:border-color .2s,transform .2s}
+.ccard:hover{border-color:var(--gold);transform:translateY(-2px)}
+.cico{font-size:1.5rem;margin-bottom:10px}
+.cname{font-weight:700;font-size:.88rem;color:var(--white);line-height:1.4;margin-bottom:5px}
+.ciss{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--gold);letter-spacing:1px;text-transform:uppercase}
+
+/* EDUCATION */
+#education{background:var(--bg)}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.ecard{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:30px;transition:border-color .2s}
+.ecard:hover{border-color:var(--violet)}
+.edeg{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.3}
+.euni{font-family:'JetBrains Mono',monospace;font-size:.67rem;color:var(--violet);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.edate{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);margin-bottom:12px}
+.enote{font-size:.82rem;color:var(--muted);line-height:1.75}
+.enote strong{color:var(--text)}
+
+/* CONTACT */
+#contact{background:var(--surface)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.clinks{display:flex;flex-direction:column;gap:10px}
+.clink{display:flex;align-items:center;gap:14px;padding:18px 22px;background:var(--surface2);border:1px solid var(--border);border-radius:4px;text-decoration:none;transition:border-color .2s,transform .2s}
+.clink:hover{border-color:var(--cyan);transform:translateX(5px)}
+.clico{font-size:1.1rem;width:32px;text-align:center}
+.cllbl{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
+.clval{font-size:.8rem;color:var(--text);margin-top:2px}
+.cnote p{color:var(--muted);line-height:1.9;font-size:.9rem;margin-bottom:16px}
+.cnote p strong{color:var(--text)}
+.open-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,157,.06);border:1px solid rgba(0,255,157,.2);color:var(--green);padding:10px 18px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase}
+
+/* FOOTER */
+footer{padding:28px 60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--bg);position:relative;z-index:2}
+.fl{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:1px}
+.fr{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted)}
+.fr span{color:var(--cyan)}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(36px);transition:opacity .65s ease,transform .65s ease}
+.rv.on{opacity:1;transform:translateY(0)}
+.rv2{opacity:0;transform:translateY(36px);transition:opacity .65s ease .12s,transform .65s ease .12s}
+.rv2.on{opacity:1;transform:translateY(0)}
+.rv3{opacity:0;transform:translateY(36px);transition:opacity .65s ease .22s,transform .65s ease .22s}
+.rv3.on{opacity:1;transform:translateY(0)}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:14px 20px}
+  .nav-links,.avail{display:none}
+  #hero,section{padding:80px 22px 60px}
+  .about-grid,.contact-grid,.edu-grid{grid-template-columns:1fr;gap:36px}
+  .statsbar{grid-template-columns:1fr 1fr}
+  .sitem{border-right:none;border-bottom:1px solid var(--border)}
+  footer{flex-direction:column;gap:10px;padding:22px;text-align:center}
+  .hscroll{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="C"></div>
+<div class="cur-r" id="CR"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="logo">RUME<span>.</span>DOMINIC</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="avail"><div class="dot"></div>Open to Opportunities</div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hgrid"></div>
+  <div class="hglow"></div>
+  <div class="hglow2"></div>
+  <div class="hcontent">
+    <div class="htag">Senior AI Engineer · Birmingham, UK</div>
+    <h1 class="hname">Rume<br/><span class="ac">Dominic</span></h1>
+    <div class="htitle">AI Engineer &nbsp;·&nbsp; Blockchain Architect &nbsp;·&nbsp; Product Strategist</div>
+    <p class="hdesc">7+ years building autonomous AI agents, Generative AI systems, and fintech products for African and global markets. Bridging the gap between cutting-edge AI engineering and real business outcomes — reliably, securely, and at production scale.</p>
+    <div class="hcta">
+      <a href="#projects" class="btn-p">View My Work</a>
+      <a href="https://github.com/dominicrume" target="_blank" class="btn-s">GitHub Profile</a>
+      <a href="#contact" class="btn-s">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hscroll"><div class="sline"></div>Scroll to explore</div>
+</section>
+
+<!-- STATS -->
+<div class="statsbar">
+  <div class="sitem rv"><div class="snum">7+</div><div class="slbl">Years Engineering</div></div>
+  <div class="sitem rv2"><div class="snum">91+</div><div class="slbl">Reliability Scores</div></div>
+  <div class="sitem rv3"><div class="snum">5</div><div class="slbl">Published Books</div></div>
+  <div class="sitem rv"><div class="snum">10+</div><div class="slbl">Live Projects</div></div>
+  <div class="sitem rv2"><div class="snum">MSc</div><div class="slbl">AI & Business Strategy</div></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="slabel">About</div>
+  <div class="about-grid">
+    <div class="about-text rv">
+      <h2 class="stitle" style="margin-bottom:26px">AI That Ships.<br/>Strategy That Scales.</h2>
+      <p>Visionary software developer, AI engineer, and blockchain architect with <strong>7+ years of experience</strong> building full-stack applications, autonomous AI agents, and fintech products for African and global markets.</p>
+      <p>Author of <strong>5 published books</strong> on AI, technology, and business strategy. Executive member of the Stakeholders in Blockchain Association of Nigeria (SIBAN). Speaker at <strong>FrontierTechX</strong> — a recognised frontier voice in AI strategy.</p>
+      <p>Currently pursuing an <strong>MSc in Artificial Intelligence & Business Strategy (Distinction track)</strong> at Aston University — a deliberate convergence of technical depth and commercial vision. Every system built is governed: secure, auditable, and designed to outlast individual effort.</p>
+      <p>Experienced in taking products <strong>from concept to deployment</strong> using Python, TypeScript, Next.js, Flask, Supabase, and AI APIs including OpenAI, Google Gemini, and Claude.</p>
+    </div>
+    <div class="about-cards rv2">
+      <div class="acard">
+        <div class="acard-ico">🤖</div>
+        <div class="acard-t">Autonomous AI Agents</div>
+        <div class="acard-d">End-to-end agentic systems — from prompt architecture to production deployment. Multi-step reasoning, guardrails, and failure recovery built in.</div>
+      </div>
+      <div class="acard">
+        <div class="acard-ico">🔗</div>
+        <div class="acard-t">Blockchain Architecture</div>
+        <div class="acard-d">Certified Blockchain Architect. Solidity, DeFi, NFT, Smart Contracts, Web3 architecture. SIBAN Executive Member.</div>
+      </div>
+      <div class="acard">
+        <div class="acard-ico">📊</div>
+        <div class="acard-t">Product Strategy</div>
+        <div class="acard-d">Product roadmapping, go-to-market strategy, business model design, and AI-driven growth systems for African and global markets.</div>
+      </div>
+      <div class="acard">
+        <div class="acard-ico">🌍</div>
+        <div class="acard-t">African & Global Markets</div>
+        <div class="acard-d">Deep expertise building fintech and edtech products for the African market — Vorem Nigeria, Nigerian Tax Engine, BRIAN-STORE-AI.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="slabel">Skills</div>
+  <h2 class="stitle rv">Tools & Technologies</h2>
+  <p class="ssub rv">Full-stack AI engineering from model to market.</p>
+  <div class="skills-grid">
+    <div class="skcard rv">
+      <div class="sk-ico">🐍</div>
+      <div class="sk-name">Languages</div>
+      <div class="tags">
+        <span class="tag tc">Python</span><span class="tag tc">TypeScript</span>
+        <span class="tag tc">JavaScript</span><span class="tag tc">Solidity</span>
+        <span class="tag tc">SQL</span><span class="tag tc">Shell</span>
+      </div>
+    </div>
+    <div class="skcard rv2">
+      <div class="sk-ico">⚙️</div>
+      <div class="sk-name">Frameworks</div>
+      <div class="tags">
+        <span class="tag tv">Next.js</span><span class="tag tv">React</span>
+        <span class="tag tv">Flask</span><span class="tag tv">Vite</span>
+        <span class="tag tv">Tailwind CSS</span><span class="tag tv">Node.js</span>
+      </div>
+    </div>
+    <div class="skcard rv3">
+      <div class="sk-ico">🧠</div>
+      <div class="sk-name">AI & Data</div>
+      <div class="tags">
+        <span class="tag tg">OpenAI GPT-4o</span><span class="tag tg">Google Gemini</span>
+        <span class="tag tg">AI Studio</span><span class="tag tg">Claude API</span>
+        <span class="tag tg">Autonomous Agents</span><span class="tag tg">NLP</span>
+        <span class="tag tg">Prompt Engineering</span>
+      </div>
+    </div>
+    <div class="skcard rv">
+      <div class="sk-ico">🔗</div>
+      <div class="sk-name">Blockchain</div>
+      <div class="tags">
+        <span class="tag to">Solidity</span><span class="tag to">EVM</span>
+        <span class="tag to">DeFi</span><span class="tag to">NFT</span>
+        <span class="tag to">Smart Contracts</span><span class="tag to">Web3</span>
+        <span class="tag to">MetaTrader 5</span>
+      </div>
+    </div>
+    <div class="skcard rv2">
+      <div class="sk-ico">☁️</div>
+      <div class="sk-name">Infrastructure</div>
+      <div class="tags">
+        <span class="tag tc">Supabase</span><span class="tag tc">PostgreSQL</span>
+        <span class="tag tc">Docker</span><span class="tag tc">GitHub Actions</span>
+        <span class="tag tc">CI/CD</span><span class="tag tc">REST APIs</span>
+        <span class="tag tc">Vercel</span><span class="tag tc">Cloud Run</span>
+      </div>
+    </div>
+    <div class="skcard rv3">
+      <div class="sk-ico">📈</div>
+      <div class="sk-name">Product & Strategy</div>
+      <div class="tags">
+        <span class="tag tn">Product Roadmapping</span>
+        <span class="tag tn">Go-to-Market</span>
+        <span class="tag tn">Business Model Design</span>
+        <span class="tag tn">AI-Driven Growth</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="slabel">Experience</div>
+  <h2 class="stitle rv">Professional Record</h2>
+  <p class="ssub rv">7+ years shipping systems that operate in the real world.</p>
+  <div class="exp-list">
+
+    <div class="exp rv">
+      <div class="exp-h">
+        <div>
+          <div class="exp-role">AI Engineer & Growth Consultant</div>
+          <div class="exp-co">Simeria · United Kingdom</div>
+        </div>
+        <div><div class="exp-date">Dec 2025 — Present</div><div class="exp-loc">Birmingham, UK</div></div>
+      </div>
+      <ul class="exp-ul">
+        <li>Architected an <strong>AI-Driven Content Engine</strong> using Python and Google AI Studio — automating multi-channel marketing distribution across LinkedIn, YouTube, and X.</li>
+        <li>Deployed agentic scheduling pipelines that scaled product communications <strong>without human input</strong>, increasing automated engagement metrics measurably.</li>
+      </ul>
+    </div>
+
+    <div class="exp rv">
+      <div class="exp-h">
+        <div>
+          <div class="exp-role">Senior AI / ML Engineer</div>
+          <div class="exp-co">Micki Solutions · United Kingdom</div>
+        </div>
+        <div><div class="exp-date">Nov 2025 — Present</div><div class="exp-loc">Birmingham, UK</div></div>
+      </div>
+      <ul class="exp-ul">
+        <li>Designed production-grade AI automation systems achieving <strong>91+ performance scores</strong> in reliability and accessibility.</li>
+        <li>Authored <strong>AI requirements and security documentation</strong>, embedding Responsible AI standards — reliability, fairness, accountability — into every deployed workflow.</li>
+      </ul>
+    </div>
+
+    <div class="exp rv">
+      <div class="exp-h">
+        <div>
+          <div class="exp-role">Lead AI / ML Engineer & Founder</div>
+          <div class="exp-co">Vorem Limited · Nigeria & UK</div>
+        </div>
+        <div><div class="exp-date">2017 — Oct 2025</div><div class="exp-loc">Warri / London / Birmingham</div></div>
+      </div>
+      <ul class="exp-ul">
+        <li>Founded and scaled <strong>Vorem Nigeria</strong> — an operational AI and blockchain education platform delivering scalable digital products across fintech, edtech, and Web3 verticals.</li>
+        <li>Built and deployed <strong>Generative AI systems</strong> using foundation models, implementing custom prompt guardrails to ensure enterprise-safe outputs across client deployments.</li>
+        <li>Designed deployment patterns for <strong>automated business strategy tools</strong>, focusing on long-term maintainability, data security, and operational resilience.</li>
+        <li>Authored <strong>5 published books</strong> on AI, blockchain, and business strategy — establishing thought leadership across African and global technology communities.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="slabel">Projects</div>
+  <h2 class="stitle rv">GitHub Portfolio</h2>
+  <p class="ssub rv">Production systems built to solve real problems — all available at <a href="https://github.com/dominicrume" target="_blank" style="color:var(--cyan)">github.com/dominicrume</a></p>
+  <div class="proj-grid">
+
+    <div class="pcard rv">
+      <div class="pnum">01</div>
+      <div class="ptags"><span class="tag tc">Python</span><span class="tag tg">Claude API</span><span class="tag tv">Flask</span><span class="tag tn">Playwright</span></div>
+      <div class="ptitle">AI-Powered Job Search Agent</div>
+      <div class="pclient">Career Automation · Personal</div>
+      <p class="pdesc">Full-stack autonomous job search pipeline: Indeed MCP role discovery across 10 cities, semantic CV matching with gap analysis, Claude API brand-voice cover letter generation with geographic tailoring, and Playwright stealth form automation. Human-in-the-Loop Flask dashboard — zero auto-submissions.</p>
+      <div class="pstack"><span class="pstag">Claude API</span><span class="pstag">Flask</span><span class="pstag">SQLite</span><span class="pstag">Playwright</span><span class="pstag">Python</span></div>
+      <a href="https://github.com/dominicrume/rume-job-agent-" target="_blank" class="plink">View Repository →</a>
+    </div>
+
+    <div class="pcard rv2">
+      <div class="pnum">02</div>
+      <div class="ptags"><span class="tag tg">OpenAI GPT-4o</span><span class="tag tc">Python</span><span class="tag tv">Flask</span></div>
+      <div class="ptitle">Digital Sovereign Agent</div>
+      <div class="pclient">Autonomous Marketing Infrastructure</div>
+      <p class="pdesc">Autonomous AI marketing infrastructure designed to eliminate manual content creation and social media distribution. Simera Brain psychological narrative engine, Studio Director for multimedia briefs, Reddit Detective for viral content research, and a 24/7 Social Dispatcher with zero human intervention required.</p>
+      <div class="pstack"><span class="pstag">OpenAI GPT-4o</span><span class="pstag">REST APIs</span><span class="pstag">Shell</span><span class="pstag">Python</span></div>
+      <a href="https://github.com/dominicrume/social-media-marketing" target="_blank" class="plink">View Repository →</a>
+    </div>
+
+    <div class="pcard rv3">
+      <div class="pnum">03</div>
+      <div class="ptags"><span class="tag tg">Gemini API</span><span class="tag tc">TypeScript</span><span class="tag tn">QuickBooks</span></div>
+      <div class="ptitle">BRIAN-STORE-AI</div>
+      <div class="pclient">Autonomous Retail Operating System</div>
+      <p class="pdesc">AI-powered retail OS helping store owners track inventory in real time, detect theft and cash leakage, forecast demand, sync with QuickBooks, and manage customers automatically. Eliminates 100% of manual data entry via multi-step Gemini API agentic orchestration.</p>
+      <div class="pstack"><span class="pstag">Google AI Studio</span><span class="pstag">TypeScript</span><span class="pstag">QuickBooks API</span></div>
+      <a href="https://github.com/dominicrume/BRIAN-STORE-AI" target="_blank" class="plink">View Repository →</a>
+    </div>
+
+    <div class="pcard rv">
+      <div class="pnum">04</div>
+      <div class="ptags"><span class="tag tc">TypeScript</span><span class="tag tg">AI Studio</span><span class="tag tv">Next.js</span></div>
+      <div class="ptitle">Nigerian Tax Calculator & Bank Statement Analyser</div>
+      <div class="pclient">Fintech · Tax Compliance · Nigeria</div>
+      <p class="pdesc">RAG-powered AI-enhanced OCR analyser solving manual processing of unstructured bank statement images for Nigerian tax compliance. Automates extraction, anomaly detection, and tax categorisation of financial data — deployed on Google Cloud Run with enterprise-grade precision.</p>
+      <div class="pstack"><span class="pstag">Google Cloud Run</span><span class="pstag">RAG</span><span class="pstag">OCR</span><span class="pstag">TypeScript</span></div>
+      <a href="https://github.com/dominicrume/nigeria-tax-calculator" target="_blank" class="plink">View Repository →</a>
+    </div>
+
+    <div class="pcard rv2">
+      <div class="pnum">05</div>
+      <div class="ptags"><span class="tag tc">TypeScript</span><span class="tag tv">Next.js</span><span class="tag tg">AI</span></div>
+      <div class="ptitle">MCKI Solutions Platform</div>
+      <div class="pclient">Education Advisory · UK/EU Admissions</div>
+      <p class="pdesc">Full-stack education advisory platform streamlining university admissions for UK/EU and international students. Dedicated user journeys, structured intake forms, eligibility pre-checks, and consultation booking — clean, trust-focused UI built on MCKI's brand identity.</p>
+      <div class="pstack"><span class="pstag">TypeScript</span><span class="pstag">Next.js</span><span class="pstag">Supabase</span><span class="pstag">Tailwind</span></div>
+      <a href="https://github.com/dominicrume/mcki-solution" target="_blank" class="plink">View Repository →</a>
+    </div>
+
+    <div class="pcard rv3">
+      <div class="pnum">06</div>
+      <div class="ptags"><span class="tag to">MT5</span><span class="tag tc">Python</span><span class="tag tv">Flask</span></div>
+      <div class="ptitle">MT5-AI-Signal Dashboard</div>
+      <div class="pclient">Trading Signals · Real-Time</div>
+      <p class="pdesc">Python + Flask web application displaying real-time MT5 trading signals in a live dashboard UI. Built as the foundation for an MT5-to-web signal system with API endpoint for real-time signal ingestion — bridging MetaTrader 5 algorithmic trading with web-accessible intelligence.</p>
+      <div class="pstack"><span class="pstag">Python</span><span class="pstag">Flask</span><span class="pstag">MetaTrader 5</span><span class="pstag">REST API</span></div>
+      <a href="https://github.com/dominicrume/Mt5-ai-signal" target="_blank" class="plink">View Repository →</a>
+    </div>
+
+    <div class="pcard rv">
+      <div class="pnum">07</div>
+      <div class="ptags"><span class="tag tc">TypeScript</span><span class="tag tg">AI</span><span class="tag tv">Next.js</span></div>
+      <div class="ptitle">Rume Content Engine</div>
+      <div class="pclient">Content Automation · Viral Generation</div>
+      <p class="pdesc">Autonomous content generation engine designed to produce viral, brand-consistent content at scale. TypeScript-based pipeline with AI-driven narrative frameworks, multi-platform distribution hooks, and scheduled publishing — built for the creator economy.</p>
+      <div class="pstack"><span class="pstag">TypeScript</span><span class="pstag">AI APIs</span><span class="pstag">Scheduler</span></div>
+      <a href="https://github.com/dominicrume/rume-content-engine" target="_blank" class="plink">View Repository →</a>
+    </div>
+
+    <div class="pcard rv2">
+      <div class="pnum">08</div>
+      <div class="ptags"><span class="tag to">TypeScript</span><span class="tag tg">AI</span><span class="tag to">Marketplace</span></div>
+      <div class="ptitle">Grab-It: Local Discovery Engine</div>
+      <div class="pclient">Consumer Marketplace · Africa</div>
+      <p class="pdesc">Real-time, video-first marketplace eliminating friction between customers and local shopkeepers. Built on a "Traffic First, Money Later" model — the "Temu of Local Food" — gamifying the hunt for deals. Designed for the African market with global scalability in mind.</p>
+      <div class="pstack"><span class="pstag">TypeScript</span><span class="pstag">Video-first</span><span class="pstag">Real-time</span></div>
+      <a href="https://github.com/dominicrume/grab-it" target="_blank" class="plink">View Repository →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="slabel">Certifications</div>
+  <h2 class="stitle rv">Credentials & Recognition</h2>
+  <p class="ssub rv">Validated expertise across AI, blockchain, and technical leadership.</p>
+  <div class="cert-grid">
+    <div class="ccard rv"><div class="cico">🔗</div><div class="cname">Certified Blockchain Architect</div><div class="ciss">Secure & Distributed Systems</div></div>
+    <div class="ccard rv2"><div class="cico">✨</div><div class="cname">Google Gemini AI Certification</div><div class="ciss">Generative AI & Prompt Engineering</div></div>
+    <div class="ccard rv3"><div class="cico">⚖️</div><div class="cname">AI for Governance, Risk & Compliance</div><div class="ciss">Responsible AI Leadership</div></div>
+    <div class="ccard rv"><div class="cico">🐍</div><div class="cname">Programming for Everybody — Python</div><div class="ciss">University of Michigan</div></div>
+    <div class="ccard rv2"><div class="cico">🎤</div><div class="cname">FrontierTechX Speaker</div><div class="ciss">AI & Business Strategy · Conference</div></div>
+    <div class="ccard rv3"><div class="cico">🏛️</div><div class="cname">SIBAN Executive Member</div><div class="ciss">Stakeholders in Blockchain Association of Nigeria</div></div>
+    <div class="ccard rv"><div class="cico">👥</div><div class="cname">Leadership Through Feedback</div><div class="ciss">Team & Technical Leadership</div></div>
+    <div class="ccard rv2"><div class="cico">📚</div><div class="cname">Author · 5 Published Books</div><div class="ciss">AI · Blockchain · Business Strategy</div></div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="slabel">Education</div>
+  <h2 class="stitle rv">Academic Foundation</h2>
+  <p class="ssub rv">Engineering rigour meets strategic vision.</p>
+  <div class="edu-grid">
+    <div class="ecard rv">
+      <div class="edeg">MSc — Artificial Intelligence & Business Strategy</div>
+      <div class="euni">Aston University · United Kingdom</div>
+      <div class="edate">2025 – 2026 · Distinction Track</div>
+      <p class="enote">A deliberate convergence of technical AI engineering and business strategy. Grounding production AI systems in the language of commercial outcomes, governance, and organisational impact. <strong>The academic backbone for the next chapter.</strong></p>
+    </div>
+    <div class="ecard rv2">
+      <div class="edeg">BSc — Electrical & Electronic Engineering (Honours)</div>
+      <div class="euni">Covenant University · Nigeria</div>
+      <div class="edate">2009 – 2014 · Warri, Nigeria</div>
+      <p class="enote">Final Project: <strong>AI-Driven Power System Automation</strong> — the origin point of a career built on applying intelligence to systems that matter. The engineering fundamentals that underpin every AI system built since.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="slabel">Contact</div>
+  <div class="contact-grid">
+    <div class="rv">
+      <h2 class="stitle">Let's Build<br/>Something Real.</h2>
+      <div style="margin-top:22px" class="cnote">
+        <p>Open to <strong>senior AI engineering roles</strong> across the UK, Ireland, Germany, Netherlands, Australia, and Canada. Available for employed positions and high-value consultancy engagements.</p>
+        <p>Every system I build is designed to outlast individual effort — <strong>production-grade, governed, and built for the long run.</strong></p>
+        <div class="open-badge"><div class="dot" style="width:5px;height:5px"></div>Available for Opportunities · Warri / London / Birmingham</div>
+      </div>
+    </div>
+    <div class="clinks rv2">
+      <a href="mailto:orumedominic@gmail.com" class="clink">
+        <div class="clico">✉️</div>
+        <div><div class="cllbl">Email</div><div class="clval">orumedominic@gmail.com</div></div>
+      </a>
+      <a href="https://linkedin.com/in/dominicrume" target="_blank" class="clink">
+        <div class="clico">💼</div>
+        <div><div class="cllbl">LinkedIn</div><div class="clval">linkedin.com/in/dominicrume</div></div>
+      </a>
+      <a href="https://github.com/dominicrume" target="_blank" class="clink">
+        <div class="clico">⚡</div>
+        <div><div class="cllbl">GitHub</div><div class="clval">github.com/dominicrume</div></div>
+      </a>
+      <a href="https://vorem.co" target="_blank" class="clink">
+        <div class="clico">🌍</div>
+        <div><div class="cllbl">Company</div><div class="clval">vorem.co</div></div>
+      </a>
+      <div class="clink" style="cursor:default">
+        <div class="clico">📍</div>
+        <div><div class="cllbl">Location</div><div class="clval">Birmingham, UK · Open to relocation globally</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fl">© 2026 Rume Dominic · Senior AI Engineer · Blockchain Architect</div>
+  <div class="fr">github.com/<span>dominicrume</span> · orumedominic@gmail.com</div>
+</footer>
+
+<script>
+// Custom cursor
+const C=document.getElementById('C'), CR=document.getElementById('CR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;C.style.left=mx+'px';C.style.top=my+'px'});
+(function anim(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;CR.style.left=rx+'px';CR.style.top=ry+'px';requestAnimationFrame(anim)})();
+document.querySelectorAll('a,button,.pcard,.skcard,.ccard,.exp,.acard,.ecard,.clink').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{C.style.transform='translate(-50%,-50%) scale(2.8)';C.style.background='var(--violet)';CR.style.width='58px';CR.style.height='58px'});
+  el.addEventListener('mouseleave',()=>{C.style.transform='translate(-50%,-50%) scale(1)';C.style.background='var(--cyan)';CR.style.width='34px';CR.style.height='34px'});
+});
+
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target)}});
+},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv,.rv2,.rv3').forEach(el=>obs.observe(el));
+
+// Active nav
+const secs=document.querySelectorAll('section[id]');
+const navAs=document.querySelectorAll('.nav-links a');
+const nobs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navAs.forEach(a=>a.classList.remove('on'));
+      const a=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if(a)a.classList.add('on');
+    }
+  });
+},{threshold:.4});
+secs.forEach(s=>nobs.observe(s));
+</script>
+</body>
+</html>
