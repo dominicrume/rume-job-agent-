@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rume Dominic — Job Application Tracker</title>
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #161a23;
+      --surface2: #1e2333;
+      --border: #2a2f42;
+      --accent: #4f8ef7;
+      --accent2: #7c3aed;
+      --green: #22c55e;
+      --yellow: #f59e0b;
+      --red: #ef4444;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --radius: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+
+    header {
+      background: linear-gradient(135deg, var(--surface) 0%, #1a1f35 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-left h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; }
+    .header-left p { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+    .badge {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      padding: 28px 40px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      text-align: center;
+    }
+    .stat-card .num { font-size: 1.8rem; font-weight: 700; }
+    .stat-card .label { font-size: 0.75rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .num.blue { color: var(--accent); }
+    .num.green { color: var(--green); }
+    .num.yellow { color: var(--yellow); }
+    .num.purple { color: #a855f7; }
+
+    .controls {
+      padding: 0 40px 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+    .search-box {
+      margin-left: auto;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      width: 220px;
+      outline: none;
+    }
+    .search-box:focus { border-color: var(--accent); }
+
+    .table-wrap { padding: 0 40px 40px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+    tbody tr:hover { background: var(--surface2); }
+    tbody td { padding: 14px; font-size: 0.85rem; vertical-align: middle; }
+
+    .score-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .score-bar .bar {
+      height: 6px;
+      border-radius: 3px;
+      background: var(--border);
+      width: 60px;
+      overflow: hidden;
+    }
+    .score-bar .fill { height: 100%; border-radius: 3px; }
+
+    .priority-badge, .status-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .priority-high { background: rgba(239,68,68,0.15); color: #f87171; }
+    .priority-medium { background: rgba(245,158,11,0.15); color: #fbbf24; }
+    .priority-low { background: rgba(100,116,139,0.15); color: var(--muted); }
+
+    .status-shortlisted { background: rgba(79,142,247,0.15); color: #7dd3fc; }
+    .status-review { background: rgba(245,158,11,0.15); color: #fbbf24; }
+    .status-applied { background: rgba(34,197,94,0.15); color: #4ade80; }
+    .status-rejected { background: rgba(239,68,68,0.15); color: #f87171; }
+    .status-interview { background: rgba(168,85,247,0.15); color: #c084fc; }
+
+    .role-link { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .role-link:hover { text-decoration: underline; }
+    .company { font-weight: 500; }
+    .comp { color: var(--muted); font-size: 0.78rem; }
+    .location-text { font-size: 0.78rem; color: var(--muted); }
+
+    .action-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      border: none;
+      padding: 5px 14px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .action-btn:hover { opacity: 0.85; }
+    .action-btn.ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .action-btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    .gap-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+    .gap-tag {
+      background: rgba(124,58,237,0.1);
+      border: 1px solid rgba(124,58,237,0.3);
+      color: #a78bfa;
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      width: 560px;
+      max-width: 95vw;
+      padding: 30px;
+    }
+    .modal h2 { font-size: 1.1rem; margin-bottom: 6px; }
+    .modal .sub { font-size: 0.8rem; color: var(--muted); margin-bottom: 20px; }
+    .modal label { font-size: 0.78rem; color: var(--muted); display: block; margin-bottom: 4px; margin-top: 12px; }
+    .modal select, .modal textarea, .modal input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      outline: none;
+    }
+    .modal select:focus, .modal textarea:focus, .modal input:focus { border-color: var(--accent); }
+    .modal textarea { height: 80px; resize: vertical; }
+    .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>Dominic Orume Uririe — Application Tracker</h1>
+    <p>orumedominic@gmail.com &nbsp;|&nbsp; Senior AI Engineer &nbsp;|&nbsp; UK · Amsterdam · Ontario · Brisbane</p>
+  </div>
+  <span class="badge">HUMAN-IN-THE-LOOP</span>
+</header>
+
+<div class="stats">
+  <div class="stat-card"><div class="num blue" id="stat-total">0</div><div class="label">Total Roles</div></div>
+  <div class="stat-card"><div class="num yellow" id="stat-shortlisted">0</div><div class="label">Shortlisted</div></div>
+  <div class="stat-card"><div class="num green" id="stat-applied">0</div><div class="label">Applied</div></div>
+  <div class="stat-card"><div class="num purple" id="stat-interview">0</div><div class="label">Interviews</div></div>
+  <div class="stat-card"><div class="num" id="stat-avg-score" style="color:#f472b6">0</div><div class="label">Avg Match %</div></div>
+</div>
+
+<div class="controls">
+  <button class="filter-btn active" onclick="filterBy('all', this)">All</button>
+  <button class="filter-btn" onclick="filterBy('shortlisted', this)">Shortlisted</button>
+  <button class="filter-btn" onclick="filterBy('review', this)">Under Review</button>
+  <button class="filter-btn" onclick="filterBy('applied', this)">Applied</button>
+  <button class="filter-btn" onclick="filterBy('interview', this)">Interview</button>
+  <input class="search-box" type="text" placeholder="Search role, company..." oninput="searchTable(this.value)" />
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Role</th>
+        <th>Company</th>
+        <th>Location</th>
+        <th>Compensation</th>
+        <th>Match</th>
+        <th>Priority</th>
+        <th>Status</th>
+        <th>Gaps</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="app-table-body"></tbody>
+  </table>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h2 id="modal-title">Update Application</h2>
+    <div class="sub" id="modal-sub"></div>
+    <label>Status</label>
+    <select id="modal-status">
+      <option value="shortlisted">Shortlisted</option>
+      <option value="review">Under Review</option>
+      <option value="applied">Applied</option>
+      <option value="interview">Interview</option>
+      <option value="rejected">Rejected</option>
+      <option value="offer">Offer</option>
+    </select>
+    <label>Cover Letter Drafted?</label>
+    <select id="modal-cl">
+      <option value="false">No</option>
+      <option value="true">Yes</option>
+    </select>
+    <label>Notes</label>
+    <textarea id="modal-notes"></textarea>
+    <div class="modal-footer">
+      <button class="action-btn ghost" onclick="closeModal()">Cancel</button>
+      <button class="action-btn" onclick="saveModal()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<footer>Rume Dominic Job Search Agent &nbsp;·&nbsp; Human-in-the-Loop Enabled &nbsp;·&nbsp; No applications submitted without explicit confirmation</footer>
+
+<script>
+  let data = null;
+  let currentFilter = 'all';
+  let currentSearch = '';
+  let editingId = null;
+
+  async function loadData() {
+    try {
+      const r = await fetch('applications.json');
+      data = await r.json();
+    } catch(e) {
+      // Fallback inline data
+      data = {
+        candidate: { name: "Dominic Orume Uririe", email: "orumedominic@gmail.com" },
+        applications: [
+          { id:"APP-001", role:"AI Architect", company:"Datacom Connect", location:"Brisbane, QLD, AU", url:"https://to.indeed.com/aapxg2fzcqx7", match_score:78, compensation:"AUD $100k–$140k", posted:"2026-02-27", status:"shortlisted", priority:"high", gap_keywords:["solution architecture","enterprise AI strategy"], cover_letter_drafted:false, submitted:false, notes:"Strongest CV match." },
+          { id:"APP-002", role:"Chief Technical Officer", company:"Jar Pay Trading", location:"London, UK", url:"https://to.indeed.com/aand6f2fj2rz", match_score:71, compensation:"£100k–£120k", posted:"2026-03-25", status:"shortlisted", priority:"high", gap_keywords:["payment rails","fintech compliance"], cover_letter_drafted:false, submitted:false, notes:"Blockchain + AI CTO narrative." },
+          { id:"APP-003", role:"Lead Security Eng (AI/DeFi)", company:"Binance", location:"Brisbane, QLD, AU", url:"https://to.indeed.com/aammt6x4sppy", match_score:62, compensation:"AUD $85k–$135k", posted:"2026-03-27", status:"shortlisted", priority:"medium", gap_keywords:["DeFi security","smart contract auditing"], cover_letter_drafted:false, submitted:false, notes:"Blockchain cert relevant." },
+          { id:"APP-004", role:"Head of AI Engineering", company:"CellIQ", location:"Mayfair, London, UK", url:"https://to.indeed.com/aa897xpmnbsn", match_score:70, compensation:"£30k–£135k", posted:"2026-03-29", status:"review", priority:"medium", gap_keywords:[], cover_letter_drafted:false, submitted:false, notes:"Part-time listing — confirm scope." },
+          { id:"APP-005", role:"Generative AI Lead", company:"GBS UK", location:"London, UK", url:"https://to.indeed.com/aah2q6xk6yyk", match_score:74, compensation:"£50k–£75k", posted:"2026-03-12", status:"review", priority:"medium", gap_keywords:[], cover_letter_drafted:false, submitted:false, notes:"Comp below market." }
+        ]
+      };
+    }
+    render();
+  }
+
+  function scoreColor(s) {
+    if (s >= 75) return '#22c55e';
+    if (s >= 60) return '#f59e0b';
+    return '#ef4444';
+  }
+
+  function render() {
+    const apps = data.applications.filter(a => {
+      const matchesFilter = currentFilter === 'all' || a.status === currentFilter;
+      const q = currentSearch.toLowerCase();
+      const matchesSearch = !q || a.role.toLowerCase().includes(q) || a.company.toLowerCase().includes(q) || a.location.toLowerCase().includes(q);
+      return matchesFilter && matchesSearch;
+    });
+
+    // Stats
+    document.getElementById('stat-total').textContent = data.applications.length;
+    document.getElementById('stat-shortlisted').textContent = data.applications.filter(a => a.status === 'shortlisted').length;
+    document.getElementById('stat-applied').textContent = data.applications.filter(a => a.status === 'applied').length;
+    document.getElementById('stat-interview').textContent = data.applications.filter(a => a.status === 'interview').length;
+    const avg = Math.round(data.applications.reduce((s,a) => s + a.match_score, 0) / data.applications.length);
+    document.getElementById('stat-avg-score').textContent = avg + '%';
+
+    const tbody = document.getElementById('app-table-body');
+    tbody.innerHTML = apps.map(a => `
+      <tr onclick="openModal('${a.id}')">
+        <td style="color:var(--muted);font-size:0.75rem">${a.id}</td>
+        <td><a class="role-link" href="${a.url}" target="_blank" onclick="event.stopPropagation()">${a.role}</a><div class="location-text">${a.cover_letter_drafted ? '✅ CL drafted' : '📝 CL pending'}</div></td>
+        <td><div class="company">${a.company}</div></td>
+        <td><div class="location-text">${a.location}</div></td>
+        <td><div class="comp">${a.compensation}</div><div class="location-text">${a.posted}</div></td>
+        <td>
+          <div class="score-bar">
+            <div class="bar"><div class="fill" style="width:${a.match_score}%;background:${scoreColor(a.match_score)}"></div></div>
+            <span style="font-size:0.78rem;font-weight:700;color:${scoreColor(a.match_score)}">${a.match_score}</span>
+          </div>
+        </td>
+        <td><span class="priority-badge priority-${a.priority}">${a.priority}</span></td>
+        <td><span class="status-badge status-${a.status}">${a.status}</span></td>
+        <td>
+          <div class="gap-tags">
+            ${(a.gap_keywords||[]).slice(0,2).map(g => `<span class="gap-tag">${g}</span>`).join('')}
+            ${(a.gap_keywords||[]).length > 2 ? `<span class="gap-tag">+${a.gap_keywords.length-2}</span>` : ''}
+          </div>
+        </td>
+        <td onclick="event.stopPropagation()">
+          <div style="display:flex;gap:6px">
+            <button class="action-btn" onclick="openModal('${a.id}')">Edit</button>
+            <a href="${a.url}" target="_blank"><button class="action-btn ghost">Apply</button></a>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function filterBy(f, btn) {
+    currentFilter = f;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  }
+
+  function searchTable(q) {
+    currentSearch = q;
+    render();
+  }
+
+  function openModal(id) {
+    const app = data.applications.find(a => a.id === id);
+    if (!app) return;
+    editingId = id;
+    document.getElementById('modal-title').textContent = app.role;
+    document.getElementById('modal-sub').textContent = `${app.company} · ${app.location}`;
+    document.getElementById('modal-status').value = app.status;
+    document.getElementById('modal-cl').value = String(app.cover_letter_drafted);
+    document.getElementById('modal-notes').value = app.notes || '';
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+    editingId = null;
+  }
+
+  function saveModal() {
+    const app = data.applications.find(a => a.id === editingId);
+    if (!app) return;
+    app.status = document.getElementById('modal-status').value;
+    app.cover_letter_drafted = document.getElementById('modal-cl').value === 'true';
+    app.notes = document.getElementById('modal-notes').value;
+    closeModal();
+    render();
+  }
+
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  loadData();
+</script>
+</body>
+</html>
