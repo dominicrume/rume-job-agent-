@@ -1,0 +1,80 @@
+# INDEED UK — SEARCH TEMPLATES
+# Used by /career-ops scan mode
+# Format: WebSearch query strings optimised for Indeed UK results
+
+queries:
+  # Tier 1 — Exact title matches (highest precision)
+  tier_1:
+    - 'site:uk.indeed.com "Lead AI Engineer" remote OR hybrid'
+    - 'site:uk.indeed.com "Lead ML Engineer" remote OR hybrid'
+    - 'site:uk.indeed.com "Senior AI Engineer" United Kingdom remote'
+    - 'site:uk.indeed.com "Senior ML Engineer" United Kingdom remote'
+    - 'site:uk.indeed.com "AI Tech Lead" United Kingdom'
+    - 'site:uk.indeed.com "Head of AI Engineering" United Kingdom'
+
+  # Tier 2 — Emerging role titles (high match potential)
+  tier_2:
+    - 'site:uk.indeed.com "LLMOps Engineer" United Kingdom'
+    - 'site:uk.indeed.com "Agentic AI Engineer" United Kingdom'
+    - 'site:uk.indeed.com "Generative AI Engineer" United Kingdom'
+    - 'site:uk.indeed.com "AI Platform Engineer" United Kingdom remote'
+    - 'site:uk.indeed.com "AI Solutions Architect" United Kingdom'
+
+  # Tier 3 — Broader sweep (filter for senior signals)
+  tier_3:
+    - 'site:uk.indeed.com "AI Engineer" "lead" OR "principal" United Kingdom'
+    - 'site:uk.indeed.com "Machine Learning Engineer" "lead" OR "senior" remote United Kingdom'
+    - 'site:uk.indeed.com "AI Architect" United Kingdom'
+    - 'site:uk.indeed.com "Applied AI Engineer" United Kingdom'
+
+  # Tier 4 — Sector-specific (enterprise AI focus)
+  tier_4:
+    - 'site:uk.indeed.com "enterprise AI" engineer lead United Kingdom'
+    - 'site:uk.indeed.com "agentic" engineer lead United Kingdom'
+    - 'site:uk.indeed.com "autonomous agent" engineer United Kingdom'
+
+# Filters applied to all results
+filters:
+  exclude:
+    - junior
+    - graduate
+    - "entry level"
+    - internship
+    - unpaid
+    - "data scientist"   # different enough to be low signal
+    - "data analyst"
+  require_one_of:
+    - remote
+    - hybrid
+    - "United Kingdom"
+  date_posted_days_max: 14
+  salary_min_gbp: 55000
+
+# Company watchlist — check these directly if not found in search
+watchlist:
+  - company: "Anthropic"
+    careers_url: "https://www.anthropic.com/careers"
+  - company: "ElevenLabs"
+    careers_url: "https://elevenlabs.io/careers"
+  - company: "Mistral AI"
+    careers_url: "https://mistral.ai/company/careers"
+  - company: "Hugging Face"
+    careers_url: "https://huggingface.co/jobs"
+  - company: "Vercel"
+    careers_url: "https://vercel.com/careers"
+  - company: "n8n"
+    careers_url: "https://n8n.io/careers"
+  - company: "Cohere"
+    careers_url: "https://cohere.com/careers"
+  - company: "PolyAI"
+    careers_url: "https://poly.ai/careers"
+  - company: "Synthesia"
+    careers_url: "https://www.synthesia.io/careers"
+  - company: "Glean"
+    careers_url: "https://www.glean.com/careers"
+  - company: "Retool"
+    careers_url: "https://retool.com/careers"
+  - company: "Celonis"
+    careers_url: "https://www.celonis.com/careers"
+  - company: "DeepL"
+    careers_url: "https://www.deepl.com/en/careers"

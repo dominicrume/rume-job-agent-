@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rume Dominic — Job Pipeline</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #07080f;
+      --surface: #0f1018;
+      --surface2: #14161f;
+      --surface3: #1a1d2a;
+      --border: #1f2235;
+      --accent: #4f8ef7;
+      --accent2: #7c3aed;
+      --green: #22c55e;
+      --yellow: #f59e0b;
+      --red: #ef4444;
+      --pink: #f472b6;
+      --text: #e2e8f0;
+      --muted: #4a5068;
+      --muted2: #6b7280;
+      --r: 10px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, var(--surface) 0%, #0d1025 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(8px);
+    }
+    .hd-left { display: flex; align-items: center; gap: 14px; }
+    .avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.9rem; color: white; flex-shrink: 0;
+    }
+    .hd-name { font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; }
+    .hd-sub { font-size: 0.75rem; color: var(--muted2); margin-top: 1px; }
+    .hd-right { display: flex; align-items: center; gap: 10px; }
+    .badge {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white; font-size: 0.68rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 20px; letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .add-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white; border: none; padding: 8px 18px;
+      border-radius: 8px; font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: opacity 0.2s;
+    }
+    .add-btn:hover { opacity: 0.85; }
+
+    /* ── STATS ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      padding: 24px 40px 0;
+    }
+    @media (max-width: 900px) { .stats { grid-template-columns: repeat(3,1fr); } }
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 16px 18px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    }
+    .stat.blue::before { background: var(--accent); }
+    .stat.yellow::before { background: var(--yellow); }
+    .stat.green::before { background: var(--green); }
+    .stat.purple::before { background: #a855f7; }
+    .stat.pink::before { background: var(--pink); }
+    .stat.red::before { background: var(--red); }
+    .stat .num { font-size: 1.7rem; font-weight: 700; line-height: 1; }
+    .stat .lbl { font-size: 0.68rem; color: var(--muted2); margin-top: 5px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .num.blue { color: var(--accent); }
+    .num.yellow { color: var(--yellow); }
+    .num.green { color: var(--green); }
+    .num.purple { color: #a855f7; }
+    .num.pink { color: var(--pink); }
+    .num.red { color: var(--red); }
+
+    /* ── CONTROLS ── */
+    .controls {
+      padding: 20px 40px 16px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .fb {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--muted2);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .fb:hover { color: var(--text); border-color: var(--muted); }
+    .fb.on { background: var(--accent); border-color: var(--accent); color: white; }
+    .search {
+      margin-left: auto;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      width: 230px;
+      outline: none;
+    }
+    .search:focus { border-color: var(--accent); }
+    .search::placeholder { color: var(--muted); }
+
+    /* ── TABLE ── */
+    .tw { padding: 0 40px 60px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      text-align: left;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+      cursor: pointer;
+    }
+    tbody tr:hover { background: var(--surface2); }
+    tbody td { padding: 12px; font-size: 0.82rem; vertical-align: middle; }
+
+    .role-title { font-weight: 600; color: var(--text); }
+    .role-company { font-size: 0.75rem; color: var(--muted2); margin-top: 2px; }
+    .role-link { color: var(--accent); text-decoration: none; }
+    .role-link:hover { text-decoration: underline; }
+    .loc { font-size: 0.75rem; color: var(--muted2); }
+    .sal { font-size: 0.78rem; color: var(--muted2); }
+    .date-sub { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
+
+    /* score bar */
+    .sbar { display: flex; align-items: center; gap: 8px; }
+    .sbar-track { height: 5px; border-radius: 3px; background: var(--border); width: 56px; overflow: hidden; }
+    .sbar-fill { height: 100%; border-radius: 3px; }
+    .sval { font-size: 0.78rem; font-weight: 700; }
+
+    /* badges */
+    .badge-sm {
+      display: inline-block;
+      font-size: 0.65rem; font-weight: 700;
+      padding: 3px 9px; border-radius: 12px;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .p-high   { background: rgba(239,68,68,.12);  color: #f87171; }
+    .p-medium { background: rgba(245,158,11,.12); color: #fbbf24; }
+    .p-low    { background: rgba(100,116,139,.12);color: var(--muted2); }
+
+    .s-pipeline    { background: rgba(100,116,139,.12); color: #94a3b8; }
+    .s-evaluated   { background: rgba(79,142,247,.12);  color: #7dd3fc; }
+    .s-applied     { background: rgba(34,197,94,.12);   color: #4ade80; }
+    .s-interview_1 { background: rgba(168,85,247,.12);  color: #c084fc; }
+    .s-interview_2 { background: rgba(168,85,247,.18);  color: #d8b4fe; }
+    .s-final       { background: rgba(240,196,64,.12);  color: #fde68a; }
+    .s-offer       { background: rgba(34,197,94,.2);    color: #86efac; border: 1px solid rgba(34,197,94,.3); }
+    .s-rejected    { background: rgba(239,68,68,.12);   color: #f87171; }
+    .s-withdrawn   { background: rgba(100,116,139,.08); color: var(--muted); }
+    .s-skip        { background: rgba(100,116,139,.08); color: var(--muted); }
+
+    /* gap tags */
+    .gaps { display: flex; flex-wrap: wrap; gap: 4px; }
+    .gtag {
+      background: rgba(124,58,237,.08);
+      border: 1px solid rgba(124,58,237,.2);
+      color: #a78bfa;
+      font-size: 0.62rem; padding: 2px 7px; border-radius: 4px;
+    }
+
+    /* action buttons */
+    .acts { display: flex; gap: 6px; }
+    .btn {
+      border: none; padding: 5px 12px; border-radius: 6px;
+      font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s;
+    }
+    .btn-p { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white; }
+    .btn-p:hover { opacity: 0.85; }
+    .btn-g { background: transparent; border: 1px solid var(--border); color: var(--muted2); }
+    .btn-g:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-del { background: transparent; border: 1px solid var(--border); color: var(--red); }
+    .btn-del:hover { border-color: var(--red); opacity: 0.8; }
+
+    /* empty state */
+    .empty {
+      text-align: center; padding: 80px 20px;
+      color: var(--muted);
+    }
+    .empty h3 { font-size: 1rem; margin-bottom: 8px; color: var(--muted2); }
+    .empty p { font-size: 0.82rem; }
+
+    /* ── MODAL ── */
+    .overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.75); z-index: 200;
+      align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .overlay.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      width: 580px; max-width: 100%;
+      max-height: 90vh; overflow-y: auto;
+      padding: 28px;
+    }
+    .modal-hd { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; }
+    .modal-hd h2 { font-size: 1rem; font-weight: 700; }
+    .close-btn { background: none; border: none; color: var(--muted); font-size: 1.2rem; cursor: pointer; padding: 2px 6px; }
+    .close-btn:hover { color: var(--text); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-full { grid-column: 1 / -1; }
+    label { font-size: 0.72rem; color: var(--muted2); display: block; margin-bottom: 5px; font-weight: 500; letter-spacing: 0.03em; }
+    input, select, textarea {
+      width: 100%;
+      background: var(--surface3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      outline: none;
+      font-family: inherit;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+    textarea { height: 72px; resize: vertical; }
+    .modal-foot { display: flex; gap: 8px; justify-content: flex-end; margin-top: 22px; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 18px;
+      font-size: 0.7rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="hd-left">
+    <div class="avatar">RD</div>
+    <div>
+      <div class="hd-name">Rume Dominic — Job Pipeline</div>
+      <div class="hd-sub">Lead AI/ML Engineer · England, UK · orumedominic@gmail.com</div>
+    </div>
+  </div>
+  <div class="hd-right">
+    <span class="badge">Live Tracker</span>
+    <button class="add-btn" onclick="openAdd()">+ Add Role</button>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat blue">  <div class="num blue"   id="s-total">0</div><div class="lbl">Total</div></div>
+  <div class="stat yellow"><div class="num yellow" id="s-eval">0</div><div class="lbl">Evaluated</div></div>
+  <div class="stat green"> <div class="num green"  id="s-applied">0</div><div class="lbl">Applied</div></div>
+  <div class="stat purple"><div class="num purple" id="s-iv">0</div><div class="lbl">Interviews</div></div>
+  <div class="stat pink">  <div class="num pink"   id="s-avg">—</div><div class="lbl">Avg Score</div></div>
+  <div class="stat red">   <div class="num red"    id="s-offer">0</div><div class="lbl">Offers</div></div>
+</div>
+
+<div class="controls">
+  <button class="fb on" onclick="filter('all',this)">All</button>
+  <button class="fb" onclick="filter('pipeline',this)">Pipeline</button>
+  <button class="fb" onclick="filter('evaluated',this)">Evaluated</button>
+  <button class="fb" onclick="filter('applied',this)">Applied</button>
+  <button class="fb" onclick="filter('interview_1',this)">Interview</button>
+  <button class="fb" onclick="filter('offer',this)">Offer</button>
+  <input class="search" type="text" placeholder="Search role, company..." oninput="search(this.value)"/>
+</div>
+
+<div class="tw">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Role & Company</th>
+        <th>Location</th>
+        <th>Salary</th>
+        <th>Score</th>
+        <th>Priority</th>
+        <th>Status</th>
+        <th>Gaps</th>
+        <th>Added</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<!-- ADD / EDIT MODAL -->
+<div class="overlay" id="modal">
+  <div class="modal">
+    <div class="modal-hd">
+      <h2 id="modal-title">Add Role</h2>
+      <button class="close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-full">
+        <label>Job Title *</label>
+        <input id="f-title" type="text" placeholder="e.g. Lead AI Engineer"/>
+      </div>
+      <div>
+        <label>Company *</label>
+        <input id="f-company" type="text" placeholder="e.g. Anthropic"/>
+      </div>
+      <div>
+        <label>Location</label>
+        <input id="f-location" type="text" placeholder="e.g. Remote, UK"/>
+      </div>
+      <div>
+        <label>Salary Range</label>
+        <input id="f-salary" type="text" placeholder="e.g. £70k–£90k"/>
+      </div>
+      <div>
+        <label>Score (0–5.0)</label>
+        <input id="f-score" type="number" min="0" max="5" step="0.1" placeholder="e.g. 4.2"/>
+      </div>
+      <div>
+        <label>Priority</label>
+        <select id="f-priority">
+          <option value="high">High</option>
+          <option value="medium" selected>Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+      <div>
+        <label>Status</label>
+        <select id="f-status">
+          <option value="pipeline">Pipeline</option>
+          <option value="evaluated">Evaluated</option>
+          <option value="applied">Applied</option>
+          <option value="interview_1">Interview 1</option>
+          <option value="interview_2">Interview 2</option>
+          <option value="final">Final Round</option>
+          <option value="offer">Offer</option>
+          <option value="rejected">Rejected</option>
+          <option value="withdrawn">Withdrawn</option>
+          <option value="skip">Skip</option>
+        </select>
+      </div>
+      <div>
+        <label>Cover Letter</label>
+        <select id="f-cl">
+          <option value="false">Not drafted</option>
+          <option value="true">Drafted ✅</option>
+        </select>
+      </div>
+      <div class="form-full">
+        <label>Indeed / Job URL</label>
+        <input id="f-url" type="url" placeholder="https://uk.indeed.com/..."/>
+      </div>
+      <div class="form-full">
+        <label>Gap Keywords (comma-separated)</label>
+        <input id="f-gaps" type="text" placeholder="e.g. MLflow, SageMaker, Azure ML"/>
+      </div>
+      <div class="form-full">
+        <label>Notes</label>
+        <textarea id="f-notes" placeholder="Any context, red flags, reasons to apply..."></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-g" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-p" onclick="saveEntry()">Save</button>
+    </div>
+  </div>
+</div>
+
+<footer>Rume Dominic · Lead AI/ML Engineer · career-ops v1.0 · Data stored locally in your browser</footer>
+
+<script>
+// ── Storage ──────────────────────────────────────────────
+const KEY = 'rume_pipeline_v2';
+let apps = [];
+let filterState = 'all';
+let searchStr = '';
+let editId = null;
+
+function save() { localStorage.setItem(KEY, JSON.stringify(apps)); }
+function load() {
+  const raw = localStorage.getItem(KEY);
+  if (raw) { apps = JSON.parse(raw); }
+  else {
+    // Seed with the 5 example applications from existing tracker
+    apps = [
+      { id: uid(), title:'AI Architect', company:'Datacom Connect', location:'Brisbane, QLD, AU', salary:'AUD $100k–$140k', score:3.9, priority:'high', status:'evaluated', cl:false, url:'https://uk.indeed.com', gaps:['solution architecture','enterprise AI strategy'], notes:'Strongest CV match so far.', added: today() },
+      { id: uid(), title:'Head of AI Engineering', company:'CellIQ', location:'Mayfair, London, UK', salary:'£30k–£135k', score:3.5, priority:'medium', status:'evaluated', cl:false, url:'https://uk.indeed.com', gaps:[], notes:'Confirm scope — listed as part-time.', added: today() },
+      { id: uid(), title:'Generative AI Lead', company:'GBS UK', location:'London, UK', salary:'£50k–£75k', score:3.7, priority:'medium', status:'pipeline', cl:false, url:'https://uk.indeed.com', gaps:[], notes:'Comp below target floor (£60k).', added: today() },
+      { id: uid(), title:'Lead AI/ML Engineer', company:'Open Role', location:'Remote, UK', salary:'£70k–£95k', score:4.5, priority:'high', status:'pipeline', cl:false, url:'https://uk.indeed.com', gaps:['LLMOps tooling'], notes:'Run /career-ops scan to populate with live roles.', added: today() },
+    ];
+    save();
+  }
+}
+
+function uid() { return 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2,5); }
+function today() { return new Date().toISOString().slice(0,10); }
+
+// ── Render ────────────────────────────────────────────────
+function render() {
+  const filtered = apps.filter(a => {
+    const fok = filterState === 'all' || a.status === filterState;
+    const q = searchStr.toLowerCase();
+    const sok = !q || a.title.toLowerCase().includes(q) || a.company.toLowerCase().includes(q) || (a.location||'').toLowerCase().includes(q);
+    return fok && sok;
+  });
+
+  // Stats (always full dataset)
+  document.getElementById('s-total').textContent   = apps.length;
+  document.getElementById('s-eval').textContent    = apps.filter(a=>a.status==='evaluated').length;
+  document.getElementById('s-applied').textContent = apps.filter(a=>a.status==='applied').length;
+  document.getElementById('s-iv').textContent      = apps.filter(a=>a.status==='interview_1'||a.status==='interview_2'||a.status==='final').length;
+  document.getElementById('s-offer').textContent   = apps.filter(a=>a.status==='offer').length;
+  const sc = apps.filter(a=>a.score>0);
+  document.getElementById('s-avg').textContent     = sc.length ? (sc.reduce((s,a)=>s+parseFloat(a.score),0)/sc.length).toFixed(1) : '—';
+
+  const tbody = document.getElementById('tbody');
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="10"><div class="empty"><h3>No roles match this filter</h3><p>Add a role or change the filter above.</p></div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map((a,i) => {
+    const sc = parseFloat(a.score) || 0;
+    const pct = Math.round(sc / 5 * 100);
+    const col = sc >= 4 ? '#22c55e' : sc >= 3 ? '#f59e0b' : '#ef4444';
+    const gaps = (a.gaps||[]).slice(0,2).map(g=>`<span class="gtag">${g}</span>`).join('');
+    const moreGaps = (a.gaps||[]).length > 2 ? `<span class="gtag">+${a.gaps.length-2}</span>` : '';
+    const statusCls = 's-' + (a.status||'pipeline');
+    const priCls = 'p-' + (a.priority||'medium');
+    const statusLabel = (a.status||'pipeline').replace('_',' ').toUpperCase();
+
+    return `<tr onclick="openEdit('${a.id}')">
+      <td style="color:var(--muted);font-size:0.72rem">${String(i+1).padStart(2,'0')}</td>
+      <td>
+        <div class="role-title">${a.url ? `<a class="role-link" href="${a.url}" target="_blank" onclick="event.stopPropagation()">${a.title}</a>` : a.title}</div>
+        <div class="role-company">${a.company} ${a.cl ? '· ✅ CL' : '· 📝 CL pending'}</div>
+      </td>
+      <td><div class="loc">${a.location||'—'}</div></td>
+      <td><div class="sal">${a.salary||'—'}</div></td>
+      <td>
+        <div class="sbar">
+          <div class="sbar-track"><div class="sbar-fill" style="width:${pct}%;background:${col}"></div></div>
+          <span class="sval" style="color:${col}">${sc > 0 ? sc.toFixed(1) : '—'}</span>
+        </div>
+      </td>
+      <td><span class="badge-sm ${priCls}">${a.priority||'med'}</span></td>
+      <td><span class="badge-sm ${statusCls}">${statusLabel}</span></td>
+      <td><div class="gaps">${gaps}${moreGaps}</div></td>
+      <td><div class="date-sub">${a.added||'—'}</div></td>
+      <td onclick="event.stopPropagation()">
+        <div class="acts">
+          <button class="btn btn-p" onclick="openEdit('${a.id}')">Edit</button>
+          ${a.url ? `<a href="${a.url}" target="_blank"><button class="btn btn-g">↗</button></a>` : ''}
+          <button class="btn btn-del" onclick="del('${a.id}')">✕</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Filter / Search ───────────────────────────────────────
+function filter(f, btn) {
+  filterState = f;
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  render();
+}
+function search(q) { searchStr = q; render(); }
+
+// ── Modal ─────────────────────────────────────────────────
+function openAdd() {
+  editId = null;
+  document.getElementById('modal-title').textContent = 'Add Role';
+  ['title','company','location','salary','url','gaps','notes'].forEach(f => document.getElementById('f-'+f).value = '');
+  document.getElementById('f-score').value = '';
+  document.getElementById('f-priority').value = 'medium';
+  document.getElementById('f-status').value = 'pipeline';
+  document.getElementById('f-cl').value = 'false';
+  document.getElementById('modal').classList.add('open');
+}
+function openEdit(id) {
+  const a = apps.find(x => x.id === id);
+  if (!a) return;
+  editId = id;
+  document.getElementById('modal-title').textContent = 'Edit Role';
+  document.getElementById('f-title').value    = a.title || '';
+  document.getElementById('f-company').value  = a.company || '';
+  document.getElementById('f-location').value = a.location || '';
+  document.getElementById('f-salary').value   = a.salary || '';
+  document.getElementById('f-score').value    = a.score || '';
+  document.getElementById('f-priority').value = a.priority || 'medium';
+  document.getElementById('f-status').value   = a.status || 'pipeline';
+  document.getElementById('f-cl').value       = String(a.cl || false);
+  document.getElementById('f-url').value      = a.url || '';
+  document.getElementById('f-gaps').value     = (a.gaps||[]).join(', ');
+  document.getElementById('f-notes').value    = a.notes || '';
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  editId = null;
+}
+function saveEntry() {
+  const title = document.getElementById('f-title').value.trim();
+  const company = document.getElementById('f-company').value.trim();
+  if (!title || !company) { alert('Role title and company are required.'); return; }
+  const entry = {
+    id: editId || uid(),
+    title,
+    company,
+    location: document.getElementById('f-location').value.trim(),
+    salary:   document.getElementById('f-salary').value.trim(),
+    score:    parseFloat(document.getElementById('f-score').value) || 0,
+    priority: document.getElementById('f-priority').value,
+    status:   document.getElementById('f-status').value,
+    cl:       document.getElementById('f-cl').value === 'true',
+    url:      document.getElementById('f-url').value.trim(),
+    gaps:     document.getElementById('f-gaps').value.split(',').map(g=>g.trim()).filter(Boolean),
+    notes:    document.getElementById('f-notes').value.trim(),
+    added:    editId ? (apps.find(a=>a.id===editId)||{}).added || today() : today(),
+  };
+  if (editId) { apps = apps.map(a => a.id === editId ? entry : a); }
+  else { apps.unshift(entry); }
+  save();
+  closeModal();
+  render();
+}
+function del(id) {
+  if (!confirm('Remove this role from the tracker?')) return;
+  apps = apps.filter(a => a.id !== id);
+  save();
+  render();
+}
+
+// close on overlay click
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ── Boot ──────────────────────────────────────────────────
+load();
+render();
+</script>
+</body>
+</html>
