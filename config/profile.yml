@@ -1,91 +1,102 @@
 # ============================================================
-# RUME DOMINIC — CANDIDATE PROFILE
-# Single source of truth for all agent modes
+# RUME DOMINIC — CANDIDATE PROFILE v2
+# Updated: 2026-04-13 | GTV + IC Job Search dual mandate
 # ============================================================
 
 candidate:
   name: "Dominic Orume Uririe"
   preferred_name: "Rume"
-  headline: "AI Lead & Senior AI/ML Engineer"
+  legal_name: "Dominic (Uririe) O'rume"
+  headline: "AI Engineer · Agentic Systems Architect · Author × 5 · International Speaker"
   location: "England, United Kingdom"
   email: "orumedominic@gmail.com"
   phone: "+44 7402 830 944"
   linkedin: "linkedin.com/in/dominicrume"
   github: "github.com/dominicrume"
-  portfolio: "rumedominic.com"
-  right_to_work: "UK (confirm visa status before applying)"
+  portfolio: "dominicrume.github.io/rume-job-agent-/"
+  right_to_work: "Pursuing Global Talent Visa (Tech Nation, Exceptional Talent, Digital Technology)"
   timezone: "GMT/BST"
 
 # ============================================================
-# NORTH STAR — What Rume is optimising for
+# DUAL MANDATE — Job Search + GTV Evidence Building
+# ============================================================
+mandate:
+  primary: "Land Lead AI/ML Engineer or Senior AI Engineer IC role at a high-growth UK/remote company"
+  secondary: "Build and consolidate Global Talent Visa evidence pack (Tech Nation, Exceptional Talent)"
+  note: "Every role applied to should ideally strengthen both mandates. UK-based roles with visible output are preferred."
+
+# ============================================================
+# NORTH STAR
 # ============================================================
 north_star:
-  primary_goal: "Land a Lead AI/ML Engineer or Senior AI Engineer IC role at a high-growth UK/remote company"
-  secondary_goal: "Establish a visible track record in enterprise agentic systems and LLMOps"
+  primary_goal: "Land a Lead AI/ML Engineer or Senior AI Engineer IC role — UK or remote"
+  secondary_goal: "Secure Global Talent Visa endorsement from Tech Nation by end of 2026"
   not_pursuing:
     - "Entry-level or junior roles"
-    - "Non-technical management with no engineering scope"
+    - "Non-technical management without engineering scope"
     - "Blockchain-only or crypto-only roles"
     - "Roles requiring full-time on-site outside England"
 
 # ============================================================
-# TARGET ROLES — In priority order
+# TARGET ROLES
 # ============================================================
 target_roles:
   - "Lead AI/ML Engineer"
   - "Senior AI Engineer"
   - "AI Platform Engineer"
-  - "AI Solutions Architect"
-  - "Senior ML Engineer"
-  - "Head of AI Engineering"
-  - "AI Tech Lead"
   - "Agentic AI Engineer"
   - "LLMOps Engineer"
+  - "AI Solutions Architect"
+  - "Head of AI Engineering"
   - "Generative AI Engineer"
+  - "Senior ML Engineer"
 
 # ============================================================
-# ARCHETYPES — How each role type is positioned
+# ARCHETYPES
 # ============================================================
 archetypes:
   ai_platform_llmops:
     signals: ["observability", "evals", "pipelines", "monitoring", "LLMOps", "AIOps"]
     lead_proof_points:
-      - "91+ performance scores in AIOps platform reliability at Micki Solutions"
+      - "AIOps platform achieving 91+ performance scores at Micki Solutions"
       - "Production RAG pipeline for Tax Intelligence OCR Engine on GCP Cloud Run"
       - "Prompt guardrail architecture reducing hallucinations in enterprise LLM deployments"
 
   agentic_automation:
     signals: ["agent", "HITL", "orchestration", "multi-agent", "autonomous", "agentic"]
     lead_proof_points:
+      - "AI-Powered Job Search Agent (live: dominicrume.github.io/rume-job-agent-/) — responsible agentic AI with HITL"
       - "Brian-Store-AI: multi-step LLM workflow agent for inventory and demand forecasting"
       - "Digital Sovereign Agent: 24/7 headless autonomous marketing daemon"
-      - "Agentic scheduling pipelines deployed across LinkedIn, YouTube, X"
+      - "Agent Education System: agentic AI training framework for NHS, Tesco, logistics"
 
   technical_ai_pm:
     signals: ["PRD", "roadmap", "discovery", "stakeholder", "product strategy"]
     lead_proof_points:
-      - "MSc AI & Business Strategy (Distinction) — bridges technical and strategic dimensions"
-      - "Cross-functional AI strategy delivery at Vorem Limited (4+ years)"
-      - "AI literacy and capability uplift across enterprise teams"
+      - "MSc AI & Business Strategy (Distinction track) — Aston University"
+      - "Cross-functional AI strategy delivery and AI literacy uplift at enterprise level"
+      - "MCKI Solutions AI Agentic Day — designed agenda, selected demos, led sessions"
 
   ai_solutions_architect:
     signals: ["architecture", "enterprise", "integration", "systems design", "scalable"]
     lead_proof_points:
       - "Multi-role full-stack AI platform (MCKI Solutions) with CI/CD and Docker"
-      - "Cloud-native AI deployments on Azure AI Studio and GCP"
+      - "Cloud-native AI deployments on Azure AI Studio and GCP Cloud Run"
       - "Responsible AI standards authorship across automated workflows"
 
   ai_forward_deployed:
     signals: ["client-facing", "prototype", "fast delivery", "field", "consulting"]
     lead_proof_points:
-      - "AI Engineer & Growth Consultant at Simeria UK — zero-to-production in first engagement"
-      - "Digital Growth Consultant at Queensberry Legal — deployed AI-powered intake and UTM infra"
+      - "AI Engineer & Growth Consultant at Simera UK — zero-to-production first engagement"
+      - "Queensberry Legal retainer (£800/month) — AI-powered intake and content workflows"
+      - "QDT Analytics: Africa market partnership and AI consulting strategy"
 
   ai_transformation:
     signals: ["change management", "adoption", "enablement", "literacy", "organisational"]
     lead_proof_points:
-      - "Drove technology adoption and AI literacy uplift at enterprise level (Vorem/Micki)"
-      - "Authored Responsible AI governance documentation embedded across automated workflows"
+      - "FrontierTechX Birmingham speaker (Mar 27, 2026) — AI as strategic autonomous agent"
+      - "MCKI Solutions AI Agentic Day lead organiser (Jun 6, 2026)"
+      - "39+ international speaking engagements — AI literacy at enterprise and community level"
 
 # ============================================================
 # COMPENSATION
@@ -99,33 +110,107 @@ compensation:
   notice_period: "To be confirmed per role"
 
 # ============================================================
-# VOICE — How Rume communicates in cover letters and outreach
+# VOICE
 # ============================================================
 voice:
   tone: "Authoritative in information yet calm. Outspoken yet not argumentative. Effortlessly innovative. Edgy."
   never_do:
     - "Use founder/CEO/entrepreneur language in IC role applications"
-    - "Mention Vorem Nigeria as a founder role — reframe as Lead AI/ML Engineer"
+    - "Frame Vorem as founder role — reframe as Lead AI/ML Engineer"
     - "Use 'visionary' or 'thought leader' self-descriptors"
     - "Use hollow phrases: 'passionate about', 'love to', 'excited to'"
     - "Write more than 3 short paragraphs in a cover letter"
+    - "Claim 'featured in Forbes' — correct is: ForbesBLK community member"
   always_do:
     - "Lead with a specific, concrete proof point from Rume's work"
     - "Bridge AI engineering depth with business strategy outcomes"
     - "Reference production systems, not just concepts"
     - "Match JD vocabulary precisely — use their words, Rume's proof"
-    - "Close with a forward-looking statement — what Rume will build, not who Rume is"
+    - "Close with what Rume will build, not who Rume is"
 
 # ============================================================
-# GAP MITIGATIONS
+# GTV EVIDENCE STATUS
+# ============================================================
+gtv_evidence:
+  visa_route: "Global Talent Visa — Tech Nation — Exceptional Talent — Digital Technology"
+  application_status: "In preparation"
+  evidence_pieces:
+    - id: "01"
+      title: "Guardian Nigeria Feature Article"
+      status: "LIVE"
+      url: "guardian.ng/news/rume-dominic-empowering-africas-youth-through-blockchain-and-ai/"
+    - id: "02"
+      title: "FrontierTechX Birmingham — Speaker Confirmation"
+      status: "Gather letterhead"
+      url: "frontiertechx.com"
+    - id: "03"
+      title: "AI-Powered Job Search Agent — GitHub + Live Dashboard"
+      status: "LIVE"
+      url: "dominicrume.github.io/rume-job-agent-/ | github.com/dominicrume/rume-job-agent-"
+    - id: "04"
+      title: "Books on Waterstones UK — Two titles stocked"
+      status: "LIVE"
+      url: "waterstones.com"
+    - id: "05"
+      title: "Jali Group London — Sponsor & Speaker Evidence"
+      status: "Gather flyer + testimonial"
+    - id: "06"
+      title: "Amazon Author Page — 5 Books, International"
+      status: "LIVE"
+    - id: "07"
+      title: "Medium/@Vorem_ng — Award & Event Articles"
+      status: "LIVE"
+    - id: "08"
+      title: "Aston University — MSc Research Confirmation"
+      status: "Gather official letter"
+    - id: "09"
+      title: "SIBAN Executive Membership Letter"
+      status: "Gather official letterhead"
+    - id: "10"
+      title: "UK Consulting Evidence — Simera + Queensberry"
+      status: "Gather client letters"
+  referees:
+    - "Dr Julien Barney — Aston University (MSc supervisor)"
+    - "Dr Kate Sugden — Aston University (MSc supervisor)"
+    - "Shivalkar Paramanandam — Director, QDT Analytics, Leeds"
+    - "SIBAN Chairman or Rotary International leader"
+
+# ============================================================
+# UK PRESENCE
+# ============================================================
+uk_presence:
+  events:
+    - date: "2025-11-29"
+      event: "Jali Group London"
+      role: "Sponsor & Featured Speaker"
+    - date: "2026-02-28"
+      event: "Agentic AI Keynote, Birmingham"
+      role: "Speaker — live system demonstration"
+    - date: "2026-03-27"
+      event: "FrontierTechX Birmingham"
+      role: "Speaker — AI as strategic autonomous agent"
+    - date: "2026-06-06"
+      event: "MCKI Solutions AI Agentic Day, Birmingham"
+      role: "Lead Organiser & Facilitator"
+  active_consulting:
+    - "Simera / Mexcelle Technologies (UK) — Dec 2025–present"
+    - "Queensberry Legal — Feb 2026–present (£800/month retainer)"
+    - "QDT Analytics, Leeds — early-stage partnership"
+
+# ============================================================
+# KNOWN GAPS
 # ============================================================
 known_gaps:
-  - gap: "Limited explicit UK enterprise employer brand"
-    mitigation: "MSc at Aston University (Distinction, in progress) establishes UK academic credibility"
+  - gap: "MLOps toolchain (MLflow, Kubeflow, W&B)"
+    mitigation: "AIOps platform design and LLMOps guardrails in production; tool transfer fast"
   - gap: "Azure/AWS depth vs GCP"
     mitigation: "Azure AI Studio experience at Micki Solutions; architecture-level cloud portability demonstrated"
-  - gap: "MLOps tooling (MLflow, Kubeflow, SageMaker)"
-    mitigation: "AIOps platform design and LLMOps guardrails demonstrated in production; framework transfer is fast"
+  - gap: "Financial services domain (relevant for JPMorgan role)"
+    mitigation: "AI for GRC certification; RAG pipeline precision narrative; governance documentation"
+  - gap: "Voice AI / TTS systems"
+    mitigation: "Strong LLM + RAG depth compensates; acknowledge gap directly"
+  - gap: "Salary TBC roles"
+    mitigation: "Research Glassdoor before applying; target £75k negotiation"
 
 # ============================================================
 # INDEED SEARCH CONFIG
@@ -143,7 +228,7 @@ indeed_search:
     - "AI Solutions Architect"
   location_filter: "United Kingdom"
   remote_filter: true
-  date_posted: "14"  # days — last 2 weeks
+  date_posted: "14"
   salary_min_gbp: 60000
   exclude_keywords:
     - "junior"
@@ -151,3 +236,4 @@ indeed_search:
     - "entry level"
     - "internship"
     - "unpaid"
+    - "data analyst"

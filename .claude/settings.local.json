@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(firecrawl-search)",
+      "WebSearch",
+      "WebFetch(domain:uk.indeed.com)"
+    ]
+  }
+}

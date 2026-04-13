@@ -1,135 +1,160 @@
-# DOMINIC ORUME URIRIE
-**AI Lead & Senior AI/ML Engineer** | England, United Kingdom
-+44 7402 830 944 | orumedominic@gmail.com | linkedin.com/in/dominicrume
+# DOMINIC (URIRIE) O'RUME
+**AI Engineer · Agentic Systems Architect · Author × 5 · International Speaker**
+England, United Kingdom | +44 7402 830 944 | orumedominic@gmail.com
+linkedin.com/in/dominicrume | github.com/dominicrume | dominicrume.github.io/rume-job-agent-/
 
 ---
 
 ## PROFESSIONAL PROFILE
 
-AI Lead and Senior AI/ML Engineer with 7+ years delivering AI/ML strategy from concept to production within enterprise environments. Expert in designing AI platforms, generative AI architectures, and autonomous agentic workflows that translate complex business problems into scalable, measurable solutions.
+AI Lead and Senior AI/ML Engineer with 7+ years delivering AI/ML strategy from concept to production in enterprise environments. Expert in designing AI platforms, generative AI architectures, and autonomous agentic workflows that translate complex business problems into scalable, measurable solutions.
 
-Demonstrated leadership driving organisational change, governing AI initiatives end-to-end, and working with cross-functional stakeholders across enterprise and high-growth environments. Proven record of shipping production AI systems — from RAG pipelines and LLM orchestration to AIOps platforms and autonomous agents.
+Demonstrated leadership driving organisational change, governing AI initiatives end-to-end, and working with cross-functional stakeholders across enterprise and high-growth environments. Proven record shipping production AI systems — RAG pipelines, LLM orchestration, AIOps platforms, and autonomous agents.
 
-MSc – Artificial Intelligence & Business Strategy (Distinction) | Aston University (2025–2026)
+MSc – Artificial Intelligence & Business Strategy (Distinction track) | Aston University, Birmingham | 2025–2026
+Dissertation: AI Tool Vulnerability Assessment (supervised by Dr Julien Barney and Dr Kate Sugden)
 
 ---
 
-## CORE SKILLS
+## CORE COMPETENCIES
 
-### AI Leadership & Strategy
-- Delivering AI/ML strategy from concept to production in enterprise environments
-- Translating complex business problems into scalable AI use cases
-- Managing cross-functional stakeholders and governing AI initiatives
-- Driving technology adoption and AI literacy across teams
-- Authoring AI requirements, security documentation, and Responsible AI standards
-
-### AI Platforms & Engineering
-- Designing and implementing production-grade AI platforms and AIOps practices
-- Automated orchestration across Azure AI Studio and Google Cloud Platform (Cloud Run)
-- Achieving 91+ performance scores in system reliability and accessibility
+### AI Engineering & Architecture
+- Designing production-grade AI platforms and AIOps practices (91+ performance scores in reliability)
 - LLMOps: model monitoring, evaluation pipelines, prompt guardrails, hallucination mitigation
+- RAG (Retrieval-Augmented Generation) system design and cloud deployment (GCP Cloud Run)
+- Autonomous agentic workflow design: multi-agent orchestration, HITL controls, headless daemon architecture
+- Foundation model fine-tuning; few-shot/zero-shot prompting; structured output engineering
 
-### Generative AI & LLMs
-- Expert-level mastery of Large Language Models: Azure OpenAI, Google Gemini API, OpenAI GPT-4o
-- Foundation model fine-tuning and few-shot/zero-shot prompting
-- Building multi-step LLM workflows with complex prompt architectures
-- RAG (Retrieval-Augmented Generation) system design and deployment
+### AI Leadership & Governance
+- Delivering AI/ML strategy from concept to production in enterprise environments
+- Authoring Responsible AI standards, security documentation, and AI requirements frameworks
+- Driving AI literacy and technology adoption across cross-functional teams
+- Translating complex business problems into scalable, governable AI use cases
 
-### Autonomous Agents & Agentic Systems
-- Designing multi-agent orchestration workflows with human-in-the-loop (HITL) controls
-- Building autonomous background agents (headless daemon architecture)
-- Agentic scheduling, state management, and crash-recovery patterns
-
-### Full-Stack & Infrastructure
-- Languages: Python · TypeScript · JavaScript · SQL · Shell · PLpgSQL
-- Frameworks: Next.js · React · Flask · Vite · Tailwind CSS · Node.js
-- Infrastructure: Supabase · PostgreSQL · Docker · GitHub Actions CI/CD · REST APIs · Vercel · GCP Cloud Run
+### Technical Stack
+- **Languages:** Python · TypeScript · JavaScript · SQL · Shell · PLpgSQL · Solidity
+- **Frameworks:** Next.js · React · Flask · Vite · Tailwind CSS · Node.js
+- **AI/ML:** Azure OpenAI · Google Gemini API · OpenAI GPT-4o · LangChain · Claude API · AI Studio
+- **Infrastructure:** GCP Cloud Run · Azure AI Studio · Supabase · PostgreSQL · Docker · GitHub Actions · Vercel
+- **Agentic:** Playwright · MCP (Model Context Protocol) · Autonomous pipelines · Cron scheduling
 
 ---
 
 ## KEY AI PROJECTS
 
+### AI-Powered Job Search Agent — Evidence Piece 03 (GTV Application)
+Full-stack autonomous pipeline demonstrating responsible agentic AI design.
+- Indeed MCP discovery across UK, semantic CV matching with gap analysis
+- Claude API brand-voice cover letter generation; Playwright form interaction
+- Human-in-the-Loop Flask dashboard — **zero auto-submissions** (responsible AI by design)
+- Live: `dominicrume.github.io/rume-job-agent-/` | GitHub: `github.com/dominicrume/rume-job-agent-`
+**Stack:** Python · Claude API · Flask · SQLite · Playwright · GitHub Pages
+
 ### Tax Intelligence & Bank Statement OCR Engine
-**Problem:** Manual processing of unstructured, low-quality bank statement images required an automated AI solution.
-**Solution:** Engineered a custom AI-enhanced OCR analyzer deployed to production via Google Cloud Platform (Cloud Run).
-**Impact:** RAG-powered retrieval system automating data extraction, anomaly detection, and tax categorisation — high precision in data governance with measurable business impact.
+- Problem: Manual processing of unstructured, low-quality bank statement images
+- Solution: Custom AI-enhanced OCR analyser deployed to GCP Cloud Run
+- Impact: RAG-powered retrieval system automating data extraction, anomaly detection, and tax categorisation — high precision in data governance
 **Stack:** Python · Google Gemini API · GCP Cloud Run · RAG · OCR
 
-### Brian-Store-AI — Autonomous Retail Workflow Agent
-**Problem:** Manual inventory tracking and demand forecasting creating operational drag on retail operations.
-**Solution:** Designed complex prompt architectures for multi-step LLM workflows handling inventory and forecasting from concept to production.
-**Impact:** Orchestrated a semi-autonomous AI platform syncing real-time retail data directly into QuickBooks — eliminated manual data entry, drove technology adoption.
-**Stack:** Python · LLMs · Multi-step prompt architecture · QuickBooks API
+### BRIAN-STORE-AI — Autonomous Retail Workflow Agent
+- Multi-step LLM workflow agent for inventory tracking and demand forecasting
+- Semi-autonomous platform syncing real-time retail data to QuickBooks — eliminated manual data entry
+- Demonstrated production AI orchestration at scale
+**Stack:** TypeScript · Google Gemini API · QuickBooks API
 
-### Digital Sovereign Agent — Autonomous AI Marketing System
-**Problem:** Manual overhead of content creation and multi-channel social media distribution.
-**Solution:** Built a 24/7 headless daemon generating daily marketing packets — psychological narrative engine, content studio director, and social dispatcher in one pipeline.
-**Impact:** Fully autonomous — zero manual intervention. Multi-channel deployment across LinkedIn, YouTube, and X via agentic scheduling.
+### Digital Sovereign Agent — Autonomous AI Marketing Infrastructure
+- 24/7 headless daemon: psychological narrative engine (Simera Brain), Studio Director, Social Dispatcher
+- Fully autonomous — zero manual intervention. Deployed across LinkedIn, YouTube, X
+- Demonstrates real agentic production systems at enterprise scale
 **Stack:** Python · OpenAI GPT-4o · Flask · REST APIs · Shell · Cron
 
-### Grab-It — Video-First Local Food Marketplace
-**Problem:** Local food discovery lacks the viral, deal-driven mechanics of consumer apps like Temu.
-**Solution:** React/TypeScript SPA with Google Gemini API–powered product discovery, recommendation, and dynamic content generation. Gamified deal-discovery UX.
-**Stack:** TypeScript · React · Vite · Google Gemini API · AI Studio · Node.js
+### Agent Education System
+- Agentic AI framework designed to train enterprise organisations (NHS, Tesco, logistics firms) in practical AI usage
+- Replicable across African businesses — bridges UK enterprise AI strategy with African market development
 
 ### MCKI Solutions — Full-Stack University Admissions Platform
-**Problem:** Manual admissions advisory process creating friction for international students and consultant overload.
-**Solution:** Production-grade multi-role full-stack application with eligibility pre-check logic, structured user journeys, intake forms, and consultation booking.
-**Stack:** TypeScript · Next.js · Python · Supabase · PostgreSQL · Docker · GitHub Actions · Tailwind CSS
+- Production-grade multi-role platform: Next.js frontend · Python API · Supabase/PostgreSQL · Docker · GitHub Actions CI/CD
+- Eligibility pre-check logic, consultation booking, structured user journeys
+**Stack:** TypeScript · Next.js · Python · Supabase · Docker · GitHub Actions · Tailwind CSS
 
 ---
 
 ## PROFESSIONAL EXPERIENCE
 
-### AI Engineer & Growth Consultant | Simeria (UK) | Dec 2025 – Present
-- **AI/ML Strategy & Automation:** Architected an AI-Driven Content Engine using Python and Google AI Studio to automate multi-channel marketing — demonstrable business impact from day one.
-- **Technology Adoption:** Deployed automated cloud platform pipelines scaling product communications across LinkedIn, YouTube, and X via agentic scheduling — driving organisational change and measurable engagement uplift.
+### AI Engineer & Growth Consultant | Simera / Mexcelle Technologies (UK) | Dec 2025 – Present
+- Architected an AI-Driven Content Engine using Python and Google AI Studio for multi-channel marketing automation
+- Built autonomous AI pipeline integrating Reddit data, Google Trends, and industry signals to generate need-based content
+- Deployed agentic scheduling pipelines across LinkedIn, YouTube, and X — measurable engagement uplift
+- Consulting on YTubeBoosterPro expansion strategy
 
 ### Senior AI/ML Engineer | Micki Solutions (UK) | Nov 2025 – Present
-- **AIOps & System Reliability:** Designed and implemented production-grade AI platforms and AIOps practices achieving 91+ performance scores in system reliability and accessibility.
-- **Technical Governance & Leadership:** Authored AI requirements and security documentation, embedding "Responsible AI" standards across every automated workflow in collaboration with cross-functional stakeholders.
+- Designed and implemented production-grade AI platform achieving 91+ performance scores in system reliability and accessibility
+- Authored AI requirements and security documentation — Responsible AI standards embedded across all automated workflows
+- Led cross-functional stakeholder governance and compliance delivery
+
+### Digital Growth Consultant | Queensberry Legal (UK) | Feb 2026 – Present
+Active retainer (£800/month). Social media strategy, SEO, AI-powered legal intake workflows, UTM tracking infrastructure, Google review acquisition — building 90-day Taylor Rose Protocol roadmap.
 
 ### Lead AI/ML Engineer | Vorem Limited | Jan 2021 – Oct 2025
-- **Enterprise Generative AI:** Led the successful delivery of Generative AI use cases into production using large language models — implemented custom prompt guardrails reducing hallucinations and ensuring enterprise-safe outputs.
-- **Cross-Functional Leadership:** Designed and implemented deployment patterns for automated business strategy tools — increased AI literacy and capability within teams, with long-term maintainability as a core design constraint.
-- **Platform Scale:** Built and launched multiple AI-powered products across fintech, edtech, and marketplace verticals serving thousands of active users.
+- Led delivery of Generative AI use cases into production: custom prompt guardrails, hallucination mitigation, enterprise-safe LLM outputs
+- Designed deployment patterns for automated business strategy tools — AI literacy uplift across enterprise teams
+- Platform built and launched across fintech, edtech, and marketplace verticals serving thousands of active users
+- Revenue generated across ventures: $13M+
 
 ---
 
 ## EDUCATION
 
-**MSc – Artificial Intelligence & Business Strategy (Distinction)**
-Aston University, United Kingdom | 2025 – 2026
-Final Project: AI Code Auditor
+**MSc – Artificial Intelligence & Business Strategy (Distinction track)**
+Aston University, Birmingham, United Kingdom | 2025–2026
+Supervisors: Dr Julien Barney · Dr Kate Sugden
+Dissertation: AI Tool Vulnerability Assessment — original research relevant to UK AI Safety priorities
 
-**BSc – Electrical & Electronic Engineering (Honours)**
-Covenant University | 2009 – 2014
-Final Project: AI-Driven Power System Automation
+**BEng – Electrical & Electronic Engineering (Honours)**
+Covenant University, Nigeria | 2009–2014
+Dissertation: AI-Driven Power System Automation
 
 ---
 
-## CERTIFICATIONS
+## UK EVENTS — SPEAKER / ORGANISER / SPONSOR (2025–2026)
 
-- Leveraging AI for Governance, Risk & Compliance
-- Google Gemini AI Certification – Generative AI & Prompt Engineering
-- Programming for Everybody (Python) – University of Michigan
-- Leadership Through Feedback – Team & Technical Leadership
-- Certified Blockchain Architect – Secure & Distributed Systems
+| Date | Event | Role |
+|------|-------|------|
+| Nov 29, 2025 | Jali Group, London — Creative × Tech × AI | Sponsor & Featured Speaker |
+| Feb 28, 2026 | Agentic AI Keynote, Birmingham | Speaker — live system demonstration |
+| Mar 27, 2026 | FrontierTechX Birmingham (frontiertechx.com) | Speaker — multi-agent AI & governance |
+| Jun 6, 2026 | MCKI Solutions AI Agentic Day, Birmingham | Lead Organiser & Facilitator |
+| Ongoing | UK Consulting: Simera · Queensberry Legal · QDT Analytics | Active engagement |
 
 ---
 
 ## PUBLISHED WORKS
 
 - *Wealth of the Blockchain: The Economy of Possibilities* (Amazon, 2022)
-- *An Evolution into the Metaverse* (co-authored, Amazon, 2022)
-- *From Code to Consciousness: Connecting AI and Humans for a Powerful Result* (Amazon, 2023)
-- *Inside the Heart of a Global Entrepreneur* (co-authored, Amazon, 2024)
+- *An Evolution into the Metaverse* (co-authored with Farzam Kamalabadi, 2022)
+- *From Code to Consciousness: Connecting AI and Humans for a Powerful Result* (Amazon, 2023) — **Waterstones UK**
+- *Inside the Heart of a Global Entrepreneur* (co-authored with Mahaveer Jain, 2024) — **Waterstones UK**
 - *MORE* — Preorder Available (2025)
 
 ---
 
-## RECOGNITION
+## CERTIFICATIONS
 
-- 39+ international public speaking engagements across tech, AI, and enterprise forums
-- Media coverage: The Guardian Nigeria · Channels TV · Daily Trust · Arise · Pulse
-- Executive Member — Stakeholders in Blockchain Association of Nigeria (SIBAN)
+- AI for Governance, Risk & Compliance — Responsible AI Leadership
+- Google Gemini AI Certification – Generative AI & Prompt Engineering
+- Certified Blockchain Architect – Secure & Distributed Systems
+- Programming for Everybody (Python) – University of Michigan
+- Leadership Through Feedback – Team & Technical Leadership
+
+---
+
+## RECOGNITION & AFFILIATIONS
+
+- **ForbesBLK** — Forbes professional network for Black entrepreneurs and innovators
+- **Rotary International** — Global civic leadership and professional service
+- **SIBAN** — Executive Member, Stakeholders in Blockchain Association of Nigeria (national body)
+- **Global Good Governance Ambassadors Award**
+- **Good Governance Award** — Sheraton Hotels, Abuja
+- **100 Most Influential Young Deltans** — Global Governance Recognition
+- **39+ international speaking engagements** — Africa · Dubai · United Kingdom
+- Media: The Guardian Nigeria · Channels TV · Daily Trust · Arise · Pulse

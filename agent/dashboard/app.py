@@ -764,7 +764,8 @@ def dashboard():
 
 
 if __name__ == "__main__":
-    port = int(os.getenv("FLASK_PORT", 5050))
+    # Railway injects PORT; FLASK_PORT used locally
+    port = int(os.getenv("PORT", os.getenv("FLASK_PORT", 5050)))
     print(f"\n🚀 Dashboard → http://localhost:{port}")
     print(f"   Health  → http://localhost:{port}/health")
     print(f"   API     → http://localhost:{port}/api/applications\n")
