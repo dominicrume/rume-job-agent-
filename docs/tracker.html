@@ -1,589 +1,1452 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rume Dominic — Job Pipeline</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --bg: #07080f;
-      --surface: #0f1018;
-      --surface2: #14161f;
-      --surface3: #1a1d2a;
-      --border: #1f2235;
-      --accent: #4f8ef7;
-      --accent2: #7c3aed;
-      --green: #22c55e;
-      --yellow: #f59e0b;
-      --red: #ef4444;
-      --pink: #f472b6;
-      --text: #e2e8f0;
-      --muted: #4a5068;
-      --muted2: #6b7280;
-      --r: 10px;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rume Dominic — Career Command Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#080910;--s1:#0d0e18;--s2:#12131f;--s3:#171829;--s4:#1c1e30;
+  --border:#1f2238;--border2:#272a42;
+  --accent:#4f8ef7;--accent2:#7c3aed;--accentG:linear-gradient(135deg,#4f8ef7,#7c3aed);
+  --green:#22c55e;--yellow:#f59e0b;--red:#ef4444;--pink:#f472b6;--orange:#fb923c;--cyan:#22d3ee;
+  --text:#e2e8f0;--muted:#94a3b8;--muted2:#64748b;--muted3:#3f4560;
+  --r:10px;--r2:14px;
+  --sidebar:240px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;height:100%}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;min-height:100vh;display:flex;overflow:hidden}
 
-    /* ── HEADER ── */
-    header {
-      background: linear-gradient(135deg, var(--surface) 0%, #0d1025 100%);
-      border-bottom: 1px solid var(--border);
-      padding: 20px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(8px);
-    }
-    .hd-left { display: flex; align-items: center; gap: 14px; }
-    .avatar {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 0.9rem; color: white; flex-shrink: 0;
-    }
-    .hd-name { font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; }
-    .hd-sub { font-size: 0.75rem; color: var(--muted2); margin-top: 1px; }
-    .hd-right { display: flex; align-items: center; gap: 10px; }
-    .badge {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white; font-size: 0.68rem; font-weight: 700;
-      padding: 4px 12px; border-radius: 20px; letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-    .add-btn {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white; border: none; padding: 8px 18px;
-      border-radius: 8px; font-size: 0.8rem; font-weight: 600;
-      cursor: pointer; transition: opacity 0.2s;
-    }
-    .add-btn:hover { opacity: 0.85; }
+/* ─── SIDEBAR ─────────────────────────────────────────── */
+.sidebar{
+  width:var(--sidebar);min-width:var(--sidebar);height:100vh;
+  background:var(--s1);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow:hidden;position:relative;z-index:10;
+}
+.sb-logo{padding:20px 18px 16px;border-bottom:1px solid var(--border);}
+.sb-logo .logo-mark{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--accentG);display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:0.85rem;color:white;margin-bottom:10px;
+}
+.sb-logo .logo-name{font-size:0.82rem;font-weight:700;letter-spacing:-0.01em;}
+.sb-logo .logo-sub{font-size:0.68rem;color:var(--muted2);margin-top:2px;}
 
-    /* ── STATS ── */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 12px;
-      padding: 24px 40px 0;
-    }
-    @media (max-width: 900px) { .stats { grid-template-columns: repeat(3,1fr); } }
-    .stat {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 16px 18px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .stat::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    }
-    .stat.blue::before { background: var(--accent); }
-    .stat.yellow::before { background: var(--yellow); }
-    .stat.green::before { background: var(--green); }
-    .stat.purple::before { background: #a855f7; }
-    .stat.pink::before { background: var(--pink); }
-    .stat.red::before { background: var(--red); }
-    .stat .num { font-size: 1.7rem; font-weight: 700; line-height: 1; }
-    .stat .lbl { font-size: 0.68rem; color: var(--muted2); margin-top: 5px; text-transform: uppercase; letter-spacing: 0.08em; }
-    .num.blue { color: var(--accent); }
-    .num.yellow { color: var(--yellow); }
-    .num.green { color: var(--green); }
-    .num.purple { color: #a855f7; }
-    .num.pink { color: var(--pink); }
-    .num.red { color: var(--red); }
+.sb-nav{padding:12px 8px;flex:1;overflow-y:auto;}
+.sb-section{font-size:0.62rem;font-weight:700;color:var(--muted3);letter-spacing:0.1em;text-transform:uppercase;padding:6px 10px 4px;}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;
+  font-size:0.8rem;font-weight:500;color:var(--muted);cursor:pointer;transition:all 0.15s;
+  margin-bottom:1px;border:none;background:none;width:100%;text-align:left;
+}
+.nav-item:hover{background:var(--s2);color:var(--text);}
+.nav-item.active{background:rgba(79,142,247,.12);color:var(--accent);}
+.nav-item .icon{font-size:1rem;width:18px;text-align:center;flex-shrink:0;}
+.nav-item .count{margin-left:auto;background:var(--s3);font-size:0.65rem;font-weight:600;padding:2px 7px;border-radius:20px;color:var(--muted);}
+.nav-item.active .count{background:rgba(79,142,247,.2);color:var(--accent);}
 
-    /* ── CONTROLS ── */
-    .controls {
-      padding: 20px 40px 16px;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .fb {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--muted2);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .fb:hover { color: var(--text); border-color: var(--muted); }
-    .fb.on { background: var(--accent); border-color: var(--accent); color: white; }
-    .search {
-      margin-left: auto;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 7px 16px;
-      border-radius: 20px;
-      font-size: 0.78rem;
-      width: 230px;
-      outline: none;
-    }
-    .search:focus { border-color: var(--accent); }
-    .search::placeholder { color: var(--muted); }
+.sb-bottom{padding:12px 8px;border-top:1px solid var(--border);}
+.profile-chip{
+  display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;
+  background:var(--s2);cursor:default;
+}
+.profile-avatar{
+  width:30px;height:30px;border-radius:50%;
+  background:var(--accentG);display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:0.72rem;color:white;flex-shrink:0;
+}
+.profile-name{font-size:0.75rem;font-weight:600;}
+.profile-role{font-size:0.65rem;color:var(--muted2);}
 
-    /* ── TABLE ── */
-    .tw { padding: 0 40px 60px; overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; }
-    thead th {
-      text-align: left;
-      font-size: 0.68rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
-    }
-    tbody tr {
-      border-bottom: 1px solid var(--border);
-      transition: background 0.12s;
-      cursor: pointer;
-    }
-    tbody tr:hover { background: var(--surface2); }
-    tbody td { padding: 12px; font-size: 0.82rem; vertical-align: middle; }
+/* ─── MAIN ─────────────────────────────────────────────── */
+.main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden;}
 
-    .role-title { font-weight: 600; color: var(--text); }
-    .role-company { font-size: 0.75rem; color: var(--muted2); margin-top: 2px; }
-    .role-link { color: var(--accent); text-decoration: none; }
-    .role-link:hover { text-decoration: underline; }
-    .loc { font-size: 0.75rem; color: var(--muted2); }
-    .sal { font-size: 0.78rem; color: var(--muted2); }
-    .date-sub { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
+/* ─── TOPBAR ────────────────────────────────────────────── */
+.topbar{
+  height:56px;min-height:56px;background:var(--s1);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 24px;gap:16px;
+}
+.page-title{font-size:0.9rem;font-weight:700;letter-spacing:-0.01em;}
+.topbar-actions{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.kbd{
+  background:var(--s3);border:1px solid var(--border2);color:var(--muted2);
+  font-size:0.65rem;font-family:'JetBrains Mono',monospace;padding:2px 7px;border-radius:4px;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  border:none;padding:7px 16px;border-radius:8px;
+  font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.15s;
+  font-family:inherit;
+}
+.btn-primary{background:var(--accentG);color:white;}
+.btn-primary:hover{opacity:0.88;}
+.btn-ghost{background:var(--s3);border:1px solid var(--border);color:var(--muted);background:var(--s2);}
+.btn-ghost:hover{border-color:var(--border2);color:var(--text);}
+.btn-sm{padding:5px 12px;font-size:0.72rem;}
+.btn-icon{padding:7px;border-radius:7px;font-size:0.9rem;}
 
-    /* score bar */
-    .sbar { display: flex; align-items: center; gap: 8px; }
-    .sbar-track { height: 5px; border-radius: 3px; background: var(--border); width: 56px; overflow: hidden; }
-    .sbar-fill { height: 100%; border-radius: 3px; }
-    .sval { font-size: 0.78rem; font-weight: 700; }
+/* ─── STATS ─────────────────────────────────────────────── */
+.stats-bar{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:12px;
+  padding:16px 24px;border-bottom:1px solid var(--border);
+  background:var(--s1);
+}
+.stat{
+  background:var(--s2);border:1px solid var(--border);border-radius:var(--r);
+  padding:14px 16px;position:relative;overflow:hidden;cursor:default;transition:border-color 0.15s;
+}
+.stat:hover{border-color:var(--border2);}
+.stat::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:2px 2px 0 0;}
+.stat.c-blue::after{background:var(--accent);}
+.stat.c-yellow::after{background:var(--yellow);}
+.stat.c-green::after{background:var(--green);}
+.stat.c-purple::after{background:#a855f7;}
+.stat.c-pink::after{background:var(--pink);}
+.stat.c-orange::after{background:var(--orange);}
+.stat .num{font-size:1.6rem;font-weight:800;letter-spacing:-0.03em;line-height:1;}
+.stat .lbl{font-size:0.65rem;color:var(--muted2);margin-top:5px;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;}
+.stat .delta{font-size:0.65rem;margin-top:3px;}
+.stat .delta.up{color:var(--green);}
+.stat .delta.neutral{color:var(--muted2);}
+.num.blue{color:var(--accent);}
+.num.yellow{color:var(--yellow);}
+.num.green{color:var(--green);}
+.num.purple{color:#a855f7;}
+.num.pink{color:var(--pink);}
+.num.orange{color:var(--orange);}
 
-    /* badges */
-    .badge-sm {
-      display: inline-block;
-      font-size: 0.65rem; font-weight: 700;
-      padding: 3px 9px; border-radius: 12px;
-      letter-spacing: 0.04em; text-transform: uppercase;
-      white-space: nowrap;
-    }
-    .p-high   { background: rgba(239,68,68,.12);  color: #f87171; }
-    .p-medium { background: rgba(245,158,11,.12); color: #fbbf24; }
-    .p-low    { background: rgba(100,116,139,.12);color: var(--muted2); }
+/* ─── CONTENT AREA ──────────────────────────────────────── */
+.content{flex:1;overflow:hidden;display:flex;flex-direction:column;}
 
-    .s-pipeline    { background: rgba(100,116,139,.12); color: #94a3b8; }
-    .s-evaluated   { background: rgba(79,142,247,.12);  color: #7dd3fc; }
-    .s-applied     { background: rgba(34,197,94,.12);   color: #4ade80; }
-    .s-interview_1 { background: rgba(168,85,247,.12);  color: #c084fc; }
-    .s-interview_2 { background: rgba(168,85,247,.18);  color: #d8b4fe; }
-    .s-final       { background: rgba(240,196,64,.12);  color: #fde68a; }
-    .s-offer       { background: rgba(34,197,94,.2);    color: #86efac; border: 1px solid rgba(34,197,94,.3); }
-    .s-rejected    { background: rgba(239,68,68,.12);   color: #f87171; }
-    .s-withdrawn   { background: rgba(100,116,139,.08); color: var(--muted); }
-    .s-skip        { background: rgba(100,116,139,.08); color: var(--muted); }
+/* ─── VIEW TABS + CONTROLS ──────────────────────────────── */
+.controls{
+  padding:14px 24px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  border-bottom:1px solid var(--border);background:var(--s1);
+}
+.view-tabs{display:flex;gap:2px;background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:3px;}
+.view-tab{
+  padding:5px 14px;border-radius:6px;font-size:0.75rem;font-weight:600;
+  cursor:pointer;transition:all 0.15s;color:var(--muted2);border:none;background:none;font-family:inherit;
+}
+.view-tab.active{background:var(--s4);color:var(--text);}
+.divider-v{width:1px;height:24px;background:var(--border);margin:0 4px;}
+.filter-group{display:flex;gap:4px;}
+.fb{
+  padding:5px 12px;border-radius:20px;font-size:0.73rem;font-weight:500;
+  cursor:pointer;transition:all 0.15s;color:var(--muted2);border:1px solid var(--border);
+  background:var(--s2);font-family:inherit;
+}
+.fb:hover{color:var(--text);border-color:var(--border2);}
+.fb.on{background:var(--accent);border-color:var(--accent);color:white;}
+.search-wrap{margin-left:auto;position:relative;}
+.search-wrap .icon-pre{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:0.8rem;color:var(--muted2);}
+.search{
+  background:var(--s2);border:1px solid var(--border);color:var(--text);
+  padding:6px 14px 6px 32px;border-radius:20px;font-size:0.78rem;
+  width:220px;outline:none;font-family:inherit;
+}
+.search:focus{border-color:var(--accent);}
+.search::placeholder{color:var(--muted3);}
 
-    /* gap tags */
-    .gaps { display: flex; flex-wrap: wrap; gap: 4px; }
-    .gtag {
-      background: rgba(124,58,237,.08);
-      border: 1px solid rgba(124,58,237,.2);
-      color: #a78bfa;
-      font-size: 0.62rem; padding: 2px 7px; border-radius: 4px;
-    }
+/* ─── TABLE VIEW ─────────────────────────────────────────── */
+#view-table{flex:1;overflow-y:auto;padding:0 24px 24px;}
+table{width:100%;border-collapse:collapse;margin-top:12px;}
+thead th{
+  text-align:left;font-size:0.65rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:0.08em;color:var(--muted2);padding:8px 12px;
+  border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0;
+  background:var(--bg);z-index:2;
+}
+tbody tr{border-bottom:1px solid var(--border);transition:background 0.12s;cursor:pointer;}
+tbody tr:hover{background:var(--s2);}
+tbody tr.selected{background:rgba(79,142,247,.06);border-left:2px solid var(--accent);}
+tbody td{padding:11px 12px;font-size:0.82rem;vertical-align:middle;}
 
-    /* action buttons */
-    .acts { display: flex; gap: 6px; }
-    .btn {
-      border: none; padding: 5px 12px; border-radius: 6px;
-      font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s;
-    }
-    .btn-p { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white; }
-    .btn-p:hover { opacity: 0.85; }
-    .btn-g { background: transparent; border: 1px solid var(--border); color: var(--muted2); }
-    .btn-g:hover { border-color: var(--accent); color: var(--accent); }
-    .btn-del { background: transparent; border: 1px solid var(--border); color: var(--red); }
-    .btn-del:hover { border-color: var(--red); opacity: 0.8; }
+.role-title{font-weight:600;font-size:0.84rem;}
+.role-co{font-size:0.72rem;color:var(--muted2);margin-top:2px;}
+.role-link{color:inherit;text-decoration:none;}
+.role-link:hover{color:var(--accent);}
 
-    /* empty state */
-    .empty {
-      text-align: center; padding: 80px 20px;
-      color: var(--muted);
-    }
-    .empty h3 { font-size: 1rem; margin-bottom: 8px; color: var(--muted2); }
-    .empty p { font-size: 0.82rem; }
+.arch-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:0.62rem;font-weight:700;padding:2px 8px;border-radius:4px;
+  letter-spacing:0.03em;text-transform:uppercase;white-space:nowrap;
+}
+.arch-platform{background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);color:#22d3ee;}
+.arch-agentic {background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.25);color:#a78bfa;}
+.arch-pm      {background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.2);color:#fb923c;}
+.arch-architect{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);color:#4ade80;}
+.arch-deployed{background:rgba(244,114,182,.08);border:1px solid rgba(244,114,182,.2);color:#f472b6;}
+.arch-transform{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:#fbbf24;}
 
-    /* ── MODAL ── */
-    .overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,.75); z-index: 200;
-      align-items: center; justify-content: center;
-      padding: 20px;
-    }
-    .overlay.open { display: flex; }
-    .modal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      width: 580px; max-width: 100%;
-      max-height: 90vh; overflow-y: auto;
-      padding: 28px;
-    }
-    .modal-hd { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; }
-    .modal-hd h2 { font-size: 1rem; font-weight: 700; }
-    .close-btn { background: none; border: none; color: var(--muted); font-size: 1.2rem; cursor: pointer; padding: 2px 6px; }
-    .close-btn:hover { color: var(--text); }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .form-full { grid-column: 1 / -1; }
-    label { font-size: 0.72rem; color: var(--muted2); display: block; margin-bottom: 5px; font-weight: 500; letter-spacing: 0.03em; }
-    input, select, textarea {
-      width: 100%;
-      background: var(--surface3);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 8px 12px;
-      border-radius: 7px;
-      font-size: 0.82rem;
-      outline: none;
-      font-family: inherit;
-    }
-    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
-    textarea { height: 72px; resize: vertical; }
-    .modal-foot { display: flex; gap: 8px; justify-content: flex-end; margin-top: 22px; }
+.loc{font-size:0.74rem;color:var(--muted);}
+.loc .remote-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:4px;vertical-align:middle;}
+.sal{font-size:0.77rem;font-weight:500;}
+.sal-tbc{color:var(--muted2);font-size:0.72rem;}
 
-    /* ── FOOTER ── */
-    footer {
-      text-align: center;
-      padding: 18px;
-      font-size: 0.7rem;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-    }
+/* score */
+.score-cell{display:flex;align-items:center;gap:8px;}
+.score-ring{width:32px;height:32px;flex-shrink:0;}
+.score-ring svg{transform:rotate(-90deg);}
+.score-ring circle{transition:stroke-dashoffset 0.6s ease;}
+.score-num{font-size:0.8rem;font-weight:700;}
 
-    /* scrollbar */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-  </style>
+/* priority / status badges */
+.badge{
+  display:inline-block;font-size:0.63rem;font-weight:700;
+  padding:3px 9px;border-radius:12px;letter-spacing:0.04em;text-transform:uppercase;
+  white-space:nowrap;
+}
+.p-high  {background:rgba(239,68,68,.1);color:#f87171;}
+.p-med   {background:rgba(245,158,11,.1);color:#fbbf24;}
+.p-low   {background:rgba(100,116,139,.1);color:var(--muted);}
+.s-pipeline    {background:rgba(100,116,139,.1);color:#94a3b8;}
+.s-evaluated   {background:rgba(34,211,238,.1);color:#22d3ee;}
+.s-applied     {background:rgba(34,197,94,.1);color:#4ade80;}
+.s-interview_1 {background:rgba(168,85,247,.1);color:#c084fc;}
+.s-interview_2 {background:rgba(168,85,247,.16);color:#d8b4fe;}
+.s-final       {background:rgba(245,158,11,.1);color:#fde68a;}
+.s-offer       {background:rgba(34,197,94,.18);color:#86efac;border:1px solid rgba(34,197,94,.3);}
+.s-rejected    {background:rgba(239,68,68,.1);color:#f87171;}
+.s-skip        {background:rgba(100,116,139,.06);color:var(--muted2);}
+.s-withdrawn   {background:rgba(100,116,139,.06);color:var(--muted2);}
+
+.gap-tags{display:flex;flex-wrap:wrap;gap:3px;max-width:140px;}
+.gtag{
+  background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.18);
+  color:#a78bfa;font-size:0.6rem;padding:2px 6px;border-radius:3px;
+}
+.cl-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);vertical-align:middle;margin-right:3px;}
+.cl-x{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--muted3);vertical-align:middle;margin-right:3px;}
+
+.row-actions{display:flex;gap:4px;opacity:0;transition:opacity 0.15s;}
+tbody tr:hover .row-actions{opacity:1;}
+tbody tr.selected .row-actions{opacity:1;}
+
+/* ─── KANBAN VIEW ────────────────────────────────────────── */
+#view-kanban{display:none;flex:1;overflow-x:auto;padding:16px 24px;gap:12px;align-items:flex-start;}
+.kanban-col{
+  min-width:220px;max-width:220px;background:var(--s2);
+  border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;
+}
+.kanban-hd{
+  padding:12px 14px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+.kanban-hd .kh-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;}
+.kanban-hd .kh-count{font-size:0.65rem;background:var(--s3);padding:2px 8px;border-radius:12px;color:var(--muted2);}
+.kanban-body{padding:10px;display:flex;flex-direction:column;gap:8px;min-height:60px;}
+.kcard{
+  background:var(--s1);border:1px solid var(--border);border-radius:8px;
+  padding:12px;cursor:pointer;transition:all 0.15s;
+}
+.kcard:hover{border-color:var(--border2);transform:translateY(-1px);}
+.kcard .kc-title{font-size:0.77rem;font-weight:600;margin-bottom:4px;}
+.kcard .kc-co{font-size:0.68rem;color:var(--muted2);margin-bottom:8px;}
+.kcard .kc-bottom{display:flex;align-items:center;justify-content:space-between;}
+.kcard .kc-sal{font-size:0.67rem;color:var(--muted2);}
+
+/* ─── DETAIL PANEL ───────────────────────────────────────── */
+.detail-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;
+}
+.detail-overlay.open{display:block;}
+.detail-panel{
+  position:fixed;right:0;top:0;bottom:0;width:540px;max-width:95vw;
+  background:var(--s1);border-left:1px solid var(--border);z-index:101;
+  display:flex;flex-direction:column;transform:translateX(100%);
+  transition:transform 0.25s cubic-bezier(.4,0,.2,1);overflow:hidden;
+}
+.detail-panel.open{transform:translateX(0);}
+.dp-header{
+  padding:20px 24px;border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+}
+.dp-title{font-size:1rem;font-weight:700;margin-bottom:4px;}
+.dp-co{font-size:0.8rem;color:var(--muted);}
+.dp-close{background:none;border:none;color:var(--muted2);font-size:1.2rem;cursor:pointer;padding:2px 6px;border-radius:6px;transition:all .15s;}
+.dp-close:hover{background:var(--s3);color:var(--text);}
+.dp-tabs{display:flex;border-bottom:1px solid var(--border);padding:0 24px;}
+.dp-tab{
+  padding:10px 0;font-size:0.75rem;font-weight:600;color:var(--muted2);cursor:pointer;
+  border-bottom:2px solid transparent;margin-right:20px;transition:all .15s;
+}
+.dp-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.dp-body{flex:1;overflow-y:auto;padding:20px 24px;}
+.dp-section{margin-bottom:20px;}
+.dp-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted2);margin-bottom:8px;}
+.dp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.dp-field{background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+.dp-field .df-label{font-size:0.65rem;color:var(--muted2);margin-bottom:3px;}
+.dp-field .df-val{font-size:0.82rem;font-weight:500;}
+
+/* score breakdown */
+.score-breakdown{display:flex;flex-direction:column;gap:6px;}
+.sb-row{display:flex;align-items:center;gap:10px;}
+.sb-name{font-size:0.72rem;color:var(--muted);width:130px;flex-shrink:0;}
+.sb-track{flex:1;height:5px;background:var(--s3);border-radius:3px;overflow:hidden;}
+.sb-fill{height:100%;border-radius:3px;transition:width .6s ease;}
+.sb-val{font-size:0.7rem;font-weight:700;width:28px;text-align:right;}
+
+/* eval blocks */
+.eval-block{background:var(--s2);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;}
+.eval-block-hd{display:flex;align-items:center;gap:8px;margin-bottom:10px;cursor:pointer;}
+.eval-block-letter{
+  width:26px;height:26px;border-radius:6px;
+  background:var(--accentG);display:flex;align-items:center;justify-content:center;
+  font-size:0.72rem;font-weight:800;color:white;flex-shrink:0;
+}
+.eval-block-title{font-size:0.8rem;font-weight:600;}
+.eval-block-body{font-size:0.78rem;color:var(--muted);line-height:1.6;}
+.match-row{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);}
+.match-row:last-child{border-bottom:none;}
+.match-tag{
+  font-size:0.6rem;font-weight:700;padding:2px 7px;border-radius:4px;flex-shrink:0;margin-top:1px;
+}
+.m-strong{background:rgba(34,197,94,.1);color:#4ade80;}
+.m-partial{background:rgba(245,158,11,.1);color:#fbbf24;}
+.m-gap   {background:rgba(239,68,68,.1);color:#f87171;}
+.match-text{font-size:0.75rem;flex:1;}
+.match-proof{font-size:0.7rem;color:var(--muted2);margin-top:2px;}
+
+/* cover letter */
+.cl-area{
+  background:var(--s2);border:1px solid var(--border);border-radius:var(--r);
+  padding:16px;font-size:0.8rem;line-height:1.75;color:var(--text);
+  min-height:160px;white-space:pre-wrap;
+}
+.cl-placeholder{color:var(--muted2);font-style:italic;font-size:0.78rem;}
+
+/* story cards */
+.story-card{background:var(--s2);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;}
+.story-card h4{font-size:0.8rem;font-weight:700;margin-bottom:6px;}
+.story-card .story-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.story-section{margin-bottom:8px;}
+.story-section .s-label{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent);margin-bottom:2px;}
+.story-section .s-body{font-size:0.75rem;color:var(--muted);line-height:1.55;}
+
+/* dp actions footer */
+.dp-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap;}
+
+/* ─── ADD/EDIT MODAL ─────────────────────────────────────── */
+.overlay-modal{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);
+  z-index:200;align-items:center;justify-content:center;padding:20px;
+}
+.overlay-modal.open{display:flex;}
+.modal{
+  background:var(--s1);border:1px solid var(--border);border-radius:var(--r2);
+  width:600px;max-width:100%;max-height:90vh;overflow-y:auto;padding:28px;
+}
+.modal-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;}
+.modal-hd h2{font-size:1rem;font-weight:700;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-full{grid-column:1/-1;}
+label{font-size:0.7rem;color:var(--muted2);display:block;margin-bottom:5px;font-weight:600;letter-spacing:.02em;}
+input,select,textarea{
+  width:100%;background:var(--s3);border:1px solid var(--border);
+  color:var(--text);padding:8px 12px;border-radius:7px;font-size:0.82rem;
+  outline:none;font-family:inherit;transition:border-color .15s;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);}
+textarea{height:80px;resize:vertical;}
+.modal-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:22px;}
+
+/* ─── TOAST ──────────────────────────────────────────────── */
+.toast-stack{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px;}
+.toast{
+  background:var(--s3);border:1px solid var(--border2);color:var(--text);
+  padding:12px 18px;border-radius:10px;font-size:0.78rem;font-weight:500;
+  display:flex;align-items:center;gap:10px;min-width:200px;max-width:340px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  animation:slideUp .25s ease;
+}
+.toast.success{border-left:3px solid var(--green);}
+.toast.info{border-left:3px solid var(--accent);}
+.toast.warn{border-left:3px solid var(--yellow);}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* ─── EMPTY ──────────────────────────────────────────────── */
+.empty{text-align:center;padding:80px 20px;color:var(--muted2);}
+.empty .e-icon{font-size:2.5rem;margin-bottom:12px;}
+.empty h3{font-size:0.95rem;margin-bottom:6px;font-weight:600;}
+.empty p{font-size:0.8rem;color:var(--muted2);}
+
+/* ─── SCROLLBAR ──────────────────────────────────────────── */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .stats-bar{grid-template-columns:repeat(3,1fr);}
+  #view-kanban{display:none!important;}
+}
+</style>
 </head>
 <body>
 
-<header>
-  <div class="hd-left">
-    <div class="avatar">RD</div>
-    <div>
-      <div class="hd-name">Rume Dominic — Job Pipeline</div>
-      <div class="hd-sub">Lead AI/ML Engineer · England, UK · orumedominic@gmail.com</div>
+<!-- ── SIDEBAR ─────────────────────────────────────────── -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="logo-mark">RD</div>
+    <div class="logo-name">Career Command</div>
+    <div class="logo-sub">career-ops v1.0</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section">Pipeline</div>
+    <button class="nav-item active" onclick="setView('table','all',this)" data-view="table">
+      <span class="icon">⚡</span> All Roles <span class="count" id="nav-total">0</span>
+    </button>
+    <button class="nav-item" onclick="setView('table','pipeline',this)">
+      <span class="icon">📥</span> Inbox <span class="count" id="nav-pipeline">0</span>
+    </button>
+    <button class="nav-item" onclick="setView('table','evaluated',this)">
+      <span class="icon">🎯</span> Evaluated <span class="count" id="nav-eval">0</span>
+    </button>
+    <button class="nav-item" onclick="setView('table','applied',this)">
+      <span class="icon">📤</span> Applied <span class="count" id="nav-applied">0</span>
+    </button>
+    <button class="nav-item" onclick="setView('table','interview_1',this)">
+      <span class="icon">🎤</span> Interviews <span class="count" id="nav-iv">0</span>
+    </button>
+    <button class="nav-item" onclick="setView('table','offer',this)">
+      <span class="icon">🏆</span> Offers <span class="count" id="nav-offers">0</span>
+    </button>
+    <div style="margin-top:8px;">
+    <div class="sb-section">Views</div>
+    <button class="nav-item" onclick="switchView('kanban')">
+      <span class="icon">🗂</span> Kanban Board
+    </button>
+    </div>
+    <div style="margin-top:8px;">
+    <div class="sb-section">Actions</div>
+    <button class="nav-item" onclick="openScan()">
+      <span class="icon">🔍</span> Scan Indeed
+    </button>
+    <button class="nav-item" onclick="openStories()">
+      <span class="icon">📖</span> Story Bank
+    </button>
+    </div>
+  </nav>
+  <div class="sb-bottom">
+    <div class="profile-chip">
+      <div class="profile-avatar">RD</div>
+      <div>
+        <div class="profile-name">Rume Dominic</div>
+        <div class="profile-role">Lead AI/ML Engineer</div>
+      </div>
     </div>
   </div>
-  <div class="hd-right">
-    <span class="badge">Live Tracker</span>
-    <button class="add-btn" onclick="openAdd()">+ Add Role</button>
+</aside>
+
+<!-- ── MAIN ─────────────────────────────────────────────── -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <span class="page-title" id="topbar-title">All Roles</span>
+    <div class="topbar-actions">
+      <span class="kbd">K</span><span style="font-size:.72rem;color:var(--muted2)"> search</span>
+      <span style="margin:0 4px;color:var(--muted3)">·</span>
+      <span class="kbd">N</span><span style="font-size:.72rem;color:var(--muted2)"> new</span>
+      <button class="btn btn-ghost btn-sm" onclick="exportCSV()" title="Export CSV">⬇ Export</button>
+      <button class="btn btn-primary btn-sm" onclick="openAdd()">+ Add Role</button>
+    </div>
   </div>
-</header>
 
-<div class="stats">
-  <div class="stat blue">  <div class="num blue"   id="s-total">0</div><div class="lbl">Total</div></div>
-  <div class="stat yellow"><div class="num yellow" id="s-eval">0</div><div class="lbl">Evaluated</div></div>
-  <div class="stat green"> <div class="num green"  id="s-applied">0</div><div class="lbl">Applied</div></div>
-  <div class="stat purple"><div class="num purple" id="s-iv">0</div><div class="lbl">Interviews</div></div>
-  <div class="stat pink">  <div class="num pink"   id="s-avg">—</div><div class="lbl">Avg Score</div></div>
-  <div class="stat red">   <div class="num red"    id="s-offer">0</div><div class="lbl">Offers</div></div>
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat c-blue">  <div class="num blue" id="s-total">0</div><div class="lbl">Total Roles</div></div>
+    <div class="stat c-yellow"><div class="num yellow" id="s-eval">0</div><div class="lbl">Evaluated</div></div>
+    <div class="stat c-green"> <div class="num green" id="s-applied">0</div><div class="lbl">Applied</div></div>
+    <div class="stat c-purple"><div class="num purple" id="s-iv">0</div><div class="lbl">Interviews</div></div>
+    <div class="stat c-pink">  <div class="num pink" id="s-avg">—</div><div class="lbl">Avg Score</div></div>
+    <div class="stat c-orange"> <div class="num orange" id="s-offer">0</div><div class="lbl">Offers</div></div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <div class="view-tabs">
+      <button class="view-tab active" id="vt-table" onclick="switchView('table')">📋 Table</button>
+      <button class="view-tab" id="vt-kanban" onclick="switchView('kanban')">🗂 Kanban</button>
+    </div>
+    <div class="divider-v"></div>
+    <div class="filter-group" id="filter-group">
+      <button class="fb on" onclick="filterBy('all',this)">All</button>
+      <button class="fb" onclick="filterBy('pipeline',this)">Pipeline</button>
+      <button class="fb" onclick="filterBy('evaluated',this)">Evaluated</button>
+      <button class="fb" onclick="filterBy('applied',this)">Applied</button>
+      <button class="fb" onclick="filterBy('interview_1',this)">Interview</button>
+      <button class="fb" onclick="filterBy('offer',this)">Offer</button>
+    </div>
+    <div class="search-wrap">
+      <span class="icon-pre">🔍</span>
+      <input class="search" id="search-input" type="text" placeholder="Search roles, companies..." oninput="searchBy(this.value)"/>
+    </div>
+  </div>
+
+  <!-- CONTENT: TABLE VIEW -->
+  <div class="content" id="view-table" style="overflow-y:auto;">
+    <div id="view-table-inner" style="padding:0 24px 24px;">
+      <table>
+        <thead>
+          <tr>
+            <th>Role & Company</th>
+            <th>Archetype</th>
+            <th>Location</th>
+            <th>Salary</th>
+            <th>Score</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>CL</th>
+            <th>Gaps</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CONTENT: KANBAN VIEW -->
+  <div class="content" id="view-kanban" style="display:none;overflow-x:auto;">
+    <div id="kanban-inner" style="display:flex;gap:12px;padding:16px 24px;align-items:flex-start;min-height:100%;"></div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- ── DETAIL PANEL ──────────────────────────────────── -->
+<div class="detail-overlay" id="detail-overlay" onclick="closeDetail()"></div>
+<div class="detail-panel" id="detail-panel">
+  <div class="dp-header">
+    <div>
+      <div class="dp-title" id="dp-title">—</div>
+      <div class="dp-co" id="dp-co">—</div>
+    </div>
+    <button class="dp-close" onclick="closeDetail()">✕</button>
+  </div>
+  <div class="dp-tabs">
+    <div class="dp-tab active" onclick="dpTab('overview',this)">Overview</div>
+    <div class="dp-tab" onclick="dpTab('eval',this)">Evaluation</div>
+    <div class="dp-tab" onclick="dpTab('cover',this)">Cover Letter</div>
+    <div class="dp-tab" onclick="dpTab('stories',this)">Stories</div>
+  </div>
+  <div class="dp-body" id="dp-body"></div>
+  <div class="dp-footer" id="dp-footer"></div>
 </div>
 
-<div class="controls">
-  <button class="fb on" onclick="filter('all',this)">All</button>
-  <button class="fb" onclick="filter('pipeline',this)">Pipeline</button>
-  <button class="fb" onclick="filter('evaluated',this)">Evaluated</button>
-  <button class="fb" onclick="filter('applied',this)">Applied</button>
-  <button class="fb" onclick="filter('interview_1',this)">Interview</button>
-  <button class="fb" onclick="filter('offer',this)">Offer</button>
-  <input class="search" type="text" placeholder="Search role, company..." oninput="search(this.value)"/>
-</div>
-
-<div class="tw">
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Role & Company</th>
-        <th>Location</th>
-        <th>Salary</th>
-        <th>Score</th>
-        <th>Priority</th>
-        <th>Status</th>
-        <th>Gaps</th>
-        <th>Added</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
-</div>
-
-<!-- ADD / EDIT MODAL -->
-<div class="overlay" id="modal">
+<!-- ── ADD/EDIT MODAL ─────────────────────────────────── -->
+<div class="overlay-modal" id="modal-add">
   <div class="modal">
     <div class="modal-hd">
       <h2 id="modal-title">Add Role</h2>
-      <button class="close-btn" onclick="closeModal()">✕</button>
+      <button class="dp-close" onclick="closeModal('modal-add')">✕</button>
     </div>
     <div class="form-grid">
-      <div class="form-full">
-        <label>Job Title *</label>
-        <input id="f-title" type="text" placeholder="e.g. Lead AI Engineer"/>
-      </div>
-      <div>
-        <label>Company *</label>
-        <input id="f-company" type="text" placeholder="e.g. Anthropic"/>
-      </div>
-      <div>
-        <label>Location</label>
-        <input id="f-location" type="text" placeholder="e.g. Remote, UK"/>
-      </div>
-      <div>
-        <label>Salary Range</label>
-        <input id="f-salary" type="text" placeholder="e.g. £70k–£90k"/>
-      </div>
-      <div>
-        <label>Score (0–5.0)</label>
-        <input id="f-score" type="number" min="0" max="5" step="0.1" placeholder="e.g. 4.2"/>
-      </div>
-      <div>
-        <label>Priority</label>
-        <select id="f-priority">
-          <option value="high">High</option>
-          <option value="medium" selected>Medium</option>
-          <option value="low">Low</option>
+      <div class="form-full"><label>Job Title *</label><input id="f-title" type="text" placeholder="e.g. Lead AI/ML Engineer"/></div>
+      <div><label>Company *</label><input id="f-company" type="text" placeholder="e.g. Anthropic"/></div>
+      <div><label>Location</label><input id="f-location" type="text" placeholder="e.g. Remote, UK"/></div>
+      <div><label>Salary Range</label><input id="f-salary" type="text" placeholder="e.g. £70k–£90k"/></div>
+      <div><label>Score (0–5.0)</label><input id="f-score" type="number" min="0" max="5" step="0.1" placeholder="e.g. 4.2"/></div>
+      <div><label>Archetype</label>
+        <select id="f-arch">
+          <option value="platform">AI Platform / LLMOps</option>
+          <option value="agentic">Agentic / Automation</option>
+          <option value="pm">Technical AI PM</option>
+          <option value="architect">AI Solutions Architect</option>
+          <option value="deployed">AI Forward Deployed</option>
+          <option value="transform">AI Transformation</option>
         </select>
       </div>
-      <div>
-        <label>Status</label>
+      <div><label>Priority</label>
+        <select id="f-priority"><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select>
+      </div>
+      <div><label>Status</label>
         <select id="f-status">
-          <option value="pipeline">Pipeline</option>
-          <option value="evaluated">Evaluated</option>
-          <option value="applied">Applied</option>
-          <option value="interview_1">Interview 1</option>
-          <option value="interview_2">Interview 2</option>
-          <option value="final">Final Round</option>
-          <option value="offer">Offer</option>
-          <option value="rejected">Rejected</option>
-          <option value="withdrawn">Withdrawn</option>
-          <option value="skip">Skip</option>
+          <option value="pipeline">Pipeline</option><option value="evaluated">Evaluated</option>
+          <option value="applied">Applied</option><option value="interview_1">Interview 1</option>
+          <option value="interview_2">Interview 2</option><option value="final">Final Round</option>
+          <option value="offer">Offer</option><option value="rejected">Rejected</option>
+          <option value="withdrawn">Withdrawn</option><option value="skip">Skip</option>
         </select>
       </div>
-      <div>
-        <label>Cover Letter</label>
-        <select id="f-cl">
-          <option value="false">Not drafted</option>
-          <option value="true">Drafted ✅</option>
-        </select>
+      <div><label>Cover Letter</label>
+        <select id="f-cl"><option value="false">Not drafted</option><option value="true">Drafted ✅</option></select>
       </div>
-      <div class="form-full">
-        <label>Indeed / Job URL</label>
-        <input id="f-url" type="url" placeholder="https://uk.indeed.com/..."/>
-      </div>
-      <div class="form-full">
-        <label>Gap Keywords (comma-separated)</label>
-        <input id="f-gaps" type="text" placeholder="e.g. MLflow, SageMaker, Azure ML"/>
-      </div>
-      <div class="form-full">
-        <label>Notes</label>
-        <textarea id="f-notes" placeholder="Any context, red flags, reasons to apply..."></textarea>
-      </div>
+      <div><label>Date Posted</label><input id="f-posted" type="text" placeholder="e.g. 2026-04-06"/></div>
+      <div class="form-full"><label>Indeed / Job URL</label><input id="f-url" type="url" placeholder="https://uk.indeed.com/..."/></div>
+      <div class="form-full"><label>Gap Keywords (comma-separated)</label><input id="f-gaps" type="text" placeholder="e.g. MLflow, SageMaker, Azure ML"/></div>
+      <div class="form-full"><label>Notes / Red Flags</label><textarea id="f-notes" placeholder="Context, concerns, reason to apply..."></textarea></div>
+      <div class="form-full"><label>Score Breakdown (CV,NorthStar,Comp,Remote,Seniority,Trajectory,Culture,Flags,Stack — space-separated 1-5)</label><input id="f-breakdown" type="text" placeholder="4.5 4 4 5 4 3.5 4 5 4"/></div>
     </div>
     <div class="modal-foot">
-      <button class="btn btn-g" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-p" onclick="saveEntry()">Save</button>
+      <button class="btn btn-ghost" onclick="closeModal('modal-add')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEntry()">Save Role</button>
     </div>
   </div>
 </div>
 
-<footer>Rume Dominic · Lead AI/ML Engineer · career-ops v1.0 · Data stored locally in your browser</footer>
+<!-- ── STORY BANK MODAL ───────────────────────────────── -->
+<div class="overlay-modal" id="modal-stories">
+  <div class="modal" style="max-width:700px;width:700px;">
+    <div class="modal-hd">
+      <h2>📖 STAR+R Story Bank</h2>
+      <button class="dp-close" onclick="closeModal('modal-stories')">✕</button>
+    </div>
+    <div id="story-list" style="max-height:65vh;overflow-y:auto;"></div>
+  </div>
+</div>
+
+<!-- ── SCAN MODAL ─────────────────────────────────────── -->
+<div class="overlay-modal" id="modal-scan">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-hd">
+      <h2>🔍 Scan Indeed UK</h2>
+      <button class="dp-close" onclick="closeModal('modal-scan')">✕</button>
+    </div>
+    <p style="font-size:.8rem;color:var(--muted);margin-bottom:16px;line-height:1.6;">
+      Paste new Indeed job URLs below (one per line) or add them directly to your pipeline. The agent will evaluate them next time you run <code style="background:var(--s3);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:.72rem;">/career-ops scan</code> in Claude Code.
+    </p>
+    <label>Paste Indeed URLs (one per line)</label>
+    <textarea id="scan-urls" style="height:140px;margin-bottom:14px;" placeholder="https://uk.indeed.com/viewjob?jk=...&#10;https://to.indeed.com/..."></textarea>
+    <div style="background:var(--s2);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:4px;">
+      <div style="font-size:.72rem;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Quick Searches — open in new tab</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;" id="quick-searches"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('modal-scan')">Close</button>
+      <button class="btn btn-primary" onclick="addScannedUrls()">Add to Pipeline</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST STACK ────────────────────────────────────── -->
+<div class="toast-stack" id="toast-stack"></div>
 
 <script>
-// ── Storage ──────────────────────────────────────────────
-const KEY = 'rume_pipeline_v2';
+// ─────────────────────────────────────────────────────────
+// DATA LAYER
+// ─────────────────────────────────────────────────────────
+const KEY = 'rume_career_ops_v3';
 let apps = [];
 let filterState = 'all';
 let searchStr = '';
 let editId = null;
+let selectedId = null;
+let currentDpTab = 'overview';
+let currentView = 'table';
 
-function save() { localStorage.setItem(KEY, JSON.stringify(apps)); }
-function load() {
+function uid(){ return 'a'+Date.now().toString(36)+Math.random().toString(36).slice(2,5); }
+function today(){ return new Date().toISOString().slice(0,10); }
+
+// ─── Seed data — 8 real pipeline roles + 4 original ──────
+const SEED = [
+  {
+    id:uid(),title:'Applied AI ML — Python & Agentic AI',company:'JPMorgan Chase',
+    location:'Glasgow, UK',remote:false,salary:'£83,500–£101,000',score:4.4,
+    arch:'agentic',priority:'high',status:'pipeline',cl:false,
+    url:'https://to.indeed.com/aa6ggycm28hn',posted:'2026-04-06',
+    gaps:['financial services domain'],notes:'Strong agentic + Python match. Senior IC fit. Glasgow HQ — confirm hybrid.',
+    added:today(),
+    breakdown:[4.5,4.5,4.5,3,4.5,5,4,4.5,4.5],
+    eval:{
+      A:{summary:'Agentic AI engineering role in JPM\'s applied AI division. Python-heavy, multi-agent orchestration, financial data pipelines.'},
+      B:[
+        {req:'Python & Agentic AI systems',strength:'strong',proof:'Brian-Store-AI autonomous agent; Digital Sovereign daemon; production LLM workflows at Vorem'},
+        {req:'Production ML deployment',strength:'strong',proof:'GCP Cloud Run deployment; 91+ AIOps score at Micki Solutions'},
+        {req:'RAG / LLM architectures',strength:'strong',proof:'Tax Intelligence RAG pipeline — data extraction, anomaly detection, categorisation'},
+        {req:'Financial services domain',strength:'gap',proof:'No direct FS domain — mitigate with governance cert (AI for GRC) and RAG pipeline precision narrative'},
+      ],
+      C:'Lead with Micki Solutions AIOps + Vorem LLM delivery. Frame Vorem as Lead AI/ML Engineer (not Founder). MSc AI & Business Strategy = strategic credibility anchor.',
+      D:'Glassdoor: £75k–£100k for ML Engineer at JPMorgan London. Role listed at £83.5k–£101k — at/above market. Above Rume\'s £60k floor.',
+      E:['Retitle CV headline to "AI Engineer — Agentic Systems & LLMOps"','Add "multi-agent orchestration" to Vorem bullet','Surface Brian-Store-AI first in AI Projects','Add Python depth signal — mention Flask, REST, Shell in stack row','Emphasise "production delivery" count: 3 systems shipped to production'],
+    },
+    coverLetter:'Production-grade agentic AI systems are not built from frameworks — they\'re designed from first principles and shipped into chaos. At Micki Solutions, I designed an AIOps platform achieving 91+ performance scores; at Vorem, I delivered a multi-step LLM workflow agent and a RAG-powered OCR engine that moved from concept to GCP Cloud Run in a single sprint.\n\nJPMorgan\'s Applied AI division is solving the class of problem I find most interesting: Python-native agentic systems operating on financial data at enterprise scale. My background maps directly — autonomous agent design, hallucination guardrails, responsible AI governance documentation, and cross-functional delivery. The Tech Stack is identical.\n\nI\'ll bring structured agentic architectures, not prototypes.',
+    stories:['Production RAG Pipeline — Tax Intelligence OCR Engine','Hallucination Guardrails — Enterprise LLM Deployment','AIOps Platform — 91+ Performance Score at Micki Solutions']
+  },
+  {
+    id:uid(),title:'AI Platform Engineer',company:'The Portfolio Group',
+    location:'London, UK',remote:true,salary:'£75,000–£85,000',score:4.2,
+    arch:'platform',priority:'high',status:'pipeline',cl:false,
+    url:'https://to.indeed.com/aackhbqz94kf',posted:'2026-04-02',
+    gaps:['MLflow','Kubeflow'],notes:'Strong platform match. Salary in range. London hybrid.',
+    added:today(),breakdown:[4,4.5,4,5,4,4,4,4.5,3.5],
+    eval:{
+      A:{summary:'AI Platform engineering — building internal ML infrastructure, pipelines, monitoring, and tooling for data/model teams.'},
+      B:[
+        {req:'AI/ML platform design',strength:'strong',proof:'Micki Solutions: production-grade AI platform with AIOps practices, 91+ reliability'},
+        {req:'Pipeline orchestration',strength:'strong',proof:'Cloud Run deployment pipeline; Digital Sovereign agent orchestration; GitHub Actions CI/CD at MCKI'},
+        {req:'MLOps tooling (MLflow/Kubeflow)',strength:'gap',proof:'Gap — mitigate: architecture-level MLOps design demonstrated; tool transfer is fast'},
+        {req:'Monitoring & observability',strength:'partial',proof:'AIOps monitoring at Micki; production scoring metrics tracked'},
+      ],
+      C:'Lead with AIOps platform credentials. Frame as platform architect who has built for production reliability, not just experiments.',
+      D:'Market rate for AI Platform Engineer London: £70k–£95k. This role at £75k–£85k is within range. Above floor.',
+      E:['Add "platform engineering" to Micki Solutions bullet','Mention observability/monitoring explicitly in AIOps bullet','Surface GitHub Actions CI/CD more prominently','Add "LLMOps" keyword to profile section','Restructure skills: AI Platforms section first'],
+    },
+    coverLetter:'',stories:['AIOps Platform — 91+ Performance Score at Micki Solutions','Production RAG Pipeline — Tax Intelligence OCR Engine']
+  },
+  {
+    id:uid(),title:'Machine Learning Engineer (AI Platform)',company:'HeadFirst Group',
+    location:'London, UK',remote:true,salary:'£72k–£102k/yr est.',score:4.0,
+    arch:'platform',priority:'high',status:'pipeline',cl:false,
+    url:'https://to.indeed.com/aazmgrtjp46n',posted:'2026-04-07',
+    gaps:['classical ML (sklearn/XGBoost)','feature stores'],notes:'Good range top-end. Platform focus matches.',
+    added:today(),breakdown:[3.5,4,4.5,5,4,4,3.5,4.5,3.5],
+    eval:{
+      A:{summary:'ML Engineer embedded in AI platform team. Model training pipelines, feature engineering, deployment infra.'},
+      B:[
+        {req:'ML pipeline development',strength:'strong',proof:'RAG pipeline on GCP; agentic workflow orchestration with multi-step LLM architecture'},
+        {req:'Production model deployment',strength:'strong',proof:'GCP Cloud Run deployment; AIOps production platform at Micki'},
+        {req:'Classical ML (sklearn, XGBoost)',strength:'gap',proof:'Background is LLM/GenAI heavy — reframe RAG retrieval as ML system; acknowledge gap'},
+        {req:'Cross-functional collaboration',strength:'strong',proof:'Cross-functional AI literacy uplift at Vorem; stakeholder governance docs at Micki'},
+      ],
+      C:'Be explicit about GenAI depth as a differentiator vs classical ML. Platform teams increasingly need LLM expertise.',
+      D:'Range £72k–£102k. Target £85k+ as experienced Lead.',
+      E:['Add "LLM-native platform engineering" framing to profile','Surface Python data manipulation work in projects','Emphasise production deployment count','Add monitoring/observability language'],
+    },
+    coverLetter:'',stories:['Production RAG Pipeline — Tax Intelligence OCR Engine','AIOps Platform — 91+ Performance Score at Micki Solutions']
+  },
+  {
+    id:uid(),title:'Staff Backend Engineer, AI Platform',company:'Hostaway',
+    location:'Remote, EMEA',remote:true,salary:'£55,000–£93,000',score:3.6,
+    arch:'platform',priority:'medium',status:'pipeline',cl:false,
+    url:'https://to.indeed.com/aa9b4j26ftwt',posted:'2026-03-31',
+    gaps:['hospitality/proptech domain','Staff-level backend depth'],notes:'100% remote ✅. Salary floor marginal (£55k base). Staff title = senior IC. Backend-heavy — assess engineering depth signal.',
+    added:today(),breakdown:[3.5,3.5,3,5,4,3.5,3.5,4,3],
+    eval:{
+      A:{summary:'Staff-level backend engineer embedded in AI platform team at a hospitality SaaS. Python/Go backend + ML infra.'},
+      B:[
+        {req:'Staff-level backend engineering',strength:'partial',proof:'Backend present (Flask, REST, GCP) but not primary signal — LLM/platform is stronger'},
+        {req:'AI/ML platform integration',strength:'strong',proof:'Micki AIOps platform; RAG pipeline on Cloud Run'},
+        {req:'Hospitality/proptech domain',strength:'gap',proof:'No domain match — neutral gap, not disqualifying'},
+        {req:'100% remote working',strength:'strong',proof:'Remote-native delivery across all roles'},
+      ],
+      C:'Apply with reason: remote 100% is rare and valuable. Salary floor at £55k is below target but ceiling £93k justifies. Frame as Platform + AI hybrid, not pure backend.',
+      D:'Below Rume\'s £75k target base but ceiling hits £93k. Remote premium offsets. Conditional apply.',
+      E:['Lead with remote-native delivery in cover letter','Add backend API architecture language','Frame GCP as full cloud deployment ownership'],
+    },
+    coverLetter:'',stories:['AIOps Platform — 91+ Performance Score at Micki Solutions']
+  },
+  {
+    id:uid(),title:'Staff Software Engineer – AI/ML (Agentic AI)',company:'OpenAsset',
+    location:'United Kingdom',remote:true,salary:'TBC',score:4.1,
+    arch:'agentic',priority:'high',status:'pipeline',cl:false,
+    url:'https://to.indeed.com/aaldf64hkjpb',posted:'2026-03-04',
+    gaps:['salary not listed'],notes:'Agentic AI focus — strongest archetype match. Salary TBC is a flag — research before applying.',
+    added:today(),breakdown:[4,4.5,3,5,4,4,4,4,4],
+    eval:{
+      A:{summary:'Agentic AI system engineering — building autonomous pipelines, HITL workflows, and multi-agent orchestration.'},
+      B:[
+        {req:'Agentic AI system design',strength:'strong',proof:'Brian-Store-AI: autonomous inventory agent; Digital Sovereign: 24/7 headless daemon'},
+        {req:'Multi-agent orchestration',strength:'strong',proof:'Multi-step LLM workflow design with state management and crash recovery patterns'},
+        {req:'HITL (Human-in-the-Loop)',strength:'partial',proof:'HITL embedded in all production deployments — governance docs evidence'},
+        {req:'Salary expectation',strength:'gap',proof:'No listed salary — research Glassdoor for OpenAsset engineer comp before applying'},
+      ],
+      C:'This is Rume\'s highest-archetype match role. Lead with Agentic systems. Brian-Store-AI and Digital Sovereign Agent are the primary proof points.',
+      D:'Salary TBC — action: research before applying. OpenAsset is a PropTech SaaS — engineer comps typically £60k–£100k.',
+      E:['Retitle to "Agentic AI Engineer" for this application','Lead Brian-Store-AI bullet with HITL design','Add "autonomous pipeline" language'],
+    },
+    coverLetter:'',stories:['Autonomous Marketing Daemon — Digital Sovereign Agent','Production RAG Pipeline — Tax Intelligence OCR Engine','Brian-Store-AI — Autonomous Retail Workflow Agent']
+  },
+  {
+    id:uid(),title:'Staff Software Engineer – AI/ML (MLOps)',company:'OpenAsset',
+    location:'United Kingdom',remote:true,salary:'TBC',score:3.9,
+    arch:'platform',priority:'medium',status:'pipeline',cl:false,
+    url:'https://to.indeed.com/aaqvd9rhpwjp',posted:'2026-03-04',
+    gaps:['MLOps toolchain (MLflow, Weights & Biases)','salary TBC'],notes:'MLOps-specific — weaker match vs Agentic AI role at same company. Apply Agentic first.',
+    added:today(),breakdown:[3.5,4,3,5,4,3.5,4,4,3],
+    eval:{
+      A:{summary:'MLOps-focused Staff engineer — model registry, experiment tracking, CI/CD for ML, monitoring.'},
+      B:[
+        {req:'MLOps toolchain',strength:'gap',proof:'Gap: MLflow/W&B not in stack — mitigate with AIOps platform design and production monitoring evidence'},
+        {req:'Production ML deployment',strength:'strong',proof:'GCP Cloud Run; AIOps 91+ score'},
+        {req:'Experiment tracking & CI/CD',strength:'partial',proof:'GitHub Actions CI/CD at MCKI; structured deployment patterns at Vorem'},
+      ],
+      C:'Apply after Agentic AI role at same company. Weaker match — lead with AIOps production credentials.',
+      D:'Same as Agentic AI role — research required.',
+      E:['Add "model lifecycle" language to Micki Solutions bullet','Surface GitHub Actions CI/CD prominently','Frame production scoring metrics as experiment tracking analogue'],
+    },
+    coverLetter:'',stories:['AIOps Platform — 91+ Performance Score at Micki Solutions']
+  },
+  {
+    id:uid(),title:'Senior LLM AI Engineer',company:'LEUTE PASSEN',
+    location:'London, UK',remote:false,salary:'£60,000–£75,000',score:4.0,
+    arch:'platform',priority:'medium',status:'pipeline',cl:false,
+    url:'https://to.indeed.com/aa88tlcyxv6j',posted:'2026-03-23',
+    gaps:['German language (company name suggests DACH)','salary at lower bound'],notes:'LLM engineering focus — strong match. Salary £60k–£75k is at floor. Confirm remote policy.',
+    added:today(),breakdown:[4.5,4,3,3,4,3.5,3.5,4.5,4.5],
+    eval:{
+      A:{summary:'Senior LLM engineer — prompt architecture, fine-tuning, RAG systems, hallucination mitigation.'},
+      B:[
+        {req:'LLM engineering depth',strength:'strong',proof:'Azure OpenAI, Gemini API, GPT-4o — production deployments across all three'},
+        {req:'Prompt architecture',strength:'strong',proof:'Custom guardrail architecture; multi-step prompt design for enterprise LLM workflows'},
+        {req:'RAG systems',strength:'strong',proof:'Tax Intelligence RAG pipeline — production, GCP, measurable precision'},
+        {req:'Salary £60k–£75k',strength:'partial',proof:'At Rume\'s floor — apply but negotiate toward £75k ceiling'},
+      ],
+      C:'Strongest LLM-specific match in pipeline. Lead with prompt guardrails and RAG pipeline. MSc AI credibility anchor.',
+      D:'Salary at market low for Senior LLM Engineer London (Glassdoor: £65k–£95k). Negotiate aggressively.',
+      E:['Add "LLM systems engineering" to headline','Surface hallucination mitigation prominently','Lead with RAG pipeline in projects'],
+    },
+    coverLetter:'',stories:['Hallucination Guardrails — Enterprise LLM Deployment','Production RAG Pipeline — Tax Intelligence OCR Engine']
+  },
+  {
+    id:uid(),title:'AI/ML & Prompt Engineer — LLM, RAG & Voice Agent',company:'QuantumLoopAI',
+    location:'London, UK',remote:false,salary:'TBC',score:3.7,
+    arch:'agentic',priority:'medium',status:'pipeline',cl:false,
+    url:'https://to.indeed.com/aasnrwzbffbd',posted:'2026-04-01',
+    gaps:['voice agent / TTS systems','salary TBC','company size unclear'],notes:'Interesting role — voice AI + RAG combo. Salary TBC and company unknown = more research needed.',
+    added:today(),breakdown:[3.5,3.5,3,3,3.5,3,3.5,4,4],
+    eval:{
+      A:{summary:'Hybrid AI/Prompt Engineer role — LLM, RAG, and voice agent systems in a startup context.'},
+      B:[
+        {req:'Prompt engineering',strength:'strong',proof:'Hallucination mitigation; few/zero-shot; custom guardrails in production'},
+        {req:'RAG systems',strength:'strong',proof:'Tax Intelligence RAG pipeline'},
+        {req:'Voice agent systems',strength:'gap',proof:'No voice AI experience — ElevenLabs/Whisper/TTS not in stack. Significant gap.'},
+        {req:'Company credibility',strength:'gap',proof:'QuantumLoopAI — low brand recognition. Research founders, funding before applying'},
+      ],
+      C:'Apply only after researching the company. Voice AI gap is real but prompt+RAG depth compensates partially.',
+      D:'Salary TBC — red flag without strong company signals. Research required.',
+      E:['If applying: frame RAG + LLM depth as core; acknowledge voice AI as adjacent learn'],
+    },
+    coverLetter:'',stories:['Hallucination Guardrails — Enterprise LLM Deployment','Production RAG Pipeline — Tax Intelligence OCR Engine']
+  },
+];
+
+const STORIES = [
+  {
+    title:'Production RAG Pipeline — Tax Intelligence OCR Engine',
+    archetypes:['AI Platform / LLMOps','Agentic / Automation'],
+    competencies:['Technical delivery','Production deployment','AI architecture'],
+    keywords:['RAG','production AI','LLMs','GCP','Cloud Run','data extraction'],
+    situation:'A business was manually processing unstructured, low-quality bank statement images to extract tax-relevant data. The process was slow, error-prone, and unscalable.',
+    task:'As Lead AI/ML Engineer, design, build, and deploy an automated AI solution end-to-end — from problem definition through to production.',
+    action:'Engineered a custom AI-enhanced OCR analyzer using Google Gemini API and a RAG-powered retrieval architecture. Designed the pipeline to handle image degradation, built anomaly detection logic, and deployed to GCP via Cloud Run for serverless scale.',
+    result:'System moved to production. Automated data extraction, anomaly detection, and tax categorisation — eliminating manual processing and delivering measurable improvements in data governance precision.',
+    reflection:'Treating OCR not as a single-model problem but as a pipeline with distinct retrieval, extraction, and validation stages was the key insight. If doing again: build a feedback loop into the anomaly detection layer.'
+  },
+  {
+    title:'Hallucination Guardrails — Enterprise LLM Deployment',
+    archetypes:['AI Platform / LLMOps','AI Transformation'],
+    competencies:['Technical governance','Responsible AI','Enterprise reliability'],
+    keywords:['hallucination mitigation','prompt engineering','LLM guardrails','enterprise safety'],
+    situation:'An enterprise deploying LLMs for automated business strategy tooling faced real risk of hallucinated outputs in a compliance-sensitive context.',
+    task:'As Lead AI/ML Engineer, implement guardrails ensuring enterprise-safe outputs from LLM workflows.',
+    action:'Designed a custom prompt guardrail architecture — combining few-shot prompting, output validation layers, and structured response schemas. Tested adversarial edge cases systematically before each production release.',
+    result:'Delivered Generative AI use cases into production with enterprise-safe outputs. Hallucination incidents consistently below threshold. Guardrail patterns became the standard deployment template.',
+    reflection:'Prompt guardrails alone are insufficient without output validation at the application layer. The combination of upstream prompt design and downstream format enforcement is what makes LLMs reliable in enterprise contexts.'
+  },
+  {
+    title:'AIOps Platform — 91+ Performance Score',
+    archetypes:['AI Platform / LLMOps'],
+    competencies:['System reliability','AIOps','Technical leadership'],
+    keywords:['AIOps','system reliability','performance','production-grade','monitoring'],
+    situation:'Micki Solutions needed a production-grade AI platform meeting strict performance and accessibility standards.',
+    task:'As Senior AI/ML Engineer, design and implement the AIOps platform from the ground up with measurable performance targets.',
+    action:'Designed AI platform architecture with AIOps practices baked in — automated health checks, performance monitoring, accessibility compliance testing, and reliability scoring in the CI/CD pipeline. Authored AI requirements and security documentation.',
+    result:'Achieved 91+ performance scores in system reliability and accessibility. Security documentation became the governance baseline for all subsequent automated workflows.',
+    reflection:'The 91+ score was achievable because we defined the measurement criteria before building, not after. Governance-first design is faster in the long run.'
+  },
+  {
+    title:'Autonomous Marketing Daemon — Digital Sovereign Agent',
+    archetypes:['Agentic / Automation'],
+    competencies:['Autonomous agent design','Production deployment','Technical innovation'],
+    keywords:['autonomous agents','multi-step LLM','orchestration','headless automation','scheduling'],
+    situation:'Content creation and multi-channel social media distribution was a major manual overhead — consuming hours daily with no scalable path.',
+    task:'Design and ship an autonomous AI system that eliminates this overhead entirely — no human input required post-deployment.',
+    action:'Engineered a 24/7 headless daemon with three core modules: a psychological narrative engine, a Studio Director generating multimedia briefs, and a Social Dispatcher with API connectors for X, LinkedIn, and Instagram. Triggered daily at 06:00 AM via cron.',
+    result:'System runs without human intervention, generating daily marketing packets and deploying across channels. Engagement metrics increased and manual content overhead eliminated.',
+    reflection:'The hardest part wasn\'t the automation — it was teaching the LLM to write in a specific brand voice consistently. Tightly scoped output schemas, not just good prompts, provide the real reliability.'
+  },
+  {
+    title:'Cross-Functional AI Literacy — Enterprise Capability Uplift',
+    archetypes:['AI Transformation','Technical AI PM'],
+    competencies:['Cross-functional leadership','Change management','AI adoption'],
+    keywords:['AI literacy','organisational change','technology adoption','cross-functional','stakeholders'],
+    situation:'Teams within an enterprise environment had limited understanding of AI\'s practical capabilities — creating a gap between what AI could deliver and what stakeholders were requesting.',
+    task:'As Lead AI/ML Engineer, increase AI literacy and capability across teams while maintaining long-term maintainability of delivered systems.',
+    action:'Designed deployment patterns for automated business strategy tools that were intentionally transparent and explainable. Ran working sessions with cross-functional stakeholders using real outputs. Built documentation non-technical teams could actually use.',
+    result:'Teams moved from passive AI consumers to active collaborators. AI literacy measurably increased — stakeholders began bringing problem statements rather than waiting to be educated.',
+    reflection:'AI transformation is a trust problem before it\'s a technology problem. The turning point was when I stopped explaining AI and started showing it working on their actual data.'
+  },
+];
+
+const INDEED_SEARCHES = [
+  {label:'Lead AI Engineer — UK Remote',q:'site:uk.indeed.com "Lead AI Engineer" remote'},
+  {label:'Senior AI/ML Engineer — UK',q:'site:uk.indeed.com "Senior AI Engineer" United Kingdom remote'},
+  {label:'LLMOps Engineer — UK',q:'site:uk.indeed.com "LLMOps Engineer" United Kingdom'},
+  {label:'Agentic AI Engineer — UK',q:'site:uk.indeed.com "Agentic AI" engineer United Kingdom'},
+  {label:'AI Platform Engineer — UK',q:'site:uk.indeed.com "AI Platform Engineer" United Kingdom remote'},
+  {label:'Generative AI Engineer — UK',q:'site:uk.indeed.com "Generative AI Engineer" United Kingdom'},
+  {label:'Head of AI Engineering — UK',q:'site:uk.indeed.com "Head of AI Engineering" United Kingdom'},
+];
+
+// ─────────────────────────────────────────────────────────
+// STORAGE
+// ─────────────────────────────────────────────────────────
+function saveData(){ localStorage.setItem(KEY, JSON.stringify(apps)); }
+function loadData(){
   const raw = localStorage.getItem(KEY);
-  if (raw) { apps = JSON.parse(raw); }
-  else {
-    // Seed with the 5 example applications from existing tracker
-    apps = [
-      { id: uid(), title:'AI Architect', company:'Datacom Connect', location:'Brisbane, QLD, AU', salary:'AUD $100k–$140k', score:3.9, priority:'high', status:'evaluated', cl:false, url:'https://uk.indeed.com', gaps:['solution architecture','enterprise AI strategy'], notes:'Strongest CV match so far.', added: today() },
-      { id: uid(), title:'Head of AI Engineering', company:'CellIQ', location:'Mayfair, London, UK', salary:'£30k–£135k', score:3.5, priority:'medium', status:'evaluated', cl:false, url:'https://uk.indeed.com', gaps:[], notes:'Confirm scope — listed as part-time.', added: today() },
-      { id: uid(), title:'Generative AI Lead', company:'GBS UK', location:'London, UK', salary:'£50k–£75k', score:3.7, priority:'medium', status:'pipeline', cl:false, url:'https://uk.indeed.com', gaps:[], notes:'Comp below target floor (£60k).', added: today() },
-      { id: uid(), title:'Lead AI/ML Engineer', company:'Open Role', location:'Remote, UK', salary:'£70k–£95k', score:4.5, priority:'high', status:'pipeline', cl:false, url:'https://uk.indeed.com', gaps:['LLMOps tooling'], notes:'Run /career-ops scan to populate with live roles.', added: today() },
-    ];
-    save();
-  }
+  if(raw){ try{ apps=JSON.parse(raw); }catch(e){ apps=[...SEED]; saveData(); } }
+  else{ apps=[...SEED]; saveData(); }
 }
 
-function uid() { return 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2,5); }
-function today() { return new Date().toISOString().slice(0,10); }
+// ─────────────────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────────────────
+const ARCH_META = {
+  platform: {label:'AI Platform / LLMOps', cls:'arch-platform'},
+  agentic:  {label:'Agentic / Automation', cls:'arch-agentic'},
+  pm:       {label:'Technical AI PM',       cls:'arch-pm'},
+  architect:{label:'AI Solutions Architect',cls:'arch-architect'},
+  deployed: {label:'AI Forward Deployed',   cls:'arch-deployed'},
+  transform:{label:'AI Transformation',     cls:'arch-transform'},
+};
 
-// ── Render ────────────────────────────────────────────────
-function render() {
-  const filtered = apps.filter(a => {
-    const fok = filterState === 'all' || a.status === filterState;
-    const q = searchStr.toLowerCase();
-    const sok = !q || a.title.toLowerCase().includes(q) || a.company.toLowerCase().includes(q) || (a.location||'').toLowerCase().includes(q);
-    return fok && sok;
+function scoreColor(s){
+  if(s>=4)return'var(--green)';
+  if(s>=3)return'var(--yellow)';
+  return'var(--red)';
+}
+function scorePct(s){ return Math.min(100,Math.round((s/5)*100)); }
+
+function renderScoreRing(s,size=32){
+  const r=11; const circ=2*Math.PI*r; const pct=scorePct(s);
+  const offset=circ-(pct/100)*circ; const col=scoreColor(s);
+  return `<svg class="score-ring" width="${size}" height="${size}" viewBox="0 0 28 28">
+    <circle cx="14" cy="14" r="${r}" fill="none" stroke="var(--s3)" stroke-width="3"/>
+    <circle cx="14" cy="14" r="${r}" fill="none" stroke="${col}" stroke-width="3"
+      stroke-dasharray="${circ}" stroke-dashoffset="${offset}" stroke-linecap="round"/>
+    <text x="14" y="18" text-anchor="middle" font-size="7" font-weight="700" fill="${col}"
+      style="font-family:Inter,sans-serif;">${s>0?s.toFixed(1):'—'}</text>
+  </svg>`;
+}
+
+function filteredApps(){
+  return apps.filter(a=>{
+    const fok = filterState==='all' || a.status===filterState;
+    const q=searchStr.toLowerCase();
+    const sok=!q||a.title.toLowerCase().includes(q)||a.company.toLowerCase().includes(q)||(a.location||'').toLowerCase().includes(q);
+    return fok&&sok;
   });
+}
 
-  // Stats (always full dataset)
-  document.getElementById('s-total').textContent   = apps.length;
-  document.getElementById('s-eval').textContent    = apps.filter(a=>a.status==='evaluated').length;
-  document.getElementById('s-applied').textContent = apps.filter(a=>a.status==='applied').length;
-  document.getElementById('s-iv').textContent      = apps.filter(a=>a.status==='interview_1'||a.status==='interview_2'||a.status==='final').length;
-  document.getElementById('s-offer').textContent   = apps.filter(a=>a.status==='offer').length;
-  const sc = apps.filter(a=>a.score>0);
-  document.getElementById('s-avg').textContent     = sc.length ? (sc.reduce((s,a)=>s+parseFloat(a.score),0)/sc.length).toFixed(1) : '—';
+function updateStats(){
+  document.getElementById('s-total').textContent=apps.length;
+  document.getElementById('s-eval').textContent=apps.filter(a=>a.status==='evaluated').length;
+  document.getElementById('s-applied').textContent=apps.filter(a=>a.status==='applied').length;
+  document.getElementById('s-iv').textContent=apps.filter(a=>['interview_1','interview_2','final'].includes(a.status)).length;
+  document.getElementById('s-offer').textContent=apps.filter(a=>a.status==='offer').length;
+  const sc=apps.filter(a=>a.score>0);
+  document.getElementById('s-avg').textContent=sc.length?(sc.reduce((s,a)=>s+parseFloat(a.score),0)/sc.length).toFixed(1):'—';
 
-  const tbody = document.getElementById('tbody');
-  if (!filtered.length) {
-    tbody.innerHTML = `<tr><td colspan="10"><div class="empty"><h3>No roles match this filter</h3><p>Add a role or change the filter above.</p></div></td></tr>`;
+  // sidebar counts
+  document.getElementById('nav-total').textContent=apps.length;
+  document.getElementById('nav-pipeline').textContent=apps.filter(a=>a.status==='pipeline').length;
+  document.getElementById('nav-eval').textContent=apps.filter(a=>a.status==='evaluated').length;
+  document.getElementById('nav-applied').textContent=apps.filter(a=>a.status==='applied').length;
+  document.getElementById('nav-iv').textContent=apps.filter(a=>['interview_1','interview_2','final'].includes(a.status)).length;
+  document.getElementById('nav-offers').textContent=apps.filter(a=>a.status==='offer').length;
+}
+
+function renderTable(){
+  const list=filteredApps();
+  const tbody=document.getElementById('tbody');
+  if(!list.length){
+    tbody.innerHTML=`<tr><td colspan="10"><div class="empty"><div class="e-icon">🔍</div><h3>No roles match this filter</h3><p>Add roles or adjust the filter above.</p></div></td></tr>`;
     return;
   }
-
-  tbody.innerHTML = filtered.map((a,i) => {
-    const sc = parseFloat(a.score) || 0;
-    const pct = Math.round(sc / 5 * 100);
-    const col = sc >= 4 ? '#22c55e' : sc >= 3 ? '#f59e0b' : '#ef4444';
-    const gaps = (a.gaps||[]).slice(0,2).map(g=>`<span class="gtag">${g}</span>`).join('');
-    const moreGaps = (a.gaps||[]).length > 2 ? `<span class="gtag">+${a.gaps.length-2}</span>` : '';
-    const statusCls = 's-' + (a.status||'pipeline');
-    const priCls = 'p-' + (a.priority||'medium');
-    const statusLabel = (a.status||'pipeline').replace('_',' ').toUpperCase();
-
-    return `<tr onclick="openEdit('${a.id}')">
-      <td style="color:var(--muted);font-size:0.72rem">${String(i+1).padStart(2,'0')}</td>
+  tbody.innerHTML=list.map(a=>{
+    const arch=ARCH_META[a.arch]||ARCH_META.platform;
+    const statusCls='s-'+(a.status||'pipeline');
+    const statusLabel=(a.status||'pipeline').replace(/_/g,' ').toUpperCase();
+    const priCls='p-'+(a.priority==='high'?'high':a.priority==='medium'?'med':'low');
+    const gaps=(a.gaps||[]).slice(0,2).map(g=>`<span class="gtag">${g}</span>`).join('');
+    const moreGaps=(a.gaps||[]).length>2?`<span class="gtag">+${a.gaps.length-2}</span>`:'';
+    const locDot=a.remote?'<span class="remote-dot"></span>':'';
+    const sel=selectedId===a.id?'selected':'';
+    return `<tr class="${sel}" onclick="openDetail('${a.id}')">
       <td>
-        <div class="role-title">${a.url ? `<a class="role-link" href="${a.url}" target="_blank" onclick="event.stopPropagation()">${a.title}</a>` : a.title}</div>
-        <div class="role-company">${a.company} ${a.cl ? '· ✅ CL' : '· 📝 CL pending'}</div>
+        <div class="role-title">${a.url?`<a class="role-link" href="${a.url}" target="_blank" onclick="event.stopPropagation()">${a.title}</a>`:a.title}</div>
+        <div class="role-co">${a.company} · ${a.posted||''}</div>
       </td>
-      <td><div class="loc">${a.location||'—'}</div></td>
-      <td><div class="sal">${a.salary||'—'}</div></td>
-      <td>
-        <div class="sbar">
-          <div class="sbar-track"><div class="sbar-fill" style="width:${pct}%;background:${col}"></div></div>
-          <span class="sval" style="color:${col}">${sc > 0 ? sc.toFixed(1) : '—'}</span>
-        </div>
-      </td>
-      <td><span class="badge-sm ${priCls}">${a.priority||'med'}</span></td>
-      <td><span class="badge-sm ${statusCls}">${statusLabel}</span></td>
-      <td><div class="gaps">${gaps}${moreGaps}</div></td>
-      <td><div class="date-sub">${a.added||'—'}</div></td>
+      <td><span class="arch-badge ${arch.cls}">${arch.label}</span></td>
+      <td><div class="loc">${locDot}${a.location||'—'}</div></td>
+      <td><div class="sal">${a.salary&&a.salary!=='TBC'?a.salary:'<span class="sal-tbc">TBC</span>'}</div></td>
+      <td>${renderScoreRing(a.score)}</td>
+      <td><span class="badge ${priCls}">${a.priority||'med'}</span></td>
+      <td><span class="badge ${statusCls}">${statusLabel}</span></td>
+      <td>${a.cl?'<span class="cl-dot"></span>Drafted':'<span class="cl-x"></span>Pending'}</td>
+      <td><div class="gap-tags">${gaps}${moreGaps}</div></td>
       <td onclick="event.stopPropagation()">
-        <div class="acts">
-          <button class="btn btn-p" onclick="openEdit('${a.id}')">Edit</button>
-          ${a.url ? `<a href="${a.url}" target="_blank"><button class="btn btn-g">↗</button></a>` : ''}
-          <button class="btn btn-del" onclick="del('${a.id}')">✕</button>
+        <div class="row-actions">
+          <button class="btn btn-ghost btn-sm btn-icon" onclick="openEdit('${a.id}')" title="Edit">✏️</button>
+          ${a.url?`<a href="${a.url}" target="_blank"><button class="btn btn-ghost btn-sm btn-icon" title="Open JD">↗</button></a>`:''}
+          <button class="btn btn-ghost btn-sm btn-icon" title="Delete" onclick="delApp('${a.id}')">🗑</button>
         </div>
       </td>
     </tr>`;
   }).join('');
 }
 
-// ── Filter / Search ───────────────────────────────────────
-function filter(f, btn) {
-  filterState = f;
-  document.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
+function renderKanban(){
+  const cols=[
+    {key:'pipeline',label:'📥 Inbox'},
+    {key:'evaluated',label:'🎯 Evaluated'},
+    {key:'applied',label:'📤 Applied'},
+    {key:'interview_1',label:'🎤 Interview'},
+    {key:'final',label:'⚡ Final Round'},
+    {key:'offer',label:'🏆 Offer'},
+  ];
+  const ki=document.getElementById('kanban-inner');
+  ki.innerHTML=cols.map(col=>{
+    const colApps=apps.filter(a=>a.status===col.key);
+    const cards=colApps.length?colApps.map(a=>{
+      const sc=parseFloat(a.score)||0;
+      return `<div class="kcard" onclick="openDetail('${a.id}')">
+        <div class="kc-title">${a.title}</div>
+        <div class="kc-co">${a.company}</div>
+        <div class="kc-bottom">
+          <div class="kc-sal">${a.salary||'TBC'}</div>
+          ${renderScoreRing(sc,28)}
+        </div>
+      </div>`;
+    }).join(''):`<div style="font-size:.72rem;color:var(--muted3);padding:8px 0;text-align:center;">Empty</div>`;
+    return `<div class="kanban-col">
+      <div class="kanban-hd">
+        <span class="kh-title">${col.label}</span>
+        <span class="kh-count">${colApps.length}</span>
+      </div>
+      <div class="kanban-body">${cards}</div>
+    </div>`;
+  }).join('');
+}
+
+function render(){
+  updateStats();
+  if(currentView==='table') renderTable();
+  else renderKanban();
+}
+
+// ─────────────────────────────────────────────────────────
+// VIEWS + FILTERS
+// ─────────────────────────────────────────────────────────
+function switchView(v){
+  currentView=v;
+  document.getElementById('view-table').style.display=v==='table'?'flex':'none';
+  document.getElementById('view-kanban').style.display=v==='kanban'?'flex':'none';
+  document.getElementById('vt-table').classList.toggle('active',v==='table');
+  document.getElementById('vt-kanban').classList.toggle('active',v==='kanban');
+  document.getElementById('filter-group').style.display=v==='table'?'flex':'none';
+  document.getElementById('topbar-title').textContent=v==='kanban'?'Kanban Board':'All Roles';
+  render();
+}
+
+function setView(view,filter,btn){
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  switchView(view);
+  filterState=filter;
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
+  const labels={'all':'All','pipeline':'Pipeline','evaluated':'Evaluated','applied':'Applied','interview_1':'Interview','offer':'Offer'};
+  document.querySelectorAll('.fb').forEach(b=>{if(b.textContent===labels[filter])b.classList.add('on');});
+  render();
+}
+function filterBy(f,btn){
+  filterState=f;
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   render();
 }
-function search(q) { searchStr = q; render(); }
+function searchBy(q){ searchStr=q; render(); }
 
-// ── Modal ─────────────────────────────────────────────────
-function openAdd() {
-  editId = null;
-  document.getElementById('modal-title').textContent = 'Add Role';
-  ['title','company','location','salary','url','gaps','notes'].forEach(f => document.getElementById('f-'+f).value = '');
-  document.getElementById('f-score').value = '';
-  document.getElementById('f-priority').value = 'medium';
-  document.getElementById('f-status').value = 'pipeline';
-  document.getElementById('f-cl').value = 'false';
-  document.getElementById('modal').classList.add('open');
+// ─────────────────────────────────────────────────────────
+// DETAIL PANEL
+// ─────────────────────────────────────────────────────────
+function openDetail(id){
+  selectedId=id;
+  const a=apps.find(x=>x.id===id);
+  if(!a) return;
+  document.getElementById('dp-title').textContent=a.title;
+  document.getElementById('dp-co').textContent=`${a.company} · ${a.location||''}`;
+  document.getElementById('detail-overlay').classList.add('open');
+  document.getElementById('detail-panel').classList.add('open');
+  currentDpTab='overview';
+  document.querySelectorAll('.dp-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
+  renderDpTab(a);
+  renderTable();
 }
-function openEdit(id) {
-  const a = apps.find(x => x.id === id);
-  if (!a) return;
-  editId = id;
-  document.getElementById('modal-title').textContent = 'Edit Role';
-  document.getElementById('f-title').value    = a.title || '';
-  document.getElementById('f-company').value  = a.company || '';
-  document.getElementById('f-location').value = a.location || '';
-  document.getElementById('f-salary').value   = a.salary || '';
-  document.getElementById('f-score').value    = a.score || '';
-  document.getElementById('f-priority').value = a.priority || 'medium';
-  document.getElementById('f-status').value   = a.status || 'pipeline';
-  document.getElementById('f-cl').value       = String(a.cl || false);
-  document.getElementById('f-url').value      = a.url || '';
-  document.getElementById('f-gaps').value     = (a.gaps||[]).join(', ');
-  document.getElementById('f-notes').value    = a.notes || '';
-  document.getElementById('modal').classList.add('open');
+function closeDetail(){
+  selectedId=null;
+  document.getElementById('detail-overlay').classList.remove('open');
+  document.getElementById('detail-panel').classList.remove('open');
+  renderTable();
 }
-function closeModal() {
-  document.getElementById('modal').classList.remove('open');
-  editId = null;
+function dpTab(tab,el){
+  currentDpTab=tab;
+  document.querySelectorAll('.dp-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  const a=apps.find(x=>x.id===selectedId);
+  if(a) renderDpTab(a);
 }
-function saveEntry() {
-  const title = document.getElementById('f-title').value.trim();
-  const company = document.getElementById('f-company').value.trim();
-  if (!title || !company) { alert('Role title and company are required.'); return; }
-  const entry = {
-    id: editId || uid(),
-    title,
-    company,
-    location: document.getElementById('f-location').value.trim(),
-    salary:   document.getElementById('f-salary').value.trim(),
-    score:    parseFloat(document.getElementById('f-score').value) || 0,
-    priority: document.getElementById('f-priority').value,
-    status:   document.getElementById('f-status').value,
-    cl:       document.getElementById('f-cl').value === 'true',
-    url:      document.getElementById('f-url').value.trim(),
-    gaps:     document.getElementById('f-gaps').value.split(',').map(g=>g.trim()).filter(Boolean),
-    notes:    document.getElementById('f-notes').value.trim(),
-    added:    editId ? (apps.find(a=>a.id===editId)||{}).added || today() : today(),
+function renderDpTab(a){
+  const body=document.getElementById('dp-body');
+  const footer=document.getElementById('dp-footer');
+  const arch=ARCH_META[a.arch]||ARCH_META.platform;
+
+  if(currentDpTab==='overview'){
+    const dims=['CV Match','North Star','Compensation','Remote Policy','Seniority Fit','Trajectory','Culture','Red Flags','Tech Stack'];
+    const weights=[0.25,0.20,0.15,0.10,0.10,0.08,0.05,0.05,0.02];
+    const bd=(a.breakdown||[4,4,4,4,4,4,4,4,4]).map(Number);
+    const breakdownHTML=dims.map((d,i)=>{
+      const v=bd[i]||0;const pct=(v/5*100).toFixed(0);const col=v>=4?'var(--green)':v>=3?'var(--yellow)':'var(--red)';
+      return `<div class="sb-row">
+        <span class="sb-name">${d} <span style="font-size:.6rem;color:var(--muted3)">(${Math.round(weights[i]*100)}%)</span></span>
+        <div class="sb-track"><div class="sb-fill" style="width:${pct}%;background:${col}"></div></div>
+        <span class="sb-val" style="color:${col}">${v.toFixed(1)}</span>
+      </div>`;
+    }).join('');
+    const verdict=a.score>=4.5?'APPLY IMMEDIATELY':a.score>=4?'APPLY':a.score>=3.5?'APPLY WITH REASON':'SKIP';
+    const vCol=a.score>=4.5?'var(--green)':a.score>=4?'var(--accent)':a.score>=3.5?'var(--yellow)':'var(--red)';
+    body.innerHTML=`
+      <div class="dp-section">
+        <div style="display:flex;align-items:center;gap:12px;background:var(--s2);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:14px;">
+          ${renderScoreRing(a.score,48)}
+          <div>
+            <div style="font-size:1.2rem;font-weight:800;color:${vCol}">${a.score.toFixed(1)}<span style="font-size:.8rem;color:var(--muted2)">/5.0</span></div>
+            <div style="font-size:.72rem;font-weight:700;color:${vCol};letter-spacing:.05em;text-transform:uppercase;">${verdict}</div>
+          </div>
+          <span class="arch-badge ${arch.cls}" style="margin-left:auto;">${arch.label}</span>
+        </div>
+        <div class="dp-grid">
+          <div class="dp-field"><div class="df-label">Company</div><div class="df-val">${a.company}</div></div>
+          <div class="dp-field"><div class="df-label">Location</div><div class="df-val">${a.location||'—'} ${a.remote?'🌐':''}</div></div>
+          <div class="dp-field"><div class="df-label">Salary</div><div class="df-val">${a.salary||'TBC'}</div></div>
+          <div class="dp-field"><div class="df-label">Posted</div><div class="df-val">${a.posted||'—'}</div></div>
+        </div>
+      </div>
+      <div class="dp-section">
+        <div class="dp-label">Score Breakdown</div>
+        <div class="score-breakdown">${breakdownHTML}</div>
+      </div>
+      ${a.notes?`<div class="dp-section"><div class="dp-label">Notes</div><div class="eval-block"><div class="eval-block-body">${a.notes}</div></div></div>`:''}
+      ${(a.gaps||[]).length?`<div class="dp-section"><div class="dp-label">Gap Keywords</div><div class="gap-tags" style="flex-wrap:wrap;">${a.gaps.map(g=>`<span class="gtag" style="font-size:.72rem;padding:4px 10px;">${g}</span>`).join('')}</div></div>`:''}
+    `;
+    footer.innerHTML=`
+      <button class="btn btn-primary btn-sm" onclick="openEdit('${a.id}')">✏️ Edit</button>
+      ${a.url?`<a href="${a.url}" target="_blank" style="text-decoration:none"><button class="btn btn-ghost btn-sm">↗ Open JD</button></a>`:''}
+      <button class="btn btn-ghost btn-sm" onclick="quickStatus('${a.id}','applied')">📤 Mark Applied</button>
+      <button class="btn btn-ghost btn-sm" onclick="quickStatus('${a.id}','interview_1')">🎤 Mark Interview</button>
+    `;
+  }
+
+  else if(currentDpTab==='eval'){
+    const ev=a.eval||{};
+    const blockA=ev.A?`<div class="eval-block">
+      <div class="eval-block-hd"><div class="eval-block-letter">A</div><div class="eval-block-title">Role Summary</div></div>
+      <div class="eval-block-body">${ev.A.summary||'—'}</div>
+    </div>`:'';
+    const blockB=ev.B?`<div class="eval-block">
+      <div class="eval-block-hd"><div class="eval-block-letter">B</div><div class="eval-block-title">CV Match Analysis</div></div>
+      <div>${ev.B.map(r=>`<div class="match-row">
+        <span class="match-tag m-${r.strength}">${r.strength}</span>
+        <div class="match-text"><strong>${r.req}</strong><div class="match-proof">↳ ${r.proof}</div></div>
+      </div>`).join('')}</div>
+    </div>`:'';
+    const blockC=ev.C?`<div class="eval-block">
+      <div class="eval-block-hd"><div class="eval-block-letter">C</div><div class="eval-block-title">Level Strategy</div></div>
+      <div class="eval-block-body">${ev.C}</div>
+    </div>`:'';
+    const blockD=ev.D?`<div class="eval-block">
+      <div class="eval-block-hd"><div class="eval-block-letter">D</div><div class="eval-block-title">Compensation Research</div></div>
+      <div class="eval-block-body">${ev.D}</div>
+    </div>`:'';
+    const blockE=ev.E?`<div class="eval-block">
+      <div class="eval-block-hd"><div class="eval-block-letter">E</div><div class="eval-block-title">Personalisation Plan</div></div>
+      <ol style="padding-left:18px;font-size:.78rem;color:var(--muted);line-height:1.8;">${ev.E.map(e=>`<li>${e}</li>`).join('')}</ol>
+    </div>`:'';
+    const noEval=!ev.A&&!ev.B?`<div class="empty"><div class="e-icon">🎯</div><h3>No evaluation yet</h3><p>Run <code style="background:var(--s3);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;">/career-ops eval</code> in Claude Code for this role.</p></div>`:'';
+    body.innerHTML=blockA+blockB+blockC+blockD+blockE+noEval;
+    footer.innerHTML=`<button class="btn btn-primary btn-sm" onclick="openEdit('${a.id}')">✏️ Edit Role</button>`;
+  }
+
+  else if(currentDpTab==='cover'){
+    const hasCL=a.coverLetter&&a.coverLetter.trim().length>0;
+    body.innerHTML=`
+      <div class="dp-section">
+        <div class="dp-label" style="margin-bottom:10px;">Cover Letter — ${a.title} @ ${a.company}</div>
+        ${hasCL
+          ? `<div class="cl-area" id="cl-display">${a.coverLetter}</div>`
+          : `<div class="cl-area"><span class="cl-placeholder">No cover letter drafted yet. Generate one with <strong>/career-ops cover</strong> in Claude Code, then paste it here.</span></div>`
+        }
+      </div>
+      <div class="dp-section" style="margin-top:14px;">
+        <label>Paste / Edit Cover Letter</label>
+        <textarea id="cl-edit" style="height:180px;margin-top:6px;" placeholder="Paste cover letter here...">${a.coverLetter||''}</textarea>
+      </div>
+    `;
+    footer.innerHTML=`
+      <button class="btn btn-primary btn-sm" onclick="saveCoverLetter('${a.id}')">💾 Save Letter</button>
+      <button class="btn btn-ghost btn-sm" onclick="copyCoverLetter('${a.id}')">📋 Copy</button>
+      ${a.url?`<a href="${a.url}" target="_blank" style="text-decoration:none"><button class="btn btn-ghost btn-sm">↗ Open JD</button></a>`:''}
+    `;
+  }
+
+  else if(currentDpTab==='stories'){
+    const linked=a.stories||[];
+    const cards=STORIES.filter(s=>linked.includes(s.title)||linked.length===0).map(s=>`
+      <div class="story-card">
+        <h4>${s.title}</h4>
+        <div class="story-meta">
+          ${s.archetypes.map(at=>`<span class="badge s-evaluated" style="font-size:.6rem;">${at}</span>`).join('')}
+        </div>
+        <div class="story-section"><div class="s-label">Situation</div><div class="s-body">${s.situation}</div></div>
+        <div class="story-section"><div class="s-label">Action</div><div class="s-body">${s.action}</div></div>
+        <div class="story-section"><div class="s-label">Result</div><div class="s-body">${s.result}</div></div>
+        <div class="story-section"><div class="s-label">Reflection</div><div class="s-body">${s.reflection}</div></div>
+      </div>
+    `).join('');
+    body.innerHTML=cards||`<div class="empty"><div class="e-icon">📖</div><h3>No stories linked</h3><p>Run <code>/career-ops stories</code> to build your bank.</p></div>`;
+    footer.innerHTML=`<button class="btn btn-ghost btn-sm" onclick="openStories()">📖 Full Story Bank</button>`;
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+// QUICK ACTIONS
+// ─────────────────────────────────────────────────────────
+function quickStatus(id,status){
+  const a=apps.find(x=>x.id===id);
+  if(!a) return;
+  a.status=status;
+  if(status==='applied') a.cl=true;
+  saveData();
+  render();
+  const a2=apps.find(x=>x.id===id);
+  if(a2) renderDpTab(a2);
+  toast(`${a.company} marked as ${status.replace('_',' ').toUpperCase()}`,status==='applied'?'success':'info');
+}
+
+function saveCoverLetter(id){
+  const a=apps.find(x=>x.id===id);
+  if(!a) return;
+  a.coverLetter=document.getElementById('cl-edit').value;
+  a.cl=a.coverLetter.trim().length>0;
+  saveData();
+  renderDpTab(a);
+  render();
+  toast('Cover letter saved ✅','success');
+}
+function copyCoverLetter(id){
+  const a=apps.find(x=>x.id===id);
+  if(!a||!a.coverLetter){toast('No cover letter to copy','warn');return;}
+  navigator.clipboard.writeText(a.coverLetter);
+  toast('Copied to clipboard','success');
+}
+
+// ─────────────────────────────────────────────────────────
+// ADD / EDIT MODAL
+// ─────────────────────────────────────────────────────────
+function openAdd(){
+  editId=null;
+  document.getElementById('modal-title').textContent='Add Role';
+  ['title','company','location','salary','url','gaps','notes'].forEach(f=>{document.getElementById('f-'+f).value='';});
+  document.getElementById('f-score').value='';
+  document.getElementById('f-priority').value='medium';
+  document.getElementById('f-status').value='pipeline';
+  document.getElementById('f-cl').value='false';
+  document.getElementById('f-arch').value='platform';
+  document.getElementById('f-posted').value=today();
+  document.getElementById('f-breakdown').value='';
+  openModal('modal-add');
+}
+function openEdit(id){
+  const a=apps.find(x=>x.id===id);
+  if(!a) return;
+  editId=id;
+  document.getElementById('modal-title').textContent='Edit Role';
+  document.getElementById('f-title').value=a.title||'';
+  document.getElementById('f-company').value=a.company||'';
+  document.getElementById('f-location').value=a.location||'';
+  document.getElementById('f-salary').value=a.salary||'';
+  document.getElementById('f-score').value=a.score||'';
+  document.getElementById('f-arch').value=a.arch||'platform';
+  document.getElementById('f-priority').value=a.priority||'medium';
+  document.getElementById('f-status').value=a.status||'pipeline';
+  document.getElementById('f-cl').value=String(a.cl||false);
+  document.getElementById('f-url').value=a.url||'';
+  document.getElementById('f-gaps').value=(a.gaps||[]).join(', ');
+  document.getElementById('f-notes').value=a.notes||'';
+  document.getElementById('f-posted').value=a.posted||'';
+  document.getElementById('f-breakdown').value=(a.breakdown||[]).join(' ');
+  openModal('modal-add');
+}
+function saveEntry(){
+  const title=document.getElementById('f-title').value.trim();
+  const company=document.getElementById('f-company').value.trim();
+  if(!title||!company){toast('Title and company are required','warn');return;}
+  const bd=document.getElementById('f-breakdown').value.trim().split(/\s+/).map(Number).filter(n=>!isNaN(n)&&n>0);
+  const entry={
+    id:editId||uid(),title,company,
+    location:document.getElementById('f-location').value.trim(),
+    salary:document.getElementById('f-salary').value.trim(),
+    score:parseFloat(document.getElementById('f-score').value)||0,
+    arch:document.getElementById('f-arch').value,
+    priority:document.getElementById('f-priority').value,
+    status:document.getElementById('f-status').value,
+    cl:document.getElementById('f-cl').value==='true',
+    url:document.getElementById('f-url').value.trim(),
+    remote:document.getElementById('f-location').value.toLowerCase().includes('remote'),
+    gaps:document.getElementById('f-gaps').value.split(',').map(g=>g.trim()).filter(Boolean),
+    notes:document.getElementById('f-notes').value.trim(),
+    posted:document.getElementById('f-posted').value.trim(),
+    added:editId?(apps.find(a=>a.id===editId)||{}).added||today():today(),
+    breakdown:bd.length?bd:[4,4,4,4,4,4,4,4,4],
+    eval:(editId&&apps.find(a=>a.id===editId)||{}).eval||{},
+    coverLetter:(editId&&apps.find(a=>a.id===editId)||{}).coverLetter||'',
+    stories:(editId&&apps.find(a=>a.id===editId)||{}).stories||[],
   };
-  if (editId) { apps = apps.map(a => a.id === editId ? entry : a); }
-  else { apps.unshift(entry); }
-  save();
-  closeModal();
+  if(editId){ apps=apps.map(a=>a.id===editId?entry:a); toast('Role updated','success'); }
+  else{ apps.unshift(entry); toast(`${company} added to pipeline`,'success'); }
+  saveData();
+  closeModal('modal-add');
   render();
+  if(selectedId===editId && editId){ renderDpTab(entry); }
 }
-function del(id) {
-  if (!confirm('Remove this role from the tracker?')) return;
-  apps = apps.filter(a => a.id !== id);
-  save();
+function delApp(id){
+  if(!confirm('Remove this role from the tracker?')) return;
+  apps=apps.filter(a=>a.id!==id);
+  if(selectedId===id) closeDetail();
+  saveData();
   render();
+  toast('Role removed','info');
 }
 
-// close on overlay click
-document.getElementById('modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
+// ─────────────────────────────────────────────────────────
+// STORY BANK MODAL
+// ─────────────────────────────────────────────────────────
+function openStories(){
+  const sl=document.getElementById('story-list');
+  sl.innerHTML=STORIES.map(s=>`
+    <div class="story-card">
+      <h4>${s.title}</h4>
+      <div class="story-meta">
+        ${s.archetypes.map(at=>`<span class="badge s-evaluated" style="font-size:.6rem;">${at}</span>`).join('')}
+        ${s.competencies.map(c=>`<span class="badge s-skip" style="font-size:.6rem;">${c}</span>`).join('')}
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;">${s.keywords.map(k=>`<span class="gtag">${k}</span>`).join('')}</div>
+      <div class="story-section"><div class="s-label">Situation</div><div class="s-body">${s.situation}</div></div>
+      <div class="story-section"><div class="s-label">Task</div><div class="s-body">${s.task}</div></div>
+      <div class="story-section"><div class="s-label">Action</div><div class="s-body">${s.action}</div></div>
+      <div class="story-section"><div class="s-label">Result</div><div class="s-body">${s.result}</div></div>
+      <div class="story-section"><div class="s-label">Reflection</div><div class="s-body">${s.reflection}</div></div>
+    </div>
+  `).join('');
+  openModal('modal-stories');
+}
+
+// ─────────────────────────────────────────────────────────
+// SCAN MODAL
+// ─────────────────────────────────────────────────────────
+function openScan(){
+  const qs=document.getElementById('quick-searches');
+  qs.innerHTML=INDEED_SEARCHES.map(s=>`
+    <a href="https://www.google.com/search?q=${encodeURIComponent(s.q)}" target="_blank" style="text-decoration:none;">
+      <button class="fb" style="font-size:.68rem;">${s.label}</button>
+    </a>
+  `).join('');
+  openModal('modal-scan');
+}
+function addScannedUrls(){
+  const raw=document.getElementById('scan-urls').value.trim();
+  if(!raw){closeModal('modal-scan');return;}
+  const urls=raw.split('\n').map(u=>u.trim()).filter(u=>u.startsWith('http'));
+  let added=0;
+  urls.forEach(url=>{
+    if(!apps.find(a=>a.url===url)){
+      apps.unshift({
+        id:uid(),title:'New Role — Paste URL to Claude Code for evaluation',
+        company:'Unknown',location:'—',salary:'—',score:0,arch:'platform',
+        priority:'medium',status:'pipeline',cl:false,url,
+        posted:today(),added:today(),gaps:[],notes:'Added from scan — run /career-ops for evaluation.',
+        breakdown:[],eval:{},coverLetter:'',stories:[],remote:false,
+      });
+      added++;
+    }
+  });
+  saveData();
+  render();
+  closeModal('modal-scan');
+  document.getElementById('scan-urls').value='';
+  toast(`${added} role${added!==1?'s':''} added to pipeline`,'success');
+}
+
+// ─────────────────────────────────────────────────────────
+// MODAL HELPERS
+// ─────────────────────────────────────────────────────────
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.overlay-modal').forEach(m=>{
+  m.addEventListener('click',function(e){ if(e.target===this) this.classList.remove('open'); });
 });
 
-// ── Boot ──────────────────────────────────────────────────
-load();
+// ─────────────────────────────────────────────────────────
+// EXPORT
+// ─────────────────────────────────────────────────────────
+function exportCSV(){
+  const rows=[['Title','Company','Location','Salary','Score','Archetype','Status','Priority','Added','URL','Gaps','Notes']];
+  apps.forEach(a=>rows.push([a.title,a.company,a.location,a.salary,a.score,a.arch,a.status,a.priority,a.added,a.url,(a.gaps||[]).join('; '),a.notes]));
+  const csv=rows.map(r=>r.map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const link=document.createElement('a');
+  link.href=URL.createObjectURL(blob);
+  link.download=`rume-pipeline-${today()}.csv`;
+  link.click();
+  toast('CSV exported','success');
+}
+
+// ─────────────────────────────────────────────────────────
+// TOAST
+// ─────────────────────────────────────────────────────────
+function toast(msg,type='info'){
+  const el=document.createElement('div');
+  el.className=`toast ${type}`;
+  el.textContent=msg;
+  document.getElementById('toast-stack').appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0';el.style.transform='translateY(8px)';el.style.transition='all .3s'; },2800);
+  setTimeout(()=>el.remove(),3200);
+}
+
+// ─────────────────────────────────────────────────────────
+// KEYBOARD SHORTCUTS
+// ─────────────────────────────────────────────────────────
+document.addEventListener('keydown',e=>{
+  const tag=document.activeElement.tagName;
+  if(['INPUT','TEXTAREA','SELECT'].includes(tag)) return;
+  if(e.key==='k'||e.key==='K'){ e.preventDefault(); document.getElementById('search-input').focus(); }
+  if(e.key==='n'||e.key==='N'){ openAdd(); }
+  if(e.key==='Escape'){
+    closeDetail();
+    document.querySelectorAll('.overlay-modal.open').forEach(m=>m.classList.remove('open'));
+  }
+});
+
+// ─────────────────────────────────────────────────────────
+// BOOT
+// ─────────────────────────────────────────────────────────
+loadData();
 render();
+
+// Animate score rings after render
+setTimeout(()=>{
+  document.querySelectorAll('.score-ring circle:last-child').forEach(c=>{
+    const orig=c.getAttribute('stroke-dashoffset');
+    c.setAttribute('stroke-dashoffset',c.getAttribute('stroke-dasharray'));
+    setTimeout(()=>c.setAttribute('stroke-dashoffset',orig),50);
+  });
+},100);
 </script>
 </body>
 </html>
